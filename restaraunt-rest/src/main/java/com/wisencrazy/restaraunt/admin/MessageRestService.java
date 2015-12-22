@@ -5,17 +5,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * User: Hoa Ho
- * Date: 3/7/13
- * Time: 1:31 PM
+ * User: Wisencrazy
  */
 @Path("/message")
 public class MessageRestService {
+	
+	Logger logger=LoggerFactory.getLogger(MessageRestService.class);
     @GET
     @Path("/{param}")
     public Response printMessage(@PathParam("param") String msg) {
-        String result = "Restful example : " + msg;
+    	logger.error("Testing the info build");
+        String result = "Restful example Changed: " + msg;
         return Response.status(200).entity(result).build();
     }
 }
