@@ -1,0 +1,1 @@
+CREATE SCHEMA `wisencrazy_restaraunt` DEFAULT CHARACTER SET utf8 ;
