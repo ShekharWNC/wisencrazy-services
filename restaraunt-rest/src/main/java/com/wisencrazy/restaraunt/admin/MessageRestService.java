@@ -3,6 +3,8 @@ package com.wisencrazy.restaraunt.admin;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,7 +26,6 @@ public class MessageRestService {
 		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("RestroDB");
 		em=entityManagerFactory.createEntityManager();
 		logger.info("Printing em {}",em.toString());
-        
 	}
 	
 	Logger logger=LoggerFactory.getLogger(MessageRestService.class);

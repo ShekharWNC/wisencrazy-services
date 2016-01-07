@@ -27,16 +27,28 @@
 			<artifactId>jackson-jaxrs</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-entitymanager</artifactId> -->
-<!-- 			<version>5.0.6.Final</version> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
+			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.0.6.Final</version>
 		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-core</artifactId> -->
+		<!-- <version>5.0.6.Final</version> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+<dependency>
+	<groupId>org.apache.shiro</groupId>
+	<artifactId>shiro-all</artifactId>
+	<version>1.2.0</version>
+</dependency>
+
+
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -54,27 +66,11 @@
 			<!-- </exclusion> -->
 			<!-- </exclusions> -->
 		</dependency>
-		<!-- In-order to support CORS,this dependency is required. -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.thetransactioncompany</groupId> -->
-		<!-- <artifactId>cors-filter</artifactId> -->
-		<!-- <version>1.9.2</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.callcomm.eserve</groupId> -->
-		<!-- <artifactId>security-api</artifactId> -->
-		<!-- <version>1.7.1-SNAPSHOT</version> -->
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>common</artifactId> -->
-		<!-- <groupId>com.callcomm.eserve</groupId> -->
-		<!-- </exclusion> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>eserve-entities</artifactId> -->
-		<!-- <groupId>com.callcomm.eserve</groupId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.wisencrazy</groupId>
+			<artifactId>restaraunt-dto</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
