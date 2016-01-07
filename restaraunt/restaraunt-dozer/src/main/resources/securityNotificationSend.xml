@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping wildcard="false">
+      	<class-a>com.callcomm.eserve.persistence.entity.SecuritySendNotification</class-a>
+      	<class-b>com.dto.SecuritySendNotificationDTO</class-b>
+      	<field-exclude>
+      	<a>securityGeneralNotification</a>
+      	<b>securityGeneralNotification</b>
+      	</field-exclude>
+      	<field>
+      	<a>sendNotificationType</a>
+      	<b>sendNotificationType</b>
+      	</field>
+      	<field>
+      	<a>id</a>
+      	<b>id</b>
+      	</field>
+      	<field>
+      	<a>sid</a>
+      	<b>sid</b>
+      	</field>
+      	<field>
+      	<a>notificationChannelType</a>
+      	<b>notificationChannelType</b>
+      	</field>
+      </mapping>
+</mappings>

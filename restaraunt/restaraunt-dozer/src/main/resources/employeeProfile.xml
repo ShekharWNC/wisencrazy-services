@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping map-id="epto">
+      	<class-a>com.callcomm.eserve.persistence.entity.EmployeeProfile</class-a>
+      	<class-b>com.dto.EmployeeProfileDTO</class-b>
+      	<field map-id="virtualaccountid">
+      		<a>virtualAccount</a>
+      		<b>virtualAccount</b>
+      	</field>
+      </mapping>
+      
+      <mapping map-id="ep">
+        <class-a>com.dto.EmployeeProfileDTO</class-a>	
+      	<class-b>com.callcomm.eserve.persistence.entity.EmployeeProfile</class-b>
+      	<field custom-converter-id="virtualaccount">
+      		<a>virtualAccount.id</a>
+      		<b>virtualAccount</b>
+      		<b-hint>com.callcomm.eserve.persistence.entity.VirtualAccount</b-hint>
+      	</field>
+      </mapping>
+      
+      <mapping map-id="epvirtualto">
+      	<class-a>com.callcomm.eserve.persistence.entity.EmployeeProfile</class-a>
+      	<class-b>com.dto.EmployeeProfileDTO</class-b>
+      	<field-exclude>
+      		<a>virtualAccount</a>
+      		<b>virtualAccount</b>
+      	</field-exclude>
+      </mapping>
+      
+</mappings>
+ 

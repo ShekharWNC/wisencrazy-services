@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+       <mapping type="one-way">
+      	<class-a>com.callcomm.eserve.persistence.entity.AdminView</class-a>
+      	<class-b>com.dto.AdminCompanyViewDTO</class-b>
+      	
+      	<field>
+      		<a get-method="populateCompanySid">companySid</a>
+      		<b>companySid</b>
+      	</field>
+      	<field>
+      		<a get-method="populateVirtualAccountSid">virtualSid</a>
+      		<b>virtualSid</b>
+      	</field>
+      	<field>
+      		<a get-method="populateProjectSid">projectSid</a>
+      		<b>projectSid</b>
+      	</field>
+      	 </mapping>
+       <mapping type="one-way">
+      	<class-a>com.callcomm.eserve.persistence.entity.AdminView</class-a>
+      	<class-b>com.dto.AdminProjectViewDTO</class-b>
+      	
+      	<field>
+      		<a get-method="populateCompanySid">companySid</a>
+      		<b>companySid</b>
+      	</field>
+      	<field>
+      		<a get-method="populateVirtualAccountSid">virtualSid</a>
+      		<b>virtualSid</b>
+      	</field>
+       	<field>
+      		<a get-method="populateProjectSid">projectSid</a>
+      		<b>projectSid</b>
+      	</field>
+      </mapping>
+       <mapping type="one-way">
+      	<class-a>com.callcomm.eserve.persistence.entity.AdminView</class-a>
+      	<class-b>com.dto.ProjectGroupViewListDTO</class-b>
+       	<field>
+      		<a get-method="populateCompanySid">companySid</a>
+      		<b>companySid</b>
+      	</field>
+      	<field>
+      		<a get-method="populateProjectSid">projectSid</a>
+      		<b>projectSid</b>
+      	</field>
+      	<field>
+      		<a get-method="populateVirtualAccountSid">virtualAccountSid</a>
+      		<b>virtualAccountSid</b>
+      	</field>
+      	<field>
+      	    <a>projectRoleName</a>
+      	    <b>role</b>
+      	</field>
+    </mapping>
+     <mapping map-id="adminviewtoprojectviewdto">
+      	<class-a>com.callcomm.eserve.persistence.entity.AdminView</class-a>
+      	<class-b>com.dto.ProjectViewDTO</class-b>
+      	<field>
+      		<a get-method="populateProjectSid">projectSid</a>
+      		<b>projectSid</b>
+      	</field>
+    </mapping>
+    
+    <mapping>
+    	<class-a>com.callcomm.eserve.persistence.view.AllCompanyInfoView</class-a>
+    	<class-b>com.dto.AllCompanyInfoViewDTO</class-b>
+    	<field custom-converter-id="timestamptostringconv">
+    		<a>joinDate</a>
+    		<b>joinDate</b>
+    	</field>
+    	<field custom-converter-id="timestamptostringconv">
+    		<a>expiration</a>
+    		<b>expiration</b>
+    	</field>
+    	<field custom-converter-id="timestamptostringconv">
+    		<a>lastAccessed</a>
+    		<b>lastAccessed</b>
+    	</field>
+    </mapping>
+</mappings>
+

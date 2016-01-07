@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      	<mapping type="one-way">
+      		<class-a>com.dto.CustomerBusinessProfileHasPrimaryContactDTO</class-a>
+      		<class-b>com.callcomm.eserve.persistence.entity.CustomerBusinessProfileHasPrimaryContact</class-b>
+	      	<field>
+	      		<a get-method="hexStringToByteArray">sid</a>
+	      		<b>sid</b>
+	      	</field>
+	      	<field>
+	      		<a get-method="populateIdBySid">sid</a>
+	      		<b>id</b>
+	      	</field>
+	      	<field custom-converter-id="userconv" custom-converter-param="Appuser">
+	      		<a>appuser.sid</a>
+	      		<b>appuser</b>
+	      	</field>
+      		<field >
+      			<a>appuser.primaryContact</a>
+      			<b>appuser.displayName</b>
+      		</field>
+      		<field>
+      			<a>appuser.emailId</a>
+      			<b>appuser.username</b>
+      		</field>
+      	</mapping>
+      	
+      	<mapping type="one-way">
+      		<class-a>com.callcomm.eserve.persistence.entity.CustomerBusinessProfileHasPrimaryContact</class-a>
+      		<class-b>com.dto.CustomerBusinessProfileHasPrimaryContactDTO</class-b>
+      		
+	      	<field>
+	      		<a get-method="bytesToHexString">appuser.sid</a>
+	      		<b>appuser.sid</b>
+	      	</field>
+      		<field >
+      			<a>appuser.displayName</a>
+      			<b>appuser.primaryContact</b>
+      		</field>
+      		<field>
+      			<a>appuser.username</a>
+      			<b>appuser.emailId</b>
+      		</field>
+      	</mapping>
+</mappings>

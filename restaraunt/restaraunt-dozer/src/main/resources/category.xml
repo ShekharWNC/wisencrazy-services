@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping>
+      	<class-a>com.callcomm.eserve.persistence.entity.Category</class-a>
+      	<class-b>com.dto.CategoryDTO</class-b>
+      	<field>
+      		<a>description</a>
+      		<b>description</b>
+      	</field>
+      	<field>
+      		<a>status</a>
+      		<b>status</b>
+      	</field>
+      	<field>
+      		<a>sid</a>
+      		<b>sid</b>
+      	</field>
+      	<field>
+      	<a>title</a>
+      	<b>title</b>
+      	</field>
+      </mapping>
+       <mapping map-id = "categoryentitytodto">
+                <class-a>com.callcomm.eserve.persistence.entity.Category</class-a>
+                <class-b>com.dto.CategoryDTO</class-b>
+                <field custom-converter-id="timestamptostringconv">
+                        <a>createdDate</a>
+                        <b>createdDate</b>
+                </field>
+        </mapping>
+         <mapping map-id = "categorydtotoentity">
+                <class-a>com.callcomm.eserve.persistence.entity.Category</class-a>
+                <class-b>com.dto.CategoryDTO</class-b>
+               <field custom-converter-id="stringtotimestampconv">
+                        <a>createdDate</a>
+                        <b>createdDate</b>
+                        <a-hint>java.lang.String</a-hint>
+                        <b-hint>java.sql.Timestamp</b-hint>
+                </field>
+        </mapping>
+        <mapping map-id="getonlycategory">
+                <class-a>com.callcomm.eserve.persistence.entity.Category</class-a>
+                <class-b>com.dto.CategoryDTO</class-b>
+                <field-exclude>
+                <a>appuser</a>
+                <b>appuserDTO</b>
+                </field-exclude>
+                 <field-exclude>
+                <a>subCategories</a>
+                <b>subCategories</b>
+                </field-exclude>
+                 <field-exclude>
+                <a>categoryHasRatings</a>
+                <b>categoryHasRatings</b>
+                </field-exclude>
+                 <field-exclude>
+                <a>knowledgebaseHasArticle</a>
+                <b>knowledgebaseHasArticle</b>
+                </field-exclude>
+        </mapping>
+          <mapping map-id="categorywitharticles">
+                <class-a>com.callcomm.eserve.persistence.entity.Category</class-a>
+                <class-b>com.dto.CategoryDTO</class-b>
+                <field-exclude>
+                <a>subCategories</a>
+                <b>subCategories</b>
+                </field-exclude>
+                 <field-exclude>
+                <a>categoryHasRatings</a>
+                <b>categoryHasRatings</b>
+                </field-exclude>
+        </mapping>
+</mappings>

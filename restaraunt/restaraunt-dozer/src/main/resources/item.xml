@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.Item</class-a>
+		<class-b>com.dto.ItemInputDTO</class-b>
+		<field-exclude>
+			<a>rmngQty</a>
+			<b>rmngQty</b>
+		</field-exclude>
+		<field-exclude>
+		    <a>totalQty</a>
+		    <b>totalQty</b>
+		</field-exclude>
+	</mapping>
+	<mapping type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.ItemHasSize</class-a>
+		<class-b>com.dto.ItemHasSizeInputDTO</class-b>
+		<field-exclude>
+			<a>rmngQty</a>
+			<b>rmngQty</b>
+		</field-exclude>
+		<field-exclude>
+		    <a>totalQty</a>
+		    <b>totalQty</b>
+		</field-exclude>
+	</mapping>
+	<mapping type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.ItemHasAddon</class-a>
+		<class-b>com.dto.ItemHasAddonInputDTO</class-b>
+		<field-exclude>
+			<a>rmngQty</a>
+			<b>rmngQty</b>
+		</field-exclude>
+		<field-exclude>
+		    <a>totalQty</a>
+		    <b>totalQty</b>
+		</field-exclude>
+	</mapping>
+</mappings>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.CaseViewConditionComparison</class-a>
+		<class-b map-null="false">com.dto.caseview.CaseViewConditionComparisonDTO</class-b>
+		<field>
+			<a>caseViewConditionTypeHasComparisonOperator.comparisonOperator</a>
+			<b>comparisonOperator</b>
+		</field>
+		<field>
+			<a>caseViewConditionTypeHasComparisonOperator.caseViewConditionType</a>
+			<b>caseViewConditionType</b>
+		</field>
+		<field>
+			<a>value2CompareSid</a>
+			<b>value2Compare</b>
+		</field>
+	</mapping>
+	
+	<mapping type="one-way">
+		<class-a>com.dto.caseview.CaseViewConditionComparisonDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.CaseViewConditionComparison</class-b>
+		<field>
+			<a get-method="populateComparisonOperatorIdBySid" >comparisonOperator.sid</a>
+			<b>caseViewConditionTypeHasComparisonOperator.caseViewConditionTypeHasComparisonOperatorPK.comparisonOperatorId</b>
+		</field>
+		<field>
+			<a get-method="populateCaseViewConditionTypeIdBySid">caseViewConditionType.sid</a>
+			<b>caseViewConditionTypeHasComparisonOperator.caseViewConditionTypeHasComparisonOperatorPK.caseViewConditionTypeId</b>
+		</field>
+	</mapping>
+	
+	<mapping type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.CaseView</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.CaseView</class-b>
+		<field-exclude>
+			<a>sid</a>
+			<b>sid</b>
+		</field-exclude>
+	</mapping>
+</mappings>

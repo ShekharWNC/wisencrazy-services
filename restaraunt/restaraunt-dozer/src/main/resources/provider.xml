@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping map-id="ppto">
+      	<class-a>com.callcomm.eserve.persistence.entity.ProviderProfile</class-a>
+      	<class-b>com.dto.ProviderProfileDTO</class-b>
+      	<field map-id="userid">
+      		<a>appuser</a>
+      		<b>user</b>
+      	</field>
+      </mapping>
+      
+      <mapping map-id="pp">
+      	<class-a>com.dto.ProviderProfileDTO</class-a>
+      	<class-b>com.callcomm.eserve.persistence.entity.ProviderProfile</class-b>
+      	<field custom-converter-id="userconv">
+      		<a>user.id</a>
+      		<b>appuser</b>
+      		<b-hint>com.callcomm.eserve.persistence.entity.Appuser</b-hint>
+      	</field>
+      </mapping>
+</mappings>

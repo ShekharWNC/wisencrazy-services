@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping wildcard="false">
+      	<class-a>com.callcomm.eserve.persistence.entity.RoutingRule</class-a>
+      	<class-b>com.dto.RoutingRuleDTO</class-b>
+      	<field>
+      		<a>name</a>
+      		<b>name</b>
+      	</field>
+      	<field>
+      		<a>id</a>
+      		<b>id</b>
+      	</field>
+      	<field>
+      		<a>sid</a>
+      		<b>sid</b>
+      	</field>
+      	<field>
+      		<a>enable</a>
+      		<b>enable</b>
+      	</field>
+      	<field>
+      		<a>priorityOrder</a>
+      		<b>priorityOrder</b>
+      	</field>
+      	<field>
+      		<a>runRule</a>
+      		<b>runRule</b>
+      	</field>
+      	<field-exclude>
+      	<a>routingRulesGroup</a>
+      	<b>routingRulesGroup</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="routingRule">
+      	<class-a>com.callcomm.eserve.persistence.entity.RoutingRule</class-a>
+      	<class-b>com.dto.RoutingRuleDTO</class-b>
+	    <field-exclude>
+	      	<a>ruleConditions</a>
+	      	<b>ruleConditions</b>
+      	</field-exclude>
+    	<field-exclude>
+	      	<a>ruleType</a>
+	      	<b>ruleType</b>
+      	</field-exclude>
+      	<field-exclude>
+	      	<a>channel</a>
+	      	<b>channel</b>
+      	</field-exclude>
+     	<field-exclude>
+	      	<a>ruleActions</a>
+	      	<b>ruleActions</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="ruleCondition">
+      	<class-a>com.callcomm.eserve.persistence.entity.RuleCondition</class-a>
+      	<class-b>com.dto.RuleConditionDTO</class-b>
+     	<field-exclude>
+	      	<a>ruleConditionComparisons</a>
+	      	<b>ruleConditionComparisons</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="ruleConditionComparison">
+      	<class-a>com.callcomm.eserve.persistence.entity.RuleConditionComparison</class-a>
+      	<class-b>com.dto.RuleConditionComparisonDTO</class-b>
+     	<field-exclude>
+	      	<a>ruleConditionTypeHasComparisonOperator</a>
+	      	<b>ruleConditionTypeHasComparisonOperator</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="ruleAction">
+      	<class-a>com.callcomm.eserve.persistence.entity.RuleAction</class-a>
+      	<class-b>com.dto.RuleActionDTO</class-b>
+     	<field-exclude>
+	      	<a>ruleActionType</a>
+	      	<b>ruleActionType</b>
+      	</field-exclude>
+     	<field-exclude>
+	      	<a>ruleActionParams</a>
+	      	<b>ruleActionParams</b>
+      	</field-exclude>
+      </mapping>
+</mappings>

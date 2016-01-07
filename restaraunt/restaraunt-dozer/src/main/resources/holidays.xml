@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.CompanyHasHoliday</class-a>
+		<class-b>com.dto.HolidaysDTO</class-b>
+		<field custom-converter-id="sqldatetostringconv">
+			<a>compositeId.holidayDate</a>
+			<b>holidayDate</b>
+		</field>
+		<!-- <field>
+			<a>holiday</a>
+			<b>holiday</b>
+		</field>
+		<field-exclude>
+			<a>compositeId</a>
+			<b>compositeId</b>
+		</field-exclude> -->
+	</mapping>
+</mappings>

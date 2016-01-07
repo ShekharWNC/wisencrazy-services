@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping>
+		<class-a>com.callcomm.eserve.persistence.entity.Customer</class-a>
+		<class-b>com.dto.CustomerDTO</class-b>
+		<field-exclude type="one-way">
+			<a>customerBusiness</a>
+			<b>customerBusiness</b>
+		</field-exclude>
+		<field-exclude>
+			<a>associatedCompany</a>
+			<b>associatedCompany</b>
+		</field-exclude>
+		<field-exclude type="one-way">
+			<a>password</a>
+			<b>password</b>
+		</field-exclude>
+	</mapping>
+	
+	<mapping map-id="with_password">
+		<class-a>com.callcomm.eserve.persistence.entity.Customer</class-a>
+		<class-b>com.dto.CustomerDTO</class-b>
+		<field-exclude type="one-way">
+			<a>customerBusiness</a>
+			<b>customerBusiness</b>
+		</field-exclude>
+		<field-exclude>
+			<a>associatedCompany</a>
+			<b>associatedCompany</b>
+		</field-exclude>
+	</mapping>
+</mappings>

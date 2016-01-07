@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping map-id="projectschedule">
+		<class-a>com.dto.ProjectScheduleDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.ProjectSchedule</class-b>
+		<field map-id="pshs">
+			<a>projectScheduleHasShifts</a>
+			<b>projectScheduleHasShifts</b>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>startDate</a>
+			<b>startDate</b>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>endDate</a>
+			<b>endDate</b>
+		</field>
+		<field-exclude>
+			<a>project</a>
+			<b>project</b>
+		</field-exclude>
+	</mapping>
+	
+	<mapping map-id="projectscheduledto">
+		<class-a>com.callcomm.eserve.persistence.entity.ProjectSchedule</class-a>
+		<class-b>com.dto.ProjectScheduleDTO</class-b>
+		<field map-id="pshsdto">
+			<a>projectScheduleHasShifts</a>
+			<b>projectScheduleHasShifts</b>
+		</field>
+		<field custom-converter-id="timestamptostringconv">
+			<a>startDate</a>
+			<b>startDate</b>
+		</field>
+		<field custom-converter-id="timestamptostringconv">
+			<a>endDate</a>
+			<b>endDate</b>
+		</field>
+		<field-exclude>
+			<a>project</a>
+			<b>project</b>
+		</field-exclude>
+	</mapping>
+	
+	<mapping map-id="projectschedulecommondto" wildcard="true">
+		<class-a>com.callcomm.eserve.persistence.entity.ProjectSchedule</class-a>
+		<class-b>com.dto.CommonDTO</class-b>
+		<field>
+			<a>scheduleName</a>
+			<b>name</b>
+		</field>
+		<field>
+			<a>sid</a>
+			<b>sid</b>
+		</field>
+	</mapping>
+</mappings>

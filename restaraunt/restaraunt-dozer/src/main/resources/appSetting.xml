@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping>
+		<class-a>com.callcomm.eserve.persistence.entity.AppSetting</class-a>
+		<class-b>com.dto.CommonUserHasAppSettingsDTO</class-b>
+		<field>
+			<a>settingId.setting</a>
+			<b>setting</b>
+		</field>
+		<field>
+			<a>settingId.device</a>
+			<b>settingFor</b>
+		</field>
+		<field>
+			<a>settingId.version</a>
+			<b>version</b>
+		</field>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.callcomm.eserve.persistence.entity.CustomerHasAppSetting</class-a>
+		<class-b>com.dto.CommonUserHasAppSettingsDTO</class-b>
+		<field>
+			<a>customerAppSettingId.setting</a>
+			<b>setting</b>
+		</field>
+		<field>
+			<a>customerAppSettingId.device</a>
+			<b>settingFor</b>
+		</field>
+		<field>
+			<a>customerAppSettingId.version</a>
+			<b>version</b>
+		</field>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.callcomm.eserve.persistence.entity.AppuserHasAppSetting</class-a>
+		<class-b>com.dto.CommonUserHasAppSettingsDTO</class-b>
+		<field>
+			<a>userAppSettingId.setting</a>
+			<b>setting</b>
+		</field>
+		<field>
+			<a>userAppSettingId.device</a>
+			<b>settingFor</b>
+		</field>
+		<field>
+			<a>userAppSettingId.version</a>
+			<b>version</b>
+		</field>
+	</mapping>
+</mappings>

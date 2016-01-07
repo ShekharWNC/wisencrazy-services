@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<!-- <mapping wildcard="false" map-id="skilldefault">
+		<class-a>com.eserve.marketplace.common.entity.Skill</class-a>
+		<class-b>com.dto.SkillDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+	</mapping> -->
+	
+	<mapping>
+		<class-a>com.callcomm.eserve.persistence.entity.Skill</class-a>
+		<class-b>com.dto.SkillDTO</class-b>
+		<field-exclude>
+			<a>skillType</a>
+			<b>skillType</b>
+		</field-exclude>
+		<field-exclude>
+			<a>company</a>
+			<b>company</b>
+		</field-exclude>
+		<field>
+		    <a>name</a>
+		    <b>skill</b>
+		</field>
+	</mapping>
+	<mapping map-id="skilldtotoskill">
+		<class-a>com.dto.SkillDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Skill</class-b>
+		<field>
+		    <a>skill</a>
+		    <b>name</b>
+		</field>
+	</mapping>
+</mappings>

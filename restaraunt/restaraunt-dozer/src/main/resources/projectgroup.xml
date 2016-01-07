@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping type="one-way">
+      	<class-a>com.callcomm.eserve.persistence.entity.ProjectGroup</class-a>
+      	<class-b>com.dto.AdminProjectGroupDTO</class-b>
+      	<field>
+      		<a get-method="bytesToHexString">sid</a>
+      		<b>projectGroupSid</b>
+      	</field>
+      	<field>
+      		<a>name</a>
+      		<b>projectGroupName</b>
+      	</field>
+      </mapping>
+      <mapping map-id="projectgroupwithemail">
+      <class-a>com.callcomm.eserve.persistence.entity.ProjectGroup</class-a>
+      <class-b>com.dto.ProjectGroupDTO</class-b>
+      <field>
+      <a>projectId</a>
+      <b>project</b>
+      </field>
+      <field-exclude>
+      <a>description</a>
+      <b>description</b>
+      </field-exclude>
+       <field-exclude>
+      <a>isDefault</a>
+      <b>isDefault</b>
+      </field-exclude>
+      <field>
+      <a>projectGroupHasEmails</a>
+      <b>projectGroupHasEmail</b>
+      </field>
+      </mapping>
+</mappings>

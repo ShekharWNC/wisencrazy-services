@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping map-id="caseviewexclude">
+		<class-a>com.callcomm.eserve.persistence.entity.CaseViewRule</class-a>
+		<class-b>com.dto.caseview.CaseViewRuleDTO</class-b>
+		<field-exclude>
+			<a>value2CompareTable</a>
+			<b>value2CompareTable</b>
+		</field-exclude>
+		<field>
+			<a>caseViewConditionType.name</a>
+			<b>caseViewConditon</b>
+		</field>
+		<field custom-converter-id="entitytosid">
+			<a>caseViewConditionType</a>
+			<b>caseViewConditionTypeSid</b>
+		</field>
+	</mapping>
+	
+	<mapping map-id="caseviewruleclass" wildcard="false">
+		<class-a>com.callcomm.eserve.persistence.entity.CaseViewRule</class-a>
+		<class-b>com.dto.caseview.CaseViewRuleDTO</class-b>
+		<field>
+			<a>value2CompareTable</a>
+			<b>value2CompareTable</b>
+		</field>
+		<field custom-converter-id="entitytosid">
+			<a>caseViewConditionType</a>
+			<b>caseViewConditionTypeSid</b>
+		</field>
+	</mapping>
+</mappings>

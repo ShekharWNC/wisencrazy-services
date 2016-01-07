@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping map-id="pshs">
+		<class-a>com.dto.ProjectScheduleHasShiftDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.ProjectScheduleHasShift</class-b>
+		<field map-id="shift">
+			<a>shift</a>
+			<b>event</b>
+		</field>
+	</mapping>
+	
+	<mapping map-id="pshsdto">
+		<class-a>com.callcomm.eserve.persistence.entity.ProjectScheduleHasShift</class-a>
+		<class-b>com.dto.ProjectScheduleHasShiftDTO</class-b>
+		<field map-id="shiftdto">
+			<a>event</a>
+			<b>shift</b>
+		</field>
+		<field>
+      		<a get-method="bytesToHexString">sid</a>
+      		<b>sid</b>
+      	</field>
+	</mapping>
+</mappings>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+       <mapping>
+      	<class-a>com.callcomm.eserve.persistence.entity.RegisteredPhoneNo</class-a>
+      	<class-b>com.dto.RegisteredPhoneNoDTO</class-b>
+      	<field-exclude>
+      	<a>companyId</a>
+      	<b>company</b>
+      	</field-exclude>
+      		<field-exclude>
+      	<a>project</a>
+      	<b>project</b>
+      	</field-exclude>
+      	<field>
+      		<a>phoneNo</a>
+      		<b>phoneNo</b>
+      	</field>
+      	<field>
+      		<a>voiceEnabled</a>
+      		<b>voiceEnabled</b>
+      	</field>
+      	<field>
+      		<a>smsEnabled</a>
+      		<b>smsEnabled</b>
+      	</field>
+      	<field>
+      		<a>mmsEnabled</a>
+      		<b>mmsEnabled</b>
+      	</field>
+      	<field>
+      		<a>region</a>
+      		<b>region</b>
+      	</field>
+      	<field>
+      		<a>friendlyName</a>
+      		<b>friendlyName</b>
+      	</field>
+      	<field>
+      		<a>postalCode</a>
+      		<b>postalCode</b>
+      	</field>
+      	<field>
+      		<a>status</a>
+      		<b>status</b>
+      	</field>
+      	<field>
+      		<a>areaCode</a>
+      		<b>areaCode</b>
+      	</field>
+      	 </mapping>
+</mappings>
+

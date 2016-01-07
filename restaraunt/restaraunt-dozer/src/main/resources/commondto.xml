@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping>
+      	<class-a>com.callcomm.eserve.persistence.to.CasePriorityTO</class-a>
+      	<class-b>com.dto.CommonDTO</class-b>
+      	<field-exclude>
+      		<a>id</a>
+      		<b>id</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="casestatus">
+      	<class-a>com.callcomm.eserve.persistence.to.CaseStatusTO</class-a>
+      	<class-b>com.dto.CommonDTO</class-b>
+      	<field-exclude>
+      		<a>id</a>
+      		<b>id</b>
+      	</field-exclude>
+      </mapping>
+         <mapping map-id="casetype">
+      	<class-a>com.callcomm.eserve.persistence.to.CaseTypeTO</class-a>
+      	<class-b>com.dto.CommonDTO</class-b>
+      	<field-exclude>
+      		<a>id</a>
+      		<b>id</b>
+      	</field-exclude>
+      </mapping>
+           <mapping map-id="supportchannel">
+      	<class-a>com.callcomm.eserve.persistence.to.SupportChannelTO</class-a>
+      	<class-b>com.dto.CommonDTO</class-b>
+      	<field-exclude>
+      		<a>id</a>
+      		<b>id</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="case">
+      	<class-a>com.callcomm.eserve.persistence.to.CaseTO</class-a>
+      	<class-b>com.dto.CommonDTO</class-b>
+      	<field-exclude>
+      		<a>id</a>
+      		<b>id</b>
+      	</field-exclude>
+      	<field>
+      		<a>subject</a>
+      		<b>name</b>
+      	</field>
+      </mapping>
+       <mapping map-id="customerbusiness">
+      	<class-a>com.callcomm.eserve.persistence.entity.CustomerBusiness</class-a>
+      	<class-b>com.dto.CommonDTO</class-b>
+       	<field>
+      		<a>accountName</a>
+      		<b>name</b>
+      	</field>
+      </mapping>
+</mappings>

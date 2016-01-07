@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping wildcard="false" map-id="invoiceexcludeorder">
+      	<class-a>com.callcomm.eserve.persistence.entity.Invoice</class-a>
+      	<class-b>com.dto.core.ordermanagement.InvoiceDTO</class-b>
+      	<field-exclude>
+      	<a>order</a>
+      	<b>order</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="invoicedto-to-invoicecommondto">
+      	<class-a>com.dto.core.ordermanagement.InvoiceDTO</class-a>
+      	<class-b>com.dto.payment.InvoiceDetailsCommonDTO</class-b>
+      	<field>
+      	<a>invAmount</a>
+      	<b>totalAmount</b>
+      	</field>
+      	<field-exclude>
+      	<a>customer</a>
+      	<b>customer</b>
+      	</field-exclude>
+      	<field-exclude>
+      	<a>company</a>
+      	<b>company</b>
+      	</field-exclude>
+      	<field-exclude>
+      	<a>project</a>
+      	<b>project</b>
+      	</field-exclude>
+      </mapping>
+</mappings>

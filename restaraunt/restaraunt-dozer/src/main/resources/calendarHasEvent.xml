@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping map-id="chedto">
+      	<class-a>com.callcomm.eserve.persistence.entity.CalendarHasEvent</class-a>
+      	<class-b>com.dto.CalendarHasEventDTO</class-b>
+      	<field map-id="eventdto">
+      		<a>event</a>
+      		<b>event</b>
+      	</field>
+      </mapping>
+      
+      <mapping map-id="che">
+      	<class-a>com.dto.CalendarHasEventDTO</class-a>
+      	<class-b>com.callcomm.eserve.persistence.entity.CalendarHasEvent</class-b>
+      	<field map-id="event">
+      		<a>event</a>
+      		<b>event</b>
+      	</field>
+      </mapping>
+</mappings>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping map-id="user">
+		<class-a>com.callcomm.eserve.persistence.entity.Appuser</class-a>
+		<class-b>com.dto.AppuserDTO</class-b>
+		<field custom-converter-id="userconv" custom-converter-param="Appuser">
+			<a>id</a>
+			<b>sid</b>
+		</field>
+		<!-- <field> <a>sid</a> <b get-method="hexStringToByteArray">sid</b> </field> -->
+		<field>
+			<a>accountStatus</a>
+			<b>accountStatus</b>
+		</field>
+		<field>
+			<a>username</a>
+			<b>emailId</b>
+		</field>
+		<field>
+			<a>pass</a>
+			<b>password</b>
+		</field>
+		<!-- <field>
+			<a>country</a>
+			<b>country</b>
+		</field> -->
+	</mapping>
+
+	<mapping map-id="userdto" type="one-way">
+		<class-a>com.callcomm.eserve.persistence.entity.Appuser</class-a>
+		<class-b>com.dto.AppuserDTO</class-b>
+		<!-- <field-exclude> <a>id</a> <b>id</b> </field-exclude> <field> <a get-method="bytesToHexString">sid</a> 
+			<b>sid</b> </field> -->
+		<field>
+			<a>accountStatus</a>
+			<b>accountStatus</b>
+		</field>
+		<field>
+			<a>username</a>
+			<b>emailId</b>
+		</field>
+		<field>
+			<a>pass</a>
+			<b>password</b>
+		</field>
+		<field>
+			<a>country</a>
+			<b>country</b>
+		</field>
+	</mapping>
+
+
+	<!-- <mapping wildcard="false" map-id="userdefault"> <class-a>com.callcomm.eserve.persistence.entity.Appuser</class-a> 
+		<class-b>com.dto.AppuserDTO</class-b> <field>id</field> <field>id</field> 
+		</mapping> -->
+
+	<mapping map-id="userex">
+		<class-a>com.callcomm.eserve.persistence.entity.Appuser</class-a>
+		<class-b>com.dto.AppuserDTO</class-b>
+		<field-exclude>
+			<a>userHasAddresses</a>
+			<b>userHasAddresses</b>
+		</field-exclude>
+
+		<field-exclude>
+			<a>userContacts</a>
+			<b>userContacts</b>
+		</field-exclude>
+		<field-exclude>
+			<a>pass</a>
+			<b>password</b>
+		</field-exclude>
+	</mapping>
+
+	<mapping map-id="userid" wildcard="false">
+		<class-a>com.callcomm.eserve.persistence.entity.Appuser</class-a>
+		<class-b>com.dto.AppuserDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.dto.AppuserDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Appuser</class-b>
+		<field>
+			<a>emailId</a>
+			<b>username</b>
+		</field>
+		<field>
+			<a>mobile</a>
+			<b>mobileNumber</b>
+		</field>
+	</mapping>
+	<mapping>
+		<class-a>com.callcomm.eserve.persistence.entity.Appuser</class-a>
+		<class-b>com.dto.AppuserBasicsDTO</class-b>
+		<field>
+			<a>username</a>
+			<b>emailId</b>
+		</field>
+		<field>
+			<a>mobileNumber</a>
+			<b>mobile</b>
+		</field>
+	</mapping>
+</mappings>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping map-id="customerprofile">
+      	<class-a>com.dto.CustomerProfileDTO</class-a>
+      	<class-b>com.callcomm.eserve.persistence.entity.CustomerProfile</class-b>
+      	<field custom-converter-id="userconv" custom-converter-param="CustomerProfile">
+			<a>id</a>
+			<b>sid</b>
+		</field>
+      	<field>
+      		<a get-method="hexStringToByteArray">sid</a>
+      		<b>sid</b>
+      	</field>
+      	<field>
+      		<a>company</a>
+      		<b>company</b>
+      	</field>
+      	<field>
+      		<a>department</a>
+      		<b>department</b>
+      	</field>
+      </mapping>
+      
+      
+      <mapping map-id="customerprofiledto">
+      	<class-a>com.callcomm.eserve.persistence.entity.CustomerProfile</class-a>
+      	<class-b>com.dto.CustomerProfileDTO</class-b>
+      	<field-exclude>
+      		<a>id</a>
+      		<b>id</b>
+      	</field-exclude>
+      	<field>
+      		<a get-method="bytesToHexString">sid</a>
+      		<b>sid</b>
+      	</field>
+      </mapping>
+</mappings>

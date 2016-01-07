@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>restaraunt</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1.local-SNAPSHOT</version>
+	<name>restaraunts</name>
+	<groupId>com.wisencrazy</groupId>
+	<description>This the module which will house the WAR component for the deployment of the restaraunt rest service.</description>
+
+
+	<modules>
+		<module>restaraunt-common</module>
+		<module>restaraunt-dto</module>
+		<module>restaraunt-dozer</module>
+		<module>restaraunt-rest</module>
+	</modules>
+
+</project>

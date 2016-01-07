@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping map-id = "projectpojotodto">
+		<class-a>com.callcomm.eserve.persistence.entity.Project</class-a>
+		<class-b>com.dto.ProjectDTO</class-b>
+		<field custom-converter-id="timestamptostringconv">
+			<a>startDate</a>
+			<b>startDate</b>
+		</field>
+		<field custom-converter-id="timestamptostringconv">
+			<a>endDate</a>
+			<b>endDate</b>
+		</field>
+		<field-exclude>
+		       <a>company</a>
+		       <b>company</b>
+		</field-exclude>
+	</mapping>
+	<mapping map-id = "populateproject">
+		<class-a>com.callcomm.eserve.persistence.entity.Project</class-a>
+		<class-b>com.dto.ProjectCreationDTO</class-b>
+		<!-- <field custom-converter-id="timestamptostringconv">
+			<a>startDate</a>
+			<b>startDate</b>
+		</field>
+		<field custom-converter-id="timestamptostringconv">
+			<a>endDate</a>
+			<b>endDate</b>
+		</field> -->
+		<field-exclude>
+		       <a>company</a>
+		       <b>company</b>
+		</field-exclude>
+	</mapping>
+	<mapping map-id="projectlist">
+		<class-a>com.callcomm.eserve.persistence.entity.Project</class-a>
+		<class-b>com.dto.ProjectDTO</class-b>
+		<field-exclude>
+		       <a>company</a>
+		       <b>company</b>
+		</field-exclude>
+	</mapping>
+	<mapping map-id="projectdtotopojo">
+		<class-a>com.dto.ProjectDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Project</class-b>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>startDate</a>
+			<b>startDate</b>
+			<a-hint>java.lang.String</a-hint>
+			<b-hint>java.sql.Timestamp</b-hint>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>endDate</a>
+			<b>endDate</b>
+			<a-hint>java.lang.String</a-hint>
+			<b-hint>java.sql.Timestamp</b-hint>
+		</field>
+	</mapping>
+	
+	<mapping type="one-way">
+		<class-a>com.dto.ProjectBasicDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Project</class-b>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>startDate</a>
+			<b>startDate</b>
+			<a-hint>java.lang.String</a-hint>
+			<b-hint>java.sql.Timestamp</b-hint>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>endDate</a>
+			<b>endDate</b>
+			<a-hint>java.lang.String</a-hint>
+			<b-hint>java.sql.Timestamp</b-hint>
+		</field>
+	</mapping>
+	<mapping map-id="createupdateproject">
+		<class-a>com.dto.ProjectCreationDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Project</class-b>
+		<!-- <field custom-converter-id="stringtotimestampconv">
+			<a>startDate</a>
+			<b>startDate</b>
+			<a-hint>java.lang.String</a-hint>
+			<b-hint>java.sql.Timestamp</b-hint>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>endDate</a>
+			<b>endDate</b>
+			<a-hint>java.lang.String</a-hint>
+			<b-hint>java.sql.Timestamp</b-hint>
+		</field> -->
+	</mapping>
+</mappings>

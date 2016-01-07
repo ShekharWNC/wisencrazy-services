@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping map-id="shift">
+		<class-a>com.dto.ShiftDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Event</class-b>
+		<field>
+			<a>shiftRepeatsBy</a>
+			<b>repeatBy</b>
+		</field>
+		<field>
+			<a>shiftRepeatsOn</a>
+			<b>eventRepeatsOns</b>
+			<!-- <a-hint>com.dto.EventRepeatsOnDTO</a-hint>
+			<b-hint>com.callcomm.eserve.persistence.entity.EventRepeatsOn</b-hint> -->
+		</field>
+	</mapping>   
+	
+	<mapping map-id="shiftdto">
+		<class-a>com.callcomm.eserve.persistence.entity.Event</class-a>
+		<class-b>com.dto.ShiftDTO</class-b>
+		<field>
+			<a>repeatBy</a>
+			<b>shiftRepeatsBy</b>
+		</field>
+		<field>
+			<a>eventRepeatsOns</a>
+			<b>shiftRepeatsOn</b>
+			<!-- <a-hint>com.callcomm.eserve.persistence.entity.EventRepeatsOn</a-hint>
+			<b-hint>com.dto.EventRepeatsOnDTO</b-hint> -->
+		</field>
+		<field>
+      		<a get-method="bytesToHexString">sid</a>
+      		<b>sid</b>
+      	</field>
+	</mapping>
+	
+	<mapping map-id="event">
+		<class-a>com.dto.EventDTO</class-a>
+		<class-b>com.callcomm.eserve.persistence.entity.Event</class-b>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>repeatEndBy</a>
+			<b>repeatEndBy</b>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>startDate</a>
+			<b>startDate</b>
+		</field>
+		<field custom-converter-id="stringtotimestampconv">
+			<a>endDate</a>
+			<b>endDate</b>
+		</field>
+	</mapping>     
+	
+	<mapping map-id="eventdto">
+		<class-a>com.callcomm.eserve.persistence.entity.Event</class-a>
+		<class-b>com.dto.EventDTO</class-b>
+		<field custom-converter-id="timestamptostringconv">
+			<a>repeatEndBy</a>
+			<b>repeatEndBy</b>
+		</field>
+		<field custom-converter-id="timestamptostringconv">
+			<a>startDate</a>
+			<b>startDate</b>
+		</field>
+		<field custom-converter-id="timestamptostringconv">
+			<a>endDate</a>
+			<b>endDate</b>
+		</field>
+	</mapping> 
+	
+</mappings>

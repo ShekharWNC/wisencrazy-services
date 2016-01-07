@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping map-id="visualConnect">
+      	<class-a>com.callcomm.eserve.persistence.entity.VisualConnect</class-a>
+      	<class-b>com.dto.VisualConnectDTO</class-b>
+      	<field>
+      		<a>authKey</a>
+	      	<b>website.authKey</b>
+      	</field>
+      </mapping>
+      <mapping map-id="visualConnectPopulate">
+      	<class-a>com.callcomm.eserve.persistence.entity.VisualConnect</class-a>
+      	<class-b>com.dto.VisualConnectDTO</class-b>
+      	<field custom-converter-id="entitytosid">
+      		<a>project</a>
+			<b>projectSid</b>
+      	</field>
+      	<field custom-converter-id="entitytosid">
+      		<a>project.company</a>
+			<b>companySid</b>
+      	</field>
+      </mapping>
+       <mapping map-id="visualConfigureSummary">
+      	<class-a>com.callcomm.eserve.persistence.entity.VisualConfiguration</class-a>
+      	<class-b>com.dto.VisualConfigurationDTO</class-b>
+    	<field-exclude>
+	      	<a>configuration</a>
+	      	<b>configuration</b>
+      	</field-exclude>
+      </mapping>
+      <mapping map-id="visualConnectPopulateWithoutGroup">
+      	<class-a>com.callcomm.eserve.persistence.entity.VisualConnect</class-a>
+      	<class-b>com.dto.VisualConnectDTO</class-b>
+      	<field custom-converter-id="entitytosid">
+      		<a>project</a>
+			<b>projectSid</b>
+      	</field>
+      	<field custom-converter-id="entitytosid">
+      		<a>project.company</a>
+			<b>companySid</b>
+      	</field>
+      	<field-exclude>
+      	    <a>visualConnectHasGroups</a>
+      	    <b>visualConnectHasGroups</b>
+      	</field-exclude>
+      </mapping>
+</mappings>

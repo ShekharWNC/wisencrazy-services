@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping wildcard="false">
+      	<class-a>com.callcomm.eserve.persistence.entity.BusinessHour</class-a>
+      	<class-b>com.dto.BusinessHourDTO</class-b>
+      	<field-exclude>
+      	<a>startHr</a>
+      	<b>startHr</b>
+      	</field-exclude>
+      	<field-exclude>
+      	<a>endHr</a>
+      	<b>endHr</b>
+      	</field-exclude>
+      	<field>
+      	<a>weekday</a>
+      	<b>weekday</b>
+      	</field>
+      	<field>
+      	<a>id</a>
+      	<b>id</b>
+      	</field>
+      	<field>
+      	<a>sid</a>
+      	<b>sid</b>
+      	</field>
+      </mapping>
+</mappings>

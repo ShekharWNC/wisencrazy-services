@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+      <mapping>
+      	<class-a>com.callcomm.eserve.persistence.entity.TwilioSupportedCountry</class-a>
+      	<class-b>com.dto.TwilioSupportedCountryDTO</class-b>
+      	<field>
+      		<a>countryCode2</a>
+      		<b>isoCode2</b>
+      	</field>
+      	<field>
+      		<a>country</a>
+      		<b>name</b>
+      	</field>
+      	</mapping>
+</mappings>
