@@ -5,6 +5,14 @@
 	<artifactId>restaraunt-dto</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<parent>
+		<groupId>com.wisencrazy</groupId>
+		<artifactId>restaraunt</artifactId>
+		<version>0.0.1.local-SNAPSHOT</version>
+	</parent>
+
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>

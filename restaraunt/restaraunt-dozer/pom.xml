@@ -4,6 +4,12 @@
 	<artifactId>restaraunt-dozer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<parent>
+		<groupId>com.wisencrazy</groupId>
+		<artifactId>restaraunt</artifactId>
+		<version>0.0.1.local-SNAPSHOT</version>
+	</parent>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
