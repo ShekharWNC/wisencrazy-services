@@ -1,5 +1,4 @@
 package com.dozer.mapper;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,29 +14,21 @@ import org.dozer.CustomConverter;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 
-import com.dozer.converter.CommonIdConverter;
-import com.dozer.converter.CompanyConverter;
 import com.dozer.converter.EntityByteArrayToSid;
 import com.dozer.converter.EnumToStringConverter;
 import com.dozer.converter.SqlDateToStringConverter;
 import com.dozer.converter.StringToTimestampConverter;
 import com.dozer.converter.TimeStampToStringDateConverter;
 import com.dozer.converter.TimestampToStringConverter;
-import com.dozer.converter.UserConverter;
-import com.dozer.producerutils.EJBDozerProducerBean;
 import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.DateUtils;
 import com.wisencrazy.common.exception.ApplicationException;
-import com.wisencrazy.restaraunt.datasource.DatasourceFactory;
-import com.wisencrazy.restaraunt.datasource.IPersistenceService;
 
 @Singleton
 @Startup
 public class DozerUtil {
 	private final DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
 
-	IPersistenceService<Serializable> persistenceService;
-	
 	@Inject
 	DateUtils dateUtils;
 	
@@ -48,12 +39,6 @@ public class DozerUtil {
 	
 	@PostConstruct
 	public void init(){
-		try {
-			persistenceService=DatasourceFactory.getAbsPersistence();
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-			return;
-		}
 		List<String> mappingList = new ArrayList<String>();
 		mappingList.add("dozerBeanMapping.xml");
 		mappingList.add("common.xml");
@@ -85,10 +70,8 @@ public class DozerUtil {
 	}
 	
 	private void setCustomConverters(Map<String, CustomConverter> customConverters) {
-		customConverters.put("userconv", new UserConverter(persistenceService));
 		customConverters.put("timestamptostringconv", new TimestampToStringConverter(dateUtils));
         customConverters.put("stringtotimestampconv", new StringToTimestampConverter(dateUtils));
-        customConverters.put("commonidconv", new CommonIdConverter(persistenceService));
         customConverters.put("entitytosid", new EntityByteArrayToSid());
         customConverters.put("sqldatetostringconv", new SqlDateToStringConverter(dateUtils));
         customConverters.put("enumtostring", new EnumToStringConverter());

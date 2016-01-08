@@ -12,6 +12,7 @@
 		<module>restaraunt-common</module>
 		<module>restaraunt-dto</module>
 		<module>restaraunt-dozer</module>
+		<module>restaraunt-data</module>
 		<module>restaraunt-rest</module>
 	</modules>
 

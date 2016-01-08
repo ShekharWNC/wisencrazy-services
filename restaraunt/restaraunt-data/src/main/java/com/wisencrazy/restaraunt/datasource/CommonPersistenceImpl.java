@@ -15,6 +15,12 @@ import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.exception.ApplicationException;
 public abstract class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 	
+	public CommonPersistenceImpl() throws ApplicationException {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * 
 	 */

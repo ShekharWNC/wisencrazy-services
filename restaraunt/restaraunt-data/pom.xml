@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>restaraunt-common</artifactId>
+	<artifactId>restaraunt-data</artifactId>
 	<version>0.0.1.local-SNAPSHOT</version>
 
-	<name>restaraunts-rest</name>
+	<name>restaraunts-data</name>
 
 	<!-- <repositories> <repository> <id>JBoss repository</id> <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url> 
 		</repository> </repositories> -->
@@ -22,9 +22,27 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-all</artifactId>
-			<version>1.2.0</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.0.6.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+<dependency>
+	<groupId>org.apache.shiro</groupId>
+	<artifactId>shiro-all</artifactId>
+	<version>1.2.0</version>
+</dependency>
+
+
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.37</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
@@ -39,8 +57,13 @@
 		</dependency>
 		<dependency>
 			<groupId>com.wisencrazy</groupId>
-			<artifactId>restaraunt-dto</artifactId>
+			<artifactId>restaraunt-dozer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.wisencrazy</groupId>
+			<artifactId>restaraunt-common</artifactId>
+			<version>0.0.1.local-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

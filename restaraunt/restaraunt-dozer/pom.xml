@@ -24,15 +24,14 @@
 		</dependency>
 		<dependency>
 			<groupId>com.wisencrazy</groupId>
-			<artifactId>restaraunt-common</artifactId>
-			<version>0.0.1.local-SNAPSHOT</version>
+			<artifactId>restaraunt-dto</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.wisencrazy</groupId>
-			<artifactId>restaraunt-dto</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
+			<artifactId>restaraunt-common</artifactId>
+			<version>0.0.1.local-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
