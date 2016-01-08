@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import org.dozer.CustomConverter;
 
-import com.callcomm.eserve.persistence.entity.Company;
-import com.common.exception.ApplicationException;
-import com.repositoryservice.persistenceservice.IPersistenceService;
+import com.wisencrazy.common.exception.ApplicationException;
+import com.wisencrazy.restaraunt.datasource.IPersistenceService;
+import com.wisencrazy.restaraunt.datasource.entities.entity.Company;
 
 public class CompanyConverter implements CustomConverter {
 

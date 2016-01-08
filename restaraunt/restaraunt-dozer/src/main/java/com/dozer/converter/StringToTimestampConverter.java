@@ -2,7 +2,7 @@ package com.dozer.converter;
 
 import org.dozer.CustomConverter;
 
-import com.common.utils.DateUtils;
+import com.wisencrazy.common.DateUtils;
 
 public class StringToTimestampConverter implements CustomConverter {
 

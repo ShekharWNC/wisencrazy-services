@@ -30,14 +30,25 @@ import com.wisencrazy.common.exception.PersistenceException;
 import com.wisencrazy.common.exception.UserNotFoundException;
 import com.wisencrazy.restaraunt.datasource.entities.entity.AbsCompositeEntity;
 
-@SuppressWarnings("unchecked")
-public abstract class AbsPersistenceService<T> implements Serializable {
+
+class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6958295831079445340L;
+
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(AbsPersistenceService.class);
 
 	private static EntityManager entityManager;
+	
+	private static int instances=0;
+	
+	public AbsPersistenceService() throws ApplicationException{
+		if(instances>0)throw new ApplicationException();
+	}
 	
 	public <T> T findDtoBySid(Class<T> dtoName, String entityName, String sid,
 			String mapId) throws ApplicationException {
@@ -55,7 +66,6 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		}catch(Exception exception){
 			if(exception.getCause().toString().contains(ConstraintViolationException.class.getSimpleName())){
 				throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);
-//				throw new ApplicationException(ApplicationConstants.ES_AS_100);//Duplicate entry should not be allowed.
 			}
 			logger.error("save(T)", exception); 
 			throw new ApplicationException(ApplicationConstants.GENERAL_EXCEPTION, exception);
@@ -80,7 +90,6 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		logger.trace("persist(T) - end"); 
 	}
 	
-	// we can find user details by input emailId
 	public T findUserByEmailId(String emailId) throws UserNotFoundException {
 		logger.debug("findUserByEmailId({}) - start",emailId); 
 
@@ -105,7 +114,7 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		logger.trace("findUserByEmailId(String) - end"); 
 		return user;
 	}
-	// we can find user details by input emailId
+
 	public T findCustomerByEmailId(String emailId) throws UserNotFoundException {
 		Query userQuery = null;
 		T user=null;
@@ -120,6 +129,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		return user;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#getEntityManager()
+	 */
 	public EntityManager getEntityManager() {
 		
 		if(entityManager!=null)return entityManager;
@@ -129,6 +141,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		return entityManager;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#update(T)
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public T update(T t) throws PersistenceException {
 		logger.trace("update(T) - start"); 
@@ -145,6 +160,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityById(java.lang.Class, int)
+	 */
 	public T findEntityById(Class entityName, int id)throws ApplicationException{
 		logger.trace("findEntityById(Class, int) - start"); 
 		try{
@@ -164,6 +182,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityByObjectKey(java.lang.Class, java.lang.Object)
+	 */
 	public T findEntityByObjectKey(Class entityName, Object key) throws NullKeyException{
 		if(key==null)throw new NullKeyException(ApplicationConstants.NULL_KEY,"Object Key cannot be null",null);
 		try{
@@ -175,6 +196,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		}
 		
 	}	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findTableEntityById(java.lang.Class, int)
+	 */
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public T findTableEntityById(Class entityName, int id)throws ApplicationException{
 		logger.trace("findEntityById(Class, int) - start"); 
@@ -197,6 +221,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#getEntityBySid(java.lang.Class, java.lang.String)
+	 */
 	public <T> T getEntityBySid(Class<T> clazz, String sid) throws ApplicationException {
 		logger.trace("getEntityBySid(Class<T> clazz, String sid) - start");
 		try{
@@ -215,6 +242,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#getEntityBySid(java.lang.String, java.lang.String)
+	 */
 	public <T> T getEntityBySid(String entity, String sid) throws com.wisencrazy.common.exception.NoResultException,ApplicationException {
 		logger.trace("getEntityBySid(String entity, String sid) - start");
 		try{
@@ -232,6 +262,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#remove(T)
+	 */
 	public void remove(T t) throws ApplicationException {
 		logger.trace("remove(T t) - start");
 		try{
@@ -243,6 +276,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		logger.trace("remove(T t) - end");
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#deleteOrphan(U, U)
+	 */
 	public <U, V> void deleteOrphan(U entity, U entityCheck) throws ApplicationException {
 		if (entity != null && entityCheck != null) {
 			try {
@@ -293,6 +329,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 			}
 		}
 	}
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findIdBySid(java.lang.String, java.lang.String)
+	 */
 	public Integer findIdBySid(String parameter, String sid)throws Exception {
 		Integer id = null;
 		try{
@@ -309,6 +348,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findSidById(java.lang.String, java.lang.Integer)
+	 */
 	public String findSidById(String entityName, Integer id) throws ApplicationException {
 		String sid = null;
 		try{
@@ -325,6 +367,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		return sid;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findVirtualAccountSidByAgentSid(java.lang.String, java.lang.String)
+	 */
 	public String findVirtualAccountSidByAgentSid(String agentSid, String companySid) throws ApplicationException {
 		logger.trace("findVirtualAccountSidByAgentSid(String, String) - Start");
 		try{
@@ -342,6 +387,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityList(java.lang.Class)
+	 */
 	public <T> List<T> findEntityList(Class<T> clazz)throws ApplicationException {
 		logger.info("findEntityList(Class<T>) - Start");
 		try{
@@ -356,6 +404,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#removeEntityBySid(java.lang.Class, java.lang.String)
+	 */
 	public T removeEntityBySid(Class clazz, String sid)throws ApplicationException{
 		logger.trace("removeEntityBySid(String) - Start");
 		T t = (T) getEntityBySid(clazz, sid);
@@ -365,6 +416,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#removeEntityByNamedQuery(java.lang.String, java.util.Map)
+	 */
 	public void removeEntityByNamedQuery(String namedQuery, Map<String, Object> parameters)throws ApplicationException{
 		logger.trace("removeEntityByNamedQuery(String, Map<String, Object>) - Start");
 		T t = null;
@@ -383,6 +437,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findSingleByNamedQuery(java.lang.String, java.util.Map)
+	 */
 	public T findSingleByNamedQuery(String queryName,
 			Map<String, Object> parameters) throws ApplicationException {
 		logger.info("findSingleByNamedQuery for -  {}", queryName);
@@ -412,6 +469,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListByNamedQuery(java.lang.String, java.util.Map, int)
+	 */
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List findEntityListByNamedQuery(String queryName,
 			Map<String, Object> parameters, int limits)
@@ -451,6 +511,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListByNamedQuery(java.lang.String, java.util.Map)
+	 */
 	public List findEntityListByNamedQuery(String queryName,
 			Map<String, Object> parameters)
 			throws ApplicationException {
@@ -459,6 +522,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findIdByName(java.lang.String, java.lang.String)
+	 */
 	public Integer findIdByName(String entityName, String name)throws ApplicationException{
 		Integer id = null;
 		logger.trace("findIdByName(String, String) - Start");
@@ -477,6 +543,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		return id;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#getMaxMinRecord(java.lang.Integer, java.lang.Integer)
+	 */
 	public MaxMinRecordDTO getMaxMinRecord(Integer pageNumber,Integer recordLimit) throws ApplicationException{
 		if(pageNumber==0){
 			pageNumber=1;
@@ -491,6 +560,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		return maxMinRecordDTO;
 	}	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListByQuery(java.lang.Class, java.lang.String, java.util.Map)
+	 */
 	public <T> List<T> findEntityListByQuery(Class<T> t, String queryString,
 			Map<String, Object> parameters)throws ApplicationException{
 			logger.trace("findEntityListByQuery(Class,String, Map<String, Object>) - Start");
@@ -515,6 +587,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#executeFunction(java.lang.String)
+	 */
 	public void executeFunction(String procedure)throws ApplicationException{
 		logger.trace("executeFunction(String) - Start");
 		try{
@@ -528,6 +603,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#executeNativeQuery(java.lang.String)
+	 */
 	public void executeNativeQuery(String queryString)throws ApplicationException{
 		logger.trace("executeNativeQuery(String) - Start");
 		try{
@@ -541,6 +619,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#insertOrUpdateByNamedQuery(java.lang.String, java.util.Map)
+	 */
 	public void insertOrUpdateByNamedQuery(String namedQuery,
 			Map<String, Object> parameters)throws ApplicationException{
 		logger.trace("insertOrUpdateByNamedQuery(String, Map<String,Object>) - Start");
@@ -560,6 +641,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#insertOrUpdateByNativeQuery(java.lang.String, java.util.Map)
+	 */
 	public void insertOrUpdateByNativeQuery(String namedQuery,
 			Map<String, Object> parameters)throws ApplicationException{
 		logger.trace("insertOrUpdateByNamedQuery(String, Map<String,Object>) - Start");
@@ -578,6 +662,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 		logger.trace("insertOrUpdateByNamedQuery(String, Map<String,Object>) - End");
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#deleteEntityBySid(java.lang.String, java.lang.String)
+	 */
 	public void deleteEntityBySid(String entityName, String sid)throws ApplicationException{
 		logger.trace("deleteEntityBySid(Class, String) - Start");
 		Integer id = null;
@@ -586,6 +673,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListUsingNamedQueryByPagination(java.lang.String, java.util.Map, int, int)
+	 */
 	public  List findEntityListUsingNamedQueryByPagination(
 			String queryString, Map<String, Object> parameters, int startLimit,
 			int endLimit)throws ApplicationException{
@@ -625,6 +715,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListByNativeQuery(java.lang.String, java.util.Map, java.lang.Class)
+	 */
 	public <T> List<T> findEntityListByNativeQuery(String queryString, Map<String, Object> parameters, Class<T> clazz)throws ApplicationException{
 		
 		List<T> result = null;
@@ -640,6 +733,9 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListByNativeQueryByPagination(java.lang.String, java.util.Map, java.lang.Class, int, int)
+	 */
 	public <T> List<T> findEntityListByNativeQueryByPagination(String queryString,
 			Map<String, Object> parameters, Class<T> clazz, int startLimit,
 			int endLimit)throws ApplicationException{
@@ -661,10 +757,18 @@ public abstract class AbsPersistenceService<T> implements Serializable {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#findEntityListSizeByNativeQuery(java.lang.String, java.util.Map, java.lang.Class)
+	 */
 	public <T> int findEntityListSizeByNativeQuery(String queryString, Map<String, Object> parameters, Class<T> clazz)throws ApplicationException{
 		List<T> result = null;
 		result = findEntityListByNativeQuery(queryString, parameters, clazz);
 		return result.size();
 	}
+	/* (non-Javadoc)
+	 * @see com.wisencrazy.restaraunt.datasource.IPersistenceService#getDtoListByEntity(java.lang.Class, java.lang.Class)
+	 */
 	public <T, U> List<U> getDtoListByEntity(Class<T> entityClass,Class<U> dtoClass) throws ApplicationException {return null;}
+	
+	
 }

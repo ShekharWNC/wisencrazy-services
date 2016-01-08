@@ -1,8 +1,10 @@
 package com.dozer.converter;
 
 import java.sql.Timestamp;
+
 import org.dozer.CustomConverter;
-import com.common.utils.DateUtils;
+
+import com.wisencrazy.common.DateUtils;
 
 /**
  * 

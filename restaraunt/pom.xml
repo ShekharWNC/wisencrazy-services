@@ -8,7 +8,6 @@
 	<groupId>com.wisencrazy</groupId>
 	<description>This the module which will house the WAR component for the deployment of the restaraunt rest service.</description>
 
-
 	<modules>
 		<module>restaraunt-common</module>
 		<module>restaraunt-dto</module>

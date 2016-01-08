@@ -8,5 +8,7 @@ public class ApplicationConstants {
 	public static final String NULL_KEY = "NULL_KEY";
 	public static final String ILLEGAL_ARG = "ILLEGAL_ARG";
 	public static final Integer RECORD_SIZE_DEFAULT = 10;
+	public static final String DATE_FORMAT_EXP = "DATE_FORMAT_EXP";
+	public static final String DOZER_MAP_EXP = "DOZER_MAP_EXP";
         
 }

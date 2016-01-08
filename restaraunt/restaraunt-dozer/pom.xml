@@ -22,5 +22,17 @@
 			<artifactId>dozer</artifactId>
 			<version>5.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.wisencrazy</groupId>
+			<artifactId>restaraunt-common</artifactId>
+			<version>0.0.1.local-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.wisencrazy</groupId>
+			<artifactId>restaraunt-dto</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 </project>

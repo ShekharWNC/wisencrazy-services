@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import org.dozer.CustomConverter;
 
-import com.common.utils.DateUtils;
+import com.wisencrazy.common.DateUtils;
 
 public class SqlDateToStringConverter implements CustomConverter {
 

@@ -2,7 +2,7 @@ package com.dozer.converter;
 
 import org.dozer.CustomConverter;
 
-import com.callcomm.eserve.persistence.entity.AbsBaseEntity;
+import com.wisencrazy.restaraunt.datasource.entities.entity.AbsBaseEntity;
 
 public class EntityByteArrayToSid implements CustomConverter {
 

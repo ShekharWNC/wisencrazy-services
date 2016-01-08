@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.dozer.ConfigurableCustomConverter;
 
-import com.repositoryservice.persistenceservice.IPersistenceService;
+import com.wisencrazy.restaraunt.datasource.IPersistenceService;
 
 public class UserConverter implements ConfigurableCustomConverter {
 	private String parameter;
