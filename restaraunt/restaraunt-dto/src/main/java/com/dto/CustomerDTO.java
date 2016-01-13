@@ -22,26 +22,10 @@ public class CustomerDTO extends CustomerSignupDTO {
 	
 	private List<String> customerGroupSids;
 	
-	/*
-	 * Agent virtual account sid
-	 */
-	private String virtualAccountSid;
-
-	private CustomerBusinessCommonDTO customerBusiness;
-
-	private DepartmentDTO department;
-	
 	private SignupType signupType;
 
 	private List<CustomerHasAddressDTO> customerHasAddresses;
 
-	private List<CustomerHasContactDTO> customerHasContacts;
-
-	private List<CustomerHasSocialNetworkDTO> customerHasSocialNetworks;
-	
-	private List<CustomerBusinessDTO> customerAccounts;
-	
-	private List<CompanyCommonDTO> customerAssociateCompanies;
 
 	public CustomerDTO() {
 	}
@@ -95,29 +79,6 @@ public class CustomerDTO extends CustomerSignupDTO {
 		this.customerGroupSids = customerGroupSids;
 	}
 
-	public String getVirtualAccountSid() {
-		return virtualAccountSid;
-	}
-
-	public void setVirtualAccountSid(String virtualAccountSid) {
-		this.virtualAccountSid = virtualAccountSid;
-	}
-
-	public CustomerBusinessCommonDTO getCustomerBusiness() {
-		return this.customerBusiness;
-	}
-
-	public void setCustomerBusiness(CustomerBusinessCommonDTO customerBusiness) {
-		this.customerBusiness = customerBusiness;
-	}
-
-	public DepartmentDTO getDepartment() {
-		return this.department;
-	}
-
-	public void setDepartment(DepartmentDTO department) {
-		this.department = department;
-	}
 
 	public List<CustomerHasAddressDTO> getCustomerHasAddresses() {
 		return this.customerHasAddresses;
@@ -125,39 +86,6 @@ public class CustomerDTO extends CustomerSignupDTO {
 
 	public void setCustomerHasAddresses(List<CustomerHasAddressDTO> customerHasAddresses) {
 		this.customerHasAddresses = customerHasAddresses;
-	}
-
-	public List<CustomerHasContactDTO> getCustomerHasContacts() {
-		return this.customerHasContacts;
-	}
-
-	public void setCustomerHasContacts(List<CustomerHasContactDTO> customerHasContacts) {
-		this.customerHasContacts = customerHasContacts;
-	}
-
-	public List<CustomerHasSocialNetworkDTO> getCustomerHasSocialNetworks() {
-		return this.customerHasSocialNetworks;
-	}
-
-	public void setCustomerHasSocialNetworks(List<CustomerHasSocialNetworkDTO> customerHasSocialNetworks) {
-		this.customerHasSocialNetworks = customerHasSocialNetworks;
-	}
-
-	public List<CustomerBusinessDTO> getCustomerAccounts() {
-		return customerAccounts;
-	}
-
-	public void setCustomerAccounts(List<CustomerBusinessDTO> customerAccounts) {
-		this.customerAccounts = customerAccounts;
-	}
-
-	public List<CompanyCommonDTO> getCustomerAssociateCompanies() {
-		return customerAssociateCompanies;
-	}
-
-	public void setCustomerAssociateCompanies(
-			List<CompanyCommonDTO> customerAssociateCompanies) {
-		this.customerAssociateCompanies = customerAssociateCompanies;
 	}
 
 	public SignupType getSignupType() {

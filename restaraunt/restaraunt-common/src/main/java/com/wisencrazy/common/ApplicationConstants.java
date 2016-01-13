@@ -10,5 +10,8 @@ public class ApplicationConstants {
 	public static final Integer RECORD_SIZE_DEFAULT = 10;
 	public static final String DATE_FORMAT_EXP = "DATE_FORMAT_EXP";
 	public static final String DOZER_MAP_EXP = "DOZER_MAP_EXP";
-        
+	public static final String SIGNUP_NAME = "SIGNUP_NAME_MISSING";
+	public static final String SIGNUP_EMAIL = "SIGNUP_EMAIL_MISSING";
+	public static final String SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
+	public static final String PHONE = "PHONE";
 }

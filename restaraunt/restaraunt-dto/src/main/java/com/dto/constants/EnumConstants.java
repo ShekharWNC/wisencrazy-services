@@ -15,7 +15,7 @@ public interface EnumConstants {
     }
 	
 	public enum SignupType {
-		gmail, facebook, android, viachat
+		gmail, facebook, android, restaraunt
 	}
 	public enum PlaceOrigin {
 		GOOGLE,VIACHAT

@@ -48,6 +48,8 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 	
 	public AbsPersistenceService() throws ApplicationException{
 		if(instances>0)throw new ApplicationException();
+		entityManager=getEntityManager();
+		instances=1;
 	}
 	
 	public <T> T findDtoBySid(Class<T> dtoName, String entityName, String sid,

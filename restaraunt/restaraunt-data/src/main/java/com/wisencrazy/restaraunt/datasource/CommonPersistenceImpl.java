@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.dozer.mapper.DozerUtil;
 import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.exception.ApplicationException;
-public abstract class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
+public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 	
 	public CommonPersistenceImpl() throws ApplicationException {
 		super();

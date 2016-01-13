@@ -27,38 +27,22 @@ import com.dto.constants.EnumConstants.SignupType;
 @Table(name="customer")
 @NamedQueries({
 	@NamedQuery(name = Customer.FIND_CUSTOMER_NAME_BY_SID, query = "SELECT c.name from Customer c where hex(c.sid)=:customerSid"),
-	@NamedQuery(name = Customer.FIND_GROUP_BY_COMPANY_SID, query = "from Customer c where hex(c.associatedCompany.sid) = :sid and c.groupName = :name"),
 	@NamedQuery(name = Customer.FIND_ALL_GROUP_BY_COMPANY, query = "select c from Customer c where c.customerType = :name and hex(c.associatedCompany.sid) = :sid"),
 	@NamedQuery(name = Customer.FIND_BY_SID, query = "select c from Customer c where hex(c.sid) = :sid"),
-	@NamedQuery(name = Customer.VALIDATE_GROUP, query = "from Customer c where hex(c.associatedCompany.sid) = :sid " +
-			"and (c.groupName = :name or c.email = :email)"),
-	@NamedQuery(name = Customer.FIND_CUSTOMERS_BY_GROUP, query = "select c.customerGroups from Customer c where hex(c.associatedCompany.sid) = :companySid" +
-			" and hex(c.sid) = :sid"),
-	@NamedQuery(name = Customer.FIND_CUSTOMER_BY_COMPANY, query = "select c from Customer c join c.customerAssociateCompanies cac where hex(c.sid) = :sid and hex(cac.sid) = :companySid"),
-	@NamedQuery(name = Customer.FIND_CUSTOMER_BY_ACCOUNT, query = "select c from Customer c join c.customerAccounts cac where hex(c.sid) = :sid and hex(cac.sid) = :companySid"),
 	@NamedQuery(name = Customer.FIND_SID_BY_EMAIL, query = "select hex(c.sid) from Customer c where c.email = :email"),
 	@NamedQuery(name = Customer.FIND_ID_BY_SID, query = "select c.id from Customer c where hex(c.sid) = :sid"),
 	@NamedQuery(name = Customer.FIND_PASSWORD_BY_EMAIL, query = "select c.password from Customer c where c.email = :email group by c.email"),
 	@NamedQuery(name = Customer.FIND_CUSTOMER_BY_EMAIL, query = "from Customer c where c.email = :email group by c.email"),
 	@NamedQuery(name = Customer.VALIDATE_GOOGLE_ACCESS_TOKEN, query = "select lower(c.email) from Customer c where c.googleAccessToken = :TOKEN"),
 	@NamedQuery(name = Customer.UPDATE_GOOGLE_TOKEN_BY_EMAIL, query = "UPDATE Customer c set c.googleAccessToken = :TOKEN where c.email = :emailId"),
-	@NamedQuery(name = Customer.FIND_BY_ACTIVATION_TOKEN, query = "from Customer c where c.activationToken = :activationToken"),
-	@NamedQuery(name = Customer.UPDATE_BY_ACTIVATION_TOKEN, query = "update Customer c set c.accountStatus = :accountStatus where c.activationToken = :activationToken"),
 	@NamedQuery(name = Customer.FIND_PASSWORD_BY_SID, query = "select c.password from Customer c where hex(c.sid) = :sid"),
-	@NamedQuery(name = Customer.UPDATE_PASSWORD_BY_RESET_EMAIL, query = "UPDATE Customer u set u.passwordReset = :passwordReset, u.password = :password" +
-    		" where u.email = :email"),
    @NamedQuery(name = Customer.FIND_CUSTOMER_BY_EMAILID, query = "from Customer c where c.email = :email"),
    @NamedQuery(name = Customer.FIND_ACC_STATUS_BY_EMAIL_ID,query = "select accountStatus from Customer c where c.email = :email"),
-   @NamedQuery(name = Customer.FIND_TOKEN_BY_EMAIL, query = "SELECT c.token FROM Customer c WHERE c.email = :emailId"),
    @NamedQuery(name = Customer.FIND_ID_BY_EMAIL, query = "select c.id from Customer c where c.email = :email"),
    @NamedQuery(name = Customer.VERIFY_MOBILE, query = "select c.isMobileVerified from Customer c where c.sid = unhex(:sid)"),
    @NamedQuery(name = Customer.UPDATE_MOBILE_STATUS, query = "UPDATE Customer c set c.primaryContact = :contact, c.isMobileVerified = :status where c.sid = unhex(:sid)"),
    @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_PHONE, query = "Select hex(c.sid) from Customer c join c.customerHasContacts cc where cc.contactNumber = :phone and c.accountStatus = :status"),
-   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_EMAIL, query = "Select hex(c.sid) from Customer c where c.email = :emailId and c.accountStatus = :status "
-   		   		+ "and c.sid = (Select u.userSid from UserHasDevice u where u.userSid = c.sid group by u.userSid)"),
-   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_DEVICE, query = "Select hex(c.sid) from Customer c where c.accountStatus = :status "
-	   		+ "and c.sid = (Select u.userSid from UserHasDevice u where u.userSid = unhex(:sid) group by u.userSid)")
-	
+   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_EMAIL, query = "Select hex(c.sid) from Customer c where c.email = :emailId and c.accountStatus = :status "),
 })
 public class Customer extends AbsBaseEntity {
 	/**
@@ -68,9 +52,6 @@ public class Customer extends AbsBaseEntity {
 
 	public static class P {
 		public static final String Sid = "customerSid";
-	}
-	public enum CustomerType{
-		INDIVIDUAL, GROUP
 	}
 	
 	public enum CustomerAccountStatus{
@@ -118,31 +99,16 @@ public class Customer extends AbsBaseEntity {
 	public static String UPDATE_DONT_SHOW_STATUS="update customer set dont_show=:status where email_id=:email";
 	public static final String UPDATE_TOKEN_BY_EMAIL = "update customer set token = :TOKEN where email_id = :emailId";
 	
-	
-	@ManyToOne/*(cascade = {CascadeType.PERSIST, CascadeType.MERGE},optional=false)*/
-	@JoinColumn(name="associated_company_id",referencedColumnName="id")
-	private Company associatedCompany;
-
 	@Column(name="email_id")
 	private String email;
 	
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "password_reset")
-	private Boolean passwordReset;
 	
 	@Column(name = "account_status")
 	@Enumerated(EnumType.STRING)
 	private CustomerAccountStatus accountStatus;
-	
-	@Column(name = "activation_token")
-	private String activationToken;
-	
-	@Column(name = "token_expiry_date")
-	private Timestamp activationTokenExpireOn;
-	
-	private String token;
 	
 	@Column(name = "google_access_token")
 	private String googleAccessToken;
@@ -157,10 +123,6 @@ public class Customer extends AbsBaseEntity {
 	private String description;
 
 	private String name;
-	
-	@Column(name = "customer_type")
-	@Enumerated(EnumType.STRING)
-	private CustomerType customerType;
 	
 	@ManyToOne
 	@JoinColumn(name="photo_id")
@@ -179,77 +141,15 @@ public class Customer extends AbsBaseEntity {
 	@Column(name="location")
 	private String location;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name="customer_business_id")
-	private CustomerBusiness customerBusiness;
-
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name="customer_department_id")
-	private Department department;
-
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
 	private List<CustomerHasAddress> customerHasAddresses;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-	private List<CustomerHasContact> customerHasContacts;
-
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-	private List<CustomerHasSocialNetwork> customerHasSocialNetworks;
-
 	
-	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinTable(
-		name="customer_has_customer_group"
-		, joinColumns={
-			@JoinColumn(name="customer_group_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="customer_id")
-			}
-		)
-	private List<Customer> customerGroups;
-	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(
-		name="customer_belongs_to_account"
-		, joinColumns={
-			@JoinColumn(name="customer_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="customer_account_id")
-			}
-		)
-	private List<CustomerBusiness> customerAccounts;
-	
-	@ManyToMany
-	@JoinTable(
-		name="customer_associate_with_company"
-		, joinColumns={
-			@JoinColumn(name="customer_id", nullable = false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="company_id", nullable = false)
-			}
-		)
-	private List<Company> customerAssociateCompanies;
-	
-	/*@OneToMany
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
-	private List<CustomerHasAppSetting> userHasAppSettings;*/
 	@Enumerated(EnumType.STRING)
 	@Column(name="signup_type")
 	private SignupType signupType;
 	
-	public Company getAssociatedCompany() {
-		return this.associatedCompany;
-	}
-
-	public void setAssociatedCompany(Company associatedCompany) {
-		this.associatedCompany = associatedCompany;
-	}
     
 	public String getLocation() {
 		return location;
@@ -275,37 +175,6 @@ public class Customer extends AbsBaseEntity {
 		this.password = password;
 	}
 
-	public Boolean getPasswordReset() {
-		return passwordReset;
-	}
-
-	public void setPasswordReset(Boolean passwordReset) {
-		this.passwordReset = passwordReset;
-	}
-
-	public String getActivationToken() {
-		return activationToken;
-	}
-
-	public void setActivationToken(String activationToken) {
-		this.activationToken = activationToken;
-	}
-
-	public Timestamp getActivationTokenExpireOn() {
-		return activationTokenExpireOn;
-	}
-
-	public void setActivationTokenExpireOn(Timestamp acticationTokenExpireOn) {
-		this.activationTokenExpireOn = acticationTokenExpireOn;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 	public String getPhotoUrl() {
 		return photoUrl;
@@ -339,13 +208,6 @@ public class Customer extends AbsBaseEntity {
 		this.name = name;
 	}
 
-	public CustomerType getCustomerType() {
-		return customerType;
-	}
-
-	public void setCustomerType(CustomerType customerType) {
-		this.customerType = customerType;
-	}
 
 	public Attachment getPhoto() {
 		return this.photo;
@@ -379,21 +241,6 @@ public class Customer extends AbsBaseEntity {
 		this.title = title;
 	}
 
-	public CustomerBusiness getCustomerBusiness() {
-		return this.customerBusiness;
-	}
-
-	public void setCustomerBusiness(CustomerBusiness customerBusiness) {
-		this.customerBusiness = customerBusiness;
-	}
-
-	public Department getDepartment() {
-		return this.department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
 
 	public List<CustomerHasAddress> getCustomerHasAddresses() {
 		return this.customerHasAddresses;
@@ -403,37 +250,6 @@ public class Customer extends AbsBaseEntity {
 		this.customerHasAddresses = customerHasAddresses;
 	}
 
-	public List<CustomerHasContact> getCustomerHasContacts() {
-		return this.customerHasContacts;
-	}
-
-	public void setCustomerHasContacts(List<CustomerHasContact> customerHasContacts) {
-		this.customerHasContacts = customerHasContacts;
-	}
-
-	public List<CustomerHasSocialNetwork> getCustomerHasSocialNetworks() {
-		return this.customerHasSocialNetworks;
-	}
-
-	public void setCustomerHasSocialNetworks(List<CustomerHasSocialNetwork> customerHasSocialNetworks) {
-		this.customerHasSocialNetworks = customerHasSocialNetworks;
-	}
-
-	public List<Customer> getCustomerGroups() {
-		return customerGroups;
-	}
-
-	public void setCustomerGroups(List<Customer> customerGroups) {
-		this.customerGroups = customerGroups;
-	}
-
-	public List<CustomerBusiness> getCustomerAccounts() {
-		return customerAccounts;
-	}
-
-	public void setCustomerAccounts(List<CustomerBusiness> customerAccounts) {
-		this.customerAccounts = customerAccounts;
-	}
 
 	public CustomerAccountStatus getAccountStatus() {
 		return accountStatus;
@@ -443,14 +259,6 @@ public class Customer extends AbsBaseEntity {
 		this.accountStatus = accountStatus;
 	}
 
-	public List<Company> getCustomerAssociateCompanies() {
-		return customerAssociateCompanies;
-	}
-
-	public void setCustomerAssociateCompanies(
-			List<Company> customerAssociateCompanies) {
-		this.customerAssociateCompanies = customerAssociateCompanies;
-	}
 
 	public String getGoogleAccessToken() {
 		return googleAccessToken;
@@ -468,14 +276,6 @@ public class Customer extends AbsBaseEntity {
 		this.isShow = isShow;
 	}
     
-	/*public List<CustomerHasAppSetting> getUserHasAppSettings() {
-		return userHasAppSettings;
-	}
-
-	public void setUserHasAppSettings(
-			List<CustomerHasAppSetting> userHasAppSettings) {
-		this.userHasAppSettings = userHasAppSettings;
-	}*/
 
 	public SignupType getSignupType() {
 		return signupType;
