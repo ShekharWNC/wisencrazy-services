@@ -1,9 +1,13 @@
 package com.wisencrazy.restaraunt.admin;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,12 +16,13 @@ import javax.ws.rs.core.Response.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.dto.CustomerDTO;
 import com.dto.CustomerSignupDTO;
-import com.dto.DirectoryCustomerViewDTO;
-import com.wisencrazy.common.ApplicationConstants;
+import com.dto.constants.EnumConstants.SignupType;
 import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
+import com.wisencrazy.restaraunt.datasource.ProfileManagementImpl;
 
 /**
  * User: Wisencrazy
@@ -28,6 +33,7 @@ public class CustomerAccount {
 	
 	private static Logger logger=LoggerFactory.getLogger(MessageRestService.class);
 
+	private static ProfileManagementImpl profileModel=new ProfileManagementImpl();
 	
 	@Path("signup")
 	@POST
@@ -35,7 +41,7 @@ public class CustomerAccount {
 	public Response customerSignup(CustomerSignupDTO customerSignupDTO,
 			@Context HttpServletRequest request) {
 		logger.debug("customerSignup(CustomerSignupDTO, HttpServletRequest)",JsonUtils.toJson(customerSignupDTO));
-		DirectoryCustomerViewDTO customer = null;
+		CustomerDTO customer = null;
 		try{
 			String url = request.getRequestURL().substring(0, (request.getRequestURL().length()-request.getRequestURI().length()));
 			customer = profileModel.customerSignup(customerSignupDTO);
@@ -47,5 +53,15 @@ public class CustomerAccount {
 		return Response.status(Status.OK).entity(customer).build();//Customer registered successfully.
 	}
 	
-	
+	@GET
+	@Path("/json/{className}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response customerSignup(@PathParam("className")String className) {
+		CustomerSignupDTO customer=new CustomerSignupDTO();
+		customer.setEmail("email");
+		customer.setPassword("passowrd");
+		customer.setName("Shekhar");
+		customer.setSignupType(SignupType.restaraunt);
+		return Response.status(Status.OK).entity(customer).build();//Customer registered successfully.
+	}
 }

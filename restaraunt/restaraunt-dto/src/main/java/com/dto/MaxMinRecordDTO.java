@@ -1,9 +1,4 @@
 package com.dto;
-/**
- * 
- * @author Vikash Pandey
- *
- */
 public class MaxMinRecordDTO {
 	private Integer startFrom;
 	private Integer startTo;

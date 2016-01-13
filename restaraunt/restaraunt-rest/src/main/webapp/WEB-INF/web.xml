@@ -16,7 +16,8 @@
         <init-param>
             <param-name>resteasy.resources</param-name>
             <param-value>
-                com.wisencrazy.restaraunt.admin.MessageRestService
+                com.wisencrazy.restaraunt.admin.MessageRestService,
+                com.wisencrazy.restaraunt.admin.CustomerAccount
             </param-value>
         </init-param>
         <init-param>

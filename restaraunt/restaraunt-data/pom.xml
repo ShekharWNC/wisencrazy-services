@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>restaraunt-data</artifactId>
 	<version>0.0.1.local-SNAPSHOT</version>
-	<packaging>ejb</packaging>
+<!-- 	<packaging>ejb</packaging> -->
 
 	<name>restaraunts-data</name>
 
@@ -29,19 +29,18 @@
 			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<!-- JBoss/Weld Refrence Implementation for CDI on a Servlet Container -->
-			<groupId>org.jboss.weld.servlet</groupId>
-			<artifactId>weld-servlet</artifactId>
-			<version>2.2.6.Final</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jboss.weld.servlet</groupId> -->
+<!-- 			<artifactId>weld-servlet</artifactId> -->
+<!-- 			<version>2.2.9.Final</version> -->
+<!-- 			<scope>runtime</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax</groupId> -->
+<!-- 			<artifactId>javaee-api</artifactId> -->
+<!-- 			<version>6.0</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>

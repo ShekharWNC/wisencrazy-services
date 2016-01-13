@@ -16,14 +16,6 @@ public class CountryDTO extends AbsCommonDTO implements Serializable {
 
 	private String countryName;
 
-	//bi-directional many-to-one association to Address
-	private List<AddressDTO> addresses;
-
-	//bi-directional many-to-one association to Job
-	private List<JobDTO> jobs;
-
-	private List<AppuserDTO> users;
-	
 	public CountryDTO() {
 	}
 
@@ -41,28 +33,5 @@ public class CountryDTO extends AbsCommonDTO implements Serializable {
 		this.countryName = countryName;
 	}
 
-	public List<AddressDTO> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<AddressDTO> addresses) {
-		this.addresses = addresses;
-	}
-
-	public List<JobDTO> getJobs() {
-		return jobs;
-	}
-
-	public void setJobs(List<JobDTO> jobs) {
-		this.jobs = jobs;
-	}
-
-	public List<AppuserDTO> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<AppuserDTO> users) {
-		this.users = users;
-	}
 
 }

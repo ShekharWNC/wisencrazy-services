@@ -12,12 +12,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<!-- Provided by Tomcat, but needed for compilation -->
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
@@ -30,13 +24,12 @@
 			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<!-- JBoss/Weld Refrence Implementation for CDI on a Servlet Container -->
-			<groupId>org.jboss.weld.servlet</groupId>
-			<artifactId>weld-servlet</artifactId>
-			<version>2.2.6.Final</version>
-			<scope>runtime</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jboss.weld.servlet</groupId> -->
+<!-- 			<artifactId>weld-servlet</artifactId> -->
+<!-- 			<version>2.2.16.Final</version> -->
+<!-- 			<scope>runtime</scope> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>

@@ -2,7 +2,7 @@ package com.dto;
 
 import com.dto.constants.EnumConstants.SignupType;
 
-public class CustomerSignupDTO extends CommonDTO {
+public class CustomerSignupDTO extends AbsCommonDTO {
 
 	/**
 	 * 
@@ -19,15 +19,16 @@ public class CustomerSignupDTO extends CommonDTO {
 	private String password;
 	
 	private String primaryContact;
-
-	private String accessToken;
+	
+	private String name;
+	
+	private CustomerAccountStatus accountStatus;
 	
 	public SignupType signupType;
 	
 	public boolean isShow;
 	
-	private String location;
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -44,7 +45,6 @@ public class CustomerSignupDTO extends CommonDTO {
 		this.password = password;
 	}
 
-
 	public String getPrimaryContact() {
 		return primaryContact;
 	}
@@ -53,23 +53,14 @@ public class CustomerSignupDTO extends CommonDTO {
 		this.primaryContact = primaryContact;
 	}
 
-    
-	public String getLocation() {
-		return location;
+	public CustomerAccountStatus getAccountStatus() {
+		return accountStatus;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setAccountStatus(CustomerAccountStatus accountStatus) {
+		this.accountStatus = accountStatus;
 	}
 
-
-	public String getAccessToken() {
-		return accessToken;
-	}
-
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
 
 	public SignupType getSignupType() {
 		return signupType;
@@ -78,6 +69,7 @@ public class CustomerSignupDTO extends CommonDTO {
 	public void setSignupType(SignupType signupType) {
 		this.signupType = signupType;
 	}
+
 
 	public boolean isShow() {
 		return isShow;
@@ -89,6 +81,14 @@ public class CustomerSignupDTO extends CommonDTO {
 	
 	public boolean getIsShow() {
 		return isShow;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

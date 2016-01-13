@@ -29,40 +29,33 @@ import com.wisencrazy.common.exception.ApplicationException;
 public class DozerUtil {
 	private final DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
 
-	@Inject
 	DateUtils dateUtils;
+	Mapper mapper;
+	private static DozerUtil dozerUtil;
 	
-	@Produces @DozerMapper
 	public Mapper getDozerBeanMapper(){
 		return dozerBeanMapper;
 	}
 	
-	@PostConstruct
-	public void init(){
+	public static DozerUtil getDozerUtils(){
+		if(dozerUtil==null)
+			dozerUtil=new DozerUtil();
+		return dozerUtil;
+	}
+	
+	private DozerUtil(){
+		dateUtils=new DateUtils();
+		mapper=getDozerBeanMapper();
 		List<String> mappingList = new ArrayList<String>();
 		mappingList.add("dozerBeanMapping.xml");
 		mappingList.add("common.xml");
-		mappingList.add("userHasInvitation.xml");
-		mappingList.add("company.xml");
-		mappingList.add("notification.xml");
-		mappingList.add("providerBusiness.xml");
 		mappingList.add("user.xml");
 		mappingList.add("clientBusiness.xml");
-		mappingList.add("provider.xml");
 		mappingList.add("userinfo.xml");
-		mappingList.add("consultantProfile.xml");
 		mappingList.add("attachmentType.xml");
 		mappingList.add("attachment.xml");
 		mappingList.add("usercontact.xml");
-		mappingList.add("basicInfoview.xml");
-		mappingList.add("registerphonenumber.xml");
 		mappingList.add("commondto.xml");
-		mappingList.add("category.xml");
-		mappingList.add("subcategory.xml");
-		mappingList.add("item.xml");
-		mappingList.add("kotdto.xml");
-		mappingList.add("invoice.xml");
-		mappingList.add("orders.xml");
 		dozerBeanMapper.setMappingFiles(mappingList);
 		Map<String, CustomConverter> customConverters = new HashMap<String, CustomConverter>();
 		setCustomConverters(customConverters);
@@ -77,10 +70,6 @@ public class DozerUtil {
         customConverters.put("enumtostring", new EnumToStringConverter());
         customConverters.put("customdateconverter", new TimeStampToStringDateConverter(dateUtils));
 	}
-	
-	@Inject
-	@DozerMapper
-	Mapper mapper;
 	
 	public <T> T convert(Object srcObject, Class<T> destnationObj) throws ApplicationException{
 		try{

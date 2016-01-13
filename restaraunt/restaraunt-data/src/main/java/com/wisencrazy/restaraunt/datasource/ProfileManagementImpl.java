@@ -1,15 +1,10 @@
 package com.wisencrazy.restaraunt.datasource;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 
 import com.dozer.mapper.DozerUtil;
 import com.dto.CustomerDTO;
 import com.dto.CustomerSignupDTO;
-import com.dto.DirectoryCustomerViewDTO;
 import com.dto.constants.EnumConstants.SignupType;
 import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.CommonUtils;
@@ -19,34 +14,31 @@ import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.DuplicateEntryException;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer.CustomerAccountStatus;
-import com.wisencrazy.restaraunt.datasource.entities.entity.DirectoryCustomerView;
 
-@Stateless
 public class ProfileManagementImpl {
 
 	private Logger logger=org.slf4j.LoggerFactory.getLogger(ProfileManagementImpl.class);
 
 	private CommonPersistenceImpl profileRepoServe;
 	
-	@Inject
 	DozerUtil dozerUtil;
 	
 	
-	@PostConstruct
-	public void setupData(){
+	public ProfileManagementImpl(){
 		try {
 			profileRepoServe=new CommonPersistenceImpl();
+			dozerUtil=DozerUtil.getDozerUtils();
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			logger.error("Error while setting up Repo services");
 		}		
 	}
 	
-	public DirectoryCustomerViewDTO customerSignup(CustomerSignupDTO customerSignupDTO)
+	public CustomerDTO customerSignup(CustomerSignupDTO customerSignupDTO)
 			throws ApplicationException {
 		logger.debug("Signup for customer : ");
 		String password = null;
-		DirectoryCustomerViewDTO customer = null;
+		CustomerDTO customer = null;
 		validateCustomerDTO(customerSignupDTO);
 		CustomerDTO customerDTO = dozerUtil.convert(customerSignupDTO, CustomerDTO.class);
 		customerDTO.setSignupType(customerSignupDTO.getSignupType());
@@ -54,7 +46,7 @@ public class ProfileManagementImpl {
 		customerDTO.setPassword(password);
 		customerDTO.setPassword(CommonUtils.encryptPassword(password));
 		createCustomerProfile(customerDTO);
-		customer = profileRepoServe.getDtoByNamedQuery(DirectoryCustomerView.class, DirectoryCustomerViewDTO.class, DirectoryCustomerView.FIND_CUSTOMER_BY_EMAIL, QueryParameter.with("email", customerSignupDTO.getEmail()).parameters());
+		customer = profileRepoServe.getDtoByNamedQuery(Customer.class, CustomerDTO.class, Customer.FIND_CUSTOMER_BY_EMAIL, QueryParameter.with("email", customerSignupDTO.getEmail()).parameters());
 		logger.trace("customerSignup(CustomerSignupDTO) - End");
 		return customer;
 	}

@@ -139,7 +139,6 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 		if(entityManager!=null)return entityManager;
 		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("RestroDB");
 		entityManager=entityManagerFactory.createEntityManager();
-		
 		return entityManager;
 	}
 	

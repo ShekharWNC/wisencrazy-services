@@ -20,44 +20,60 @@
 			<version>1.7.5</version>
 		</dependency>
 		<dependency>
+			<!-- Provided by Tomcat, but needed for compilation -->
 			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jboss.weld.servlet</groupId> -->
+<!-- 			<artifactId>weld-servlet</artifactId> -->
+<!-- 			<version>2.2.9.Final</version> -->
+<!-- 			<scope>runtime</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax</groupId> -->
+<!-- 			<artifactId>javaee-api</artifactId> -->
+<!-- 			<version>6.0</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-jaxrs</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.6.Final</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate-entitymanager</artifactId> -->
+<!-- 			<version>5.0.6.Final</version> -->
+<!-- 		</dependency> -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.hibernate</groupId> -->
 		<!-- <artifactId>hibernate-core</artifactId> -->
 		<!-- <version>5.0.6.Final</version> -->
 		<!-- </dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.transaction</groupId> -->
+<!-- 			<artifactId>jta</artifactId> -->
+<!-- 			<version>1.1</version> -->
+<!-- 		</dependency> -->
 		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-all</artifactId>
+			<version>1.2.0</version>
 		</dependency>
-<dependency>
-	<groupId>org.apache.shiro</groupId>
-	<artifactId>shiro-all</artifactId>
-	<version>1.2.0</version>
-</dependency>
-
-
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.37</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>mysql</groupId> -->
+<!-- 			<artifactId>mysql-connector-java</artifactId> -->
+<!-- 			<version>5.1.37</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
@@ -76,11 +92,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.wisencrazy</groupId>
-			<artifactId>restaraunt-common</artifactId>
+			<artifactId>restaraunt-data</artifactId>
 			<version>0.0.1.local-SNAPSHOT</version>
+			<type>ejb</type>
 		</dependency>
 	</dependencies>
-
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 

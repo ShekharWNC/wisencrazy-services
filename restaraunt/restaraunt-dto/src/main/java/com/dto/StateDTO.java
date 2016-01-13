@@ -16,20 +16,15 @@ public class StateDTO extends AbsCommonDTO implements Serializable {
 
 	private String stateName;
 
-	//bi-directional many-to-one association to Address
-	private List<AddressDTO> addresses;
-
 	//bi-directional many-to-one association to Country
 	private CountryDTO country;
 
 	public StateDTO() {
 	}
 
-	public StateDTO(String stateName, List<AddressDTO> addresses,
-			CountryDTO country) {
+	public StateDTO(String stateName, CountryDTO country) {
 		super();
 		this.stateName = stateName;
-		this.addresses = addresses;
 		this.country = country;
 	}
 	public String getStateName() {
@@ -38,28 +33,6 @@ public class StateDTO extends AbsCommonDTO implements Serializable {
 
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
-	}
-
-	public List<AddressDTO> getAddresses() {
-		return this.addresses;
-	}
-
-	public void setAddresses(List<AddressDTO> addresses) {
-		this.addresses = addresses;
-	}
-
-	public AddressDTO addAddress(AddressDTO address) {
-		getAddresses().add(address);
-		address.setState(this);
-
-		return address;
-	}
-
-	public AddressDTO removeAddress(AddressDTO address) {
-		getAddresses().remove(address);
-		address.setState(null);
-
-		return address;
 	}
 
 	public CountryDTO getCountry() {
