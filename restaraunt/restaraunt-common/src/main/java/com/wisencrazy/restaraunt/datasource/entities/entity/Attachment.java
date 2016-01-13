@@ -79,9 +79,6 @@ public class Attachment extends AbsBaseEntity {
 	@JoinColumn(name="attachment_type_id", referencedColumnName = "id")
 	private AttachmentType attachmentType;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="project_id", referencedColumnName = "id")
-	private Project project;
 	/**
 	 * The Constructor.
 	 */
@@ -241,80 +238,4 @@ public class Attachment extends AbsBaseEntity {
 		this.createdBy = createdBy;
 	}
 
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-	
-	
-/*public List<ProposalConversationHasAttachment> getProposalConversationHasAttachments() {
-        return this.proposalConversationHasAttachments;
-    }
-
-    public void setProposalConversationHasAttachments(List<ProposalConversationHasAttachment> proposalConversationHasAttachments) {
-        this.proposalConversationHasAttachments = proposalConversationHasAttachments;
-    }
-
-    public ProposalConversationHasAttachment addProposalConversationHasAttachment(ProposalConversationHasAttachment proposalConversationHasAttachment) {
-        getProposalConversationHasAttachments().add(proposalConversationHasAttachment);
-        proposalConversationHasAttachment.setAttachment(this);
-
-        return proposalConversationHasAttachment;
-    }
-
-    public ProposalConversationHasAttachment removeProposalConversationHasAttachment(ProposalConversationHasAttachment proposalConversationHasAttachment) {
-        getProposalConversationHasAttachments().remove(proposalConversationHasAttachment);
-        proposalConversationHasAttachment.setAttachment(null);
-
-        return proposalConversationHasAttachment;
-    }
-
-    public List<ProposalHasAttachment> getProposalHasAttachments() {
-        return this.proposalHasAttachments;
-    }
-
-    public void setProposalHasAttachments(List<ProposalHasAttachment> proposalHasAttachments) {
-        this.proposalHasAttachments = proposalHasAttachments;
-    }
-
-    public ProposalHasAttachment addProposalHasAttachment(ProposalHasAttachment proposalHasAttachment) {
-        getProposalHasAttachments().add(proposalHasAttachment);
-        proposalHasAttachment.setAttachment(this);
-
-        return proposalHasAttachment;
-    }
-
-    public ProposalHasAttachment removeProposalHasAttachment(ProposalHasAttachment proposalHasAttachment) {
-        getProposalHasAttachments().remove(proposalHasAttachment);
-        proposalHasAttachment.setAttachment(null);
-
-        return proposalHasAttachment;
-    }
-
-    public List<UserHasAttachment> getUserHasAttachments() {
-        return this.userHasAttachments;
-    }
-
-    public void setUserHasAttachments(List<UserHasAttachment> userHasAttachments) {
-        this.userHasAttachments = userHasAttachments;
-    }
-
-    public UserHasAttachment addUserHasAttachment(UserHasAttachment userHasAttachment) {
-        getUserHasAttachments().add(userHasAttachment);
-        userHasAttachment.setAttachment(this);
-
-        return userHasAttachment;
-    }
-
-    public UserHasAttachment removeUserHasAttachment(UserHasAttachment userHasAttachment) {
-        getUserHasAttachments().remove(userHasAttachment);
-        userHasAttachment.setAttachment(null);
-
-        return userHasAttachment;
-    }
-*/
-		
 }

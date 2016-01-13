@@ -31,9 +31,6 @@ public class AttachmentLibrary extends AbsBaseEntity{
 	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="file_type_id", referencedColumnName = "id")
 	private AttachmentType attachmentType;
-	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="language_id", referencedColumnName = "id")
-	private Language language;
 	@Column(name="duration")
 	private String duration;
 	@Column(name="extension")
@@ -72,12 +69,6 @@ public class AttachmentLibrary extends AbsBaseEntity{
 	}
 	public void setAttachmentType(AttachmentType attachmentType) {
 		this.attachmentType = attachmentType;
-	}
-	public Language getLanguage() {
-		return language;
-	}
-	public void setLanguage(Language language) {
-		this.language = language;
 	}
 	public String getDuration() {
 		return duration;

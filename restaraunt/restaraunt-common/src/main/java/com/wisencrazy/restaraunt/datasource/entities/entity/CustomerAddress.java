@@ -25,15 +25,11 @@ public class CustomerAddress extends AbsBaseEntity {
 	@Column(name="address_line3")
 	private String addressLine3;
 
-	@ManyToOne
-	@JoinColumn(name="country_id")
-	private Country country;
-
 	private String pin;
 
-	@ManyToOne
-	@JoinColumn(name="state_id")
-	private State state;
+//	@ManyToOne
+//	@JoinColumn(name="state_id")
+//	private State state;
 
 	public CustomerAddress() {
 	}
@@ -62,13 +58,6 @@ public class CustomerAddress extends AbsBaseEntity {
 		this.addressLine3 = addressLine3;
 	}
 
-	public Country getCountry() {
-		return this.country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
 
 	public String getPin() {
 		return this.pin;
@@ -78,11 +67,11 @@ public class CustomerAddress extends AbsBaseEntity {
 		this.pin = pin;
 	}
 
-	public State getState() {
-		return this.state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
-	}
+//	public State getState() {
+//		return this.state;
+//	}
+//
+//	public void setState(State state) {
+//		this.state = state;
+//	}
 }
