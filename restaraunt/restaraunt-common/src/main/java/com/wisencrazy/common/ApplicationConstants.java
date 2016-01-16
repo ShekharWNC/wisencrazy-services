@@ -14,4 +14,9 @@ public class ApplicationConstants {
 	public static final String SIGNUP_EMAIL = "SIGNUP_EMAIL_MISSING";
 	public static final String SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
 	public static final String PHONE = "PHONE";
+	public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+	public static final String INVALID_ACCESS_TOKEN = "INVALID_ACCESS_TOKEN";
+	public static final String GMAIL_LOGIN = "GMAIL_LOGIN";
+	public static final String FB_LOGIN = "FB_LOGIN";
+	public static final String INCORRECT_PWD = "INCORRECT_PWD";
 }

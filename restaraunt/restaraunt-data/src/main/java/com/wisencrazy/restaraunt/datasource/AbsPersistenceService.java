@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.dto.MaxMinRecordDTO;
 import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.CommonUtils;
+import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.DuplicateEntryException;
 import com.wisencrazy.common.exception.NullKeyException;
@@ -60,8 +61,12 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public void save(T t) throws ApplicationException {
 		logger.trace("save(T) - start"); 
+		entityManager.getTransaction().begin();
 		try{
-			entityManager.merge(t);
+//			entityManager.merge(t);
+			entityManager.persist(t);
+			logger.debug("Commiting Transaction");
+			entityManager.getTransaction().commit();
 		}catch(ConstraintViolationException exception){
 			logger.error("save(T)", exception);
 			throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);			
@@ -456,9 +461,11 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 			}
 			Query query = entityManager.createNamedQuery(queryName);
 			for (Map.Entry<String, Object> entry : rawParameters) {
+				logger.debug("Setting queryKey {} and value {}",entry.getKey(),entry.getValue());
 				query.setParameter(entry.getKey(), entry.getValue());
 			}
 			t = (T) query.getSingleResult();
+			logger.debug("Entity value: {}",JsonUtils.toJson(t));
 		} catch (NoResultException noResultException){
 			throw new ApplicationException(ApplicationConstants.NO_RESULT, noResultException);
 		} catch (NonUniqueResultException nonUniqueResultException) {

@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import com.dozer.mapper.DozerUtil;
 import com.wisencrazy.common.ApplicationConstants;
+import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.exception.ApplicationException;
 public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 	
 	public CommonPersistenceImpl() throws ApplicationException {
 		super();
-		// TODO Auto-generated constructor stub
+		mapper=DozerUtil.getDozerUtils();
 	}
-
 
 	/**
 	 * 
@@ -27,7 +27,6 @@ public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 	private static final long serialVersionUID = 1L;
 
 
-	@Inject 
 	protected DozerUtil mapper;
 	
 	
@@ -78,6 +77,7 @@ public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 		T t = null;
 		U dtoObject = null;
 		t = (T) findSingleByNamedQuery(namedQuery, parameters);
+		logger.debug("Entity value: {}",JsonUtils.toJson(t));
 		dtoObject = mapper.convert(t, dtoClass);
 		logger.trace("getDtoByNamedQuery(Class, Class, String, Map<String, Object>) - End");
 		return dtoObject;
@@ -99,7 +99,6 @@ public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 
 	
 	public String findSidById(String entityName, Integer id) throws ApplicationException {
-		// TODO Auto-generated method stub
 		return super.findSidById(entityName, id);
 	}
 	

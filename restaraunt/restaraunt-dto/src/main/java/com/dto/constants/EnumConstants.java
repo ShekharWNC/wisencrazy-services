@@ -3,7 +3,7 @@ package com.dto.constants;
 public interface EnumConstants {
 	
 	public enum SettingFor{
-		ANDROID, IOS, BLACKBERRY, WEB
+		WEB
 	}
 	
 	public enum AppSetting {
@@ -21,18 +21,11 @@ public interface EnumConstants {
 		GOOGLE,VIACHAT
 	}
 	
-	public enum PrinterType {
-		INVOICE, KOT
-	}
-	public enum FeatureStatus {
-		ACTIVE, INACTIVE, WL
-	}
-	
 	public enum RequestSource {
 		WEB, APP
 	}
 	
 	public enum GoogleConstants {
-		android, ios, idine_android, idine_ios, extension, gmail, facebook
+		restaraunt,gmail, facebook
 	}
 }

@@ -4,7 +4,7 @@
       xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
       <mapping type="one-way">
       	<class-a>com.dto.AbsCommonDTO</class-a>
-      	<class-b>com.callcomm.eserve.persistence.entity.AbsBaseEntity</class-b>
+      	<class-b>com.wisencrazy.restaraunt.datasource.entities.entity.AbsBaseEntity</class-b>
       	<field>
       		<a>sid</a>
       		<b set-method="setIdBySid">id</b>
@@ -18,7 +18,7 @@
      
       
       <mapping type="one-way">
-      	<class-a>com.callcomm.eserve.persistence.entity.AbsBaseEntity</class-a>
+      	<class-a>com.wisencrazy.restaraunt.datasource.entities.entity.AbsBaseEntity</class-a>
       	<class-b>com.dto.AbsCommonDTO</class-b>
       	<field-exclude>
       		<a>id</a>
@@ -31,8 +31,8 @@
       </mapping>
       
       <mapping type="one-way">
-      	<class-a>com.callcomm.eserve.persistence.entity.AbsBaseEntity</class-a>
-      	<class-b>com.callcomm.eserve.persistence.entity.AbsCompositeEntity</class-b>
+      	<class-a>com.wisencrazy.restaraunt.datasource.entities.entity.AbsBaseEntity</class-a>
+      	<class-b>com.wisencrazy.restaraunt.datasource.entities.entity.AbsCompositeEntity</class-b>
       	<field>
       		<a get-method="bytesToHexString">sid</a>
       		<b>sid</b>
@@ -41,24 +41,15 @@
       
       <mapping type="one-way">
       	<class-a>com.dto.AbsCommonDTO</class-a>
-      	<class-b>com.callcomm.eserve.persistence.entity.AbsCompositeEntity</class-b>
+      	<class-b>com.wisencrazy.restaraunt.datasource.entities.entity.AbsCompositeEntity</class-b>
 	      	<field>
 	      		<a get-method="hexStringToByteArray">sid</a>
 	      		<b>sid</b>
 	      	</field>
       </mapping>
       
-        <mapping type="one-way">
-      	<class-a>com.callcomm.eserve.persistence.entity.AbsBaseEntity</class-a>
-      	<class-b>com.callcomm.eserve.persistence.to.AbsCommonTO</class-b>
-        <field>
-      		<a get-method="bytesToHexString">sid</a>
-      		<b>sid</b>
-      	</field>
-      </mapping>    
-      
       <mapping type="one-way">
-      	<class-a>com.callcomm.eserve.persistence.entity.AbsCompositeEntity</class-a>
+      	<class-a>com.wisencrazy.restaraunt.datasource.entities.entity.AbsCompositeEntity</class-a>
       	<class-b>com.dto.AbsCommonDTO</class-b>
         <field>
       		<a get-method="bytesToHexString">sid</a>
@@ -67,7 +58,7 @@
       </mapping>  
   
       <mapping type="one-way" map-id="withid">
-      	<class-a>com.callcomm.eserve.persistence.entity.AbsBaseEntity</class-a>
+      	<class-a>com.wisencrazy.restaraunt.datasource.entities.entity.AbsBaseEntity</class-a>
       	<class-b>com.dto.AbsCommonDTO</class-b>
       	<field>
       		<a>id</a>

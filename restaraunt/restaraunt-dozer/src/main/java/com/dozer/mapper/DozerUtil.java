@@ -49,13 +49,6 @@ public class DozerUtil {
 		List<String> mappingList = new ArrayList<String>();
 		mappingList.add("dozerBeanMapping.xml");
 		mappingList.add("common.xml");
-		mappingList.add("user.xml");
-		mappingList.add("clientBusiness.xml");
-		mappingList.add("userinfo.xml");
-		mappingList.add("attachmentType.xml");
-		mappingList.add("attachment.xml");
-		mappingList.add("usercontact.xml");
-		mappingList.add("commondto.xml");
 		dozerBeanMapper.setMappingFiles(mappingList);
 		Map<String, CustomConverter> customConverters = new HashMap<String, CustomConverter>();
 		setCustomConverters(customConverters);

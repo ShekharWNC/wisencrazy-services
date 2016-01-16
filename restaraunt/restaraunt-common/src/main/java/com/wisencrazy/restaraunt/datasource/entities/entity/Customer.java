@@ -31,7 +31,7 @@ import com.dto.constants.EnumConstants.SignupType;
 	@NamedQuery(name = Customer.FIND_SID_BY_EMAIL, query = "select hex(c.sid) from Customer c where c.email = :email"),
 	@NamedQuery(name = Customer.FIND_ID_BY_SID, query = "select c.id from Customer c where hex(c.sid) = :sid"),
 	@NamedQuery(name = Customer.FIND_PASSWORD_BY_EMAIL, query = "select c.password from Customer c where c.email = :email group by c.email"),
-	@NamedQuery(name = Customer.FIND_CUSTOMER_BY_EMAIL, query = "from Customer c where c.email = :email group by c.email"),
+	@NamedQuery(name = Customer.FIND_CUSTOMER_BY_EMAIL, query = "from Customer c where c.email = :email"),
 	@NamedQuery(name = Customer.VALIDATE_GOOGLE_ACCESS_TOKEN, query = "select lower(c.email) from Customer c where c.googleAccessToken = :TOKEN"),
 	@NamedQuery(name = Customer.UPDATE_GOOGLE_TOKEN_BY_EMAIL, query = "UPDATE Customer c set c.googleAccessToken = :TOKEN where c.email = :emailId"),
 	@NamedQuery(name = Customer.FIND_PASSWORD_BY_SID, query = "select c.password from Customer c where hex(c.sid) = :sid"),
@@ -40,8 +40,8 @@ import com.dto.constants.EnumConstants.SignupType;
    @NamedQuery(name = Customer.FIND_ID_BY_EMAIL, query = "select c.id from Customer c where c.email = :email"),
    @NamedQuery(name = Customer.VERIFY_MOBILE, query = "select c.isMobileVerified from Customer c where c.sid = unhex(:sid)"),
    @NamedQuery(name = Customer.UPDATE_MOBILE_STATUS, query = "UPDATE Customer c set c.primaryContact = :contact, c.isMobileVerified = :status where c.sid = unhex(:sid)"),
-   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_PHONE, query = "Select hex(c.sid) from Customer c join c.customerHasContacts cc where cc.contactNumber = :phone and c.accountStatus = :status"),
-   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_EMAIL, query = "Select hex(c.sid) from Customer c where c.email = :emailId and c.accountStatus = :status "),
+   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_PHONE, query = "Select hex(c.sid) from Customer c where c.primaryContact = :phone"),
+   @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_EMAIL, query = "Select hex(c.sid) from Customer c where c.email = :emailId"),
 })
 public class Customer extends AbsBaseEntity {
 	/**

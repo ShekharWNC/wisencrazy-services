@@ -4,18 +4,6 @@
 	
 	<configuration>
 		<custom-converters>
-			<converter type="com.dozer.converter.VirtualAccountConverter">
-				<class-a>java.lang.Integer</class-a>
-				<class-b>com.callcomm.eserve.persistence.entity.VirtualAccount</class-b>
-			</converter>
-			<converter type="com.dozer.converter.UserConverter">
-				<class-a>java.lang.String</class-a>
-				<class-b>com.callcomm.eserve.persistence.entity.Appuser</class-b>
-			</converter>
-      		<converter type="com.dozer.converter.CompanyConverter">
-      			<class-a>java.lang.Integer</class-a>
-				<class-b>com.callcomm.eserve.persistence.entity.Company</class-b>
-      		</converter>
       		<converter type="com.dozer.converter.TimestampToStringConverter">
 				<class-a>java.sql.Timestamp</class-a>
 				<class-b>java.lang.String</class-b>
@@ -28,45 +16,15 @@
 				<class-a>java.lang.String</class-a>
 				<class-b>java.sql.Timestamp</class-b>
 			</converter>
-			<converter type="com.dozer.converter.CommonIdConverter">
-				<class-a>java.lang.String</class-a>
-				<class-b>java.lang.Integer</class-b>
-			</converter>
 			<converter type="com.dozer.converter.EntityByteArrayToSid">
-				<class-a>com.callcomm.eserve.persistence.entity.AbsBaseEntity</class-a>
+				<class-a>com.wisencrazy.restaraunt.datasource.entities.entity.AbsBaseEntity</class-a>
 				<class-b>java.lang.String</class-b>
 			</converter>
 			<converter type="com.dozer.converter.EnumToStringConverter">
 				 <class-a>java.lang.Enum</class-a>
             	<class-b>java.lang.String</class-b>
 			</converter>
-      		<!-- <converter type="com.dozer.converter.DisplayNameConverter">
-      			<class-a>java.lang.String</class-a>
-				<class-b>java.lang.String</class-b>
-      		</converter> -->
 		</custom-converters>
 	</configuration>
 	
-	<!-- <mapping map-id="epto">
-		<class-a>com.callcomm.eserve.persistence.entity.EmployeeProfile</class-a>
-		<class-b>com.dto.EmployeeProfileDTO</class-b>
-		<field-exclude>
-			<a>virtualAccount</a>
-			<b>virtualAccount</b>
-		</field-exclude>
-		
-		<field type="one-way">
-			<a>virtualAccount.id</a>
-			<b is-accessible="true">virtualAccountId</b>
-		</field>
-	</mapping>
-	
-	<mapping map-id="ep">
-		<class-a>com.dto.EmployeeProfileDTO</class-a>
-		<class-b>com.callcomm.eserve.persistence.entity.EmployeeProfile</class-b>
-		<field  custom-converter-id="virtualaccount">
-			<a is-accessible="true">virtualAccountId</a>
-			<b>virtualAccount</b>
-		</field>
-	</mapping> -->
 </mappings>
