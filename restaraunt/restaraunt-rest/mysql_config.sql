@@ -73,3 +73,75 @@ CREATE TABLE `customer_has_address` (
   CONSTRAINT `fk_customer_has_address_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `city` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city_name` varchar(255) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `sid` binary(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sid` (`sid`),
+  KEY `fk_city1` (`state_id`),
+  CONSTRAINT `fk_city1` FOREIGN KEY (`state_id`) REFERENCES `state` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `area_name` varchar(255) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `sid` binary(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sid` (`sid`),
+  KEY `fk_area1` (`city_id`),
+  CONSTRAINT `fk_area1` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `restaraunt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `sid` binary(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `photo_url` varchar(255) DEFAULT NULL,
+  `email_id` varchar(100) DEFAULT NULL,
+  `primary_contact_no` varchar(200) default NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_date` timestamp NULL DEFAULT '2000-01-01 00:00:00',
+  `address` varchar(255) DEFAULT NULL,
+  `pin` varchar(15) NOT NULL,
+  `latitude` varchar(20) DEFAULT NULL,
+  `longitude` varchar(20) DEFAULT NULL,
+  `area_id` int(11) NOT NULL,
+  `cost_for_2` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sid` (`sid`),
+  KEY `fk_project4` (`area_id`),
+  CONSTRAINT `fk_project4` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `restaraunt_has_timings` (
+  `restaraunt_id` int(11) NOT NULL ,
+  `timing` enum('BR','LU','DI') NOT NULL,
+  `photo_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`restaraunt_id`,`timing`),
+  KEY `fk_rht1` (`restaraunt_id`),
+  CONSTRAINT `fk_rht1` FOREIGN KEY (`restaraunt_id`) REFERENCES `restaraunt` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `restaraunt_has_reviews` (
+  `restaraunt_id` int(11) NOT NULL ,
+  `customer_id` int(11) NOT NULL,
+  `rating` int(11) DEFAULT 0,
+  `comment` TEXT DEFAULT NULL,
+  `timestamp` timestamp DEFAULT '2000-01-01 00:00:00',
+  PRIMARY KEY (`restaraunt_id`,`customer_id`),
+  KEY `fk_rhr1` (`restaraunt_id`),
+  KEY `fk_rhr2` (`customer_id`),
+  CONSTRAINT `fk_rhr1` FOREIGN KEY (`restaraunt_id`) REFERENCES `restaraunt` (`id`),
+  CONSTRAINT `fk_rhr2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create view vw_restaraunt_location as 
+select r.id,unhex(r.sid) as `sid`,r.name,a.area_name,rht.photo_url,latitude,longitude,timing from restaraunt r 
+join area a on r.area_id=a.id 
+left outer join restaraunt_has_timings rht on r.id=rht.restaraunt_id;
+

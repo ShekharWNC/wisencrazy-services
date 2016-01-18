@@ -1,6 +1,5 @@
 package com.wisencrazy.restaraunt.admin;
 
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
@@ -9,7 +8,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -25,7 +23,6 @@ import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
 import com.wisencrazy.restaraunt.account.CustomerLogin;
-import com.wisencrazy.restaraunt.account.CustomerSignup;
 
 /**
  * User: Wisencrazy
@@ -82,11 +79,9 @@ public class CustomerAccount {
 	@Path("/login/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response customerLogin(CustomerLoginDTO customerLoginDTO,
-			@Context HttpServletRequest request,
-			@Context HttpHeaders httpHeaders){
+	public Response customerLogin(CustomerLoginDTO customerLoginDTO){
 		try {
-			return Response.status(Status.OK).entity(customerLogin.customerLogin(customerLoginDTO, request, httpHeaders)).build();
+			return Response.status(Status.OK).entity(customerLogin.customerLogin(customerLoginDTO)).build();
 		} catch (ApplicationException e) {
 			return ErrorCode.getErrorResponse(e);
 		}		

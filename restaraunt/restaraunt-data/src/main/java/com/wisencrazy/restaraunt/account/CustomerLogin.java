@@ -3,9 +3,6 @@ package com.wisencrazy.restaraunt.account;
 import java.util.Arrays;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.NewCookie;
 
 import org.slf4j.Logger;
@@ -45,7 +42,7 @@ public class CustomerLogin extends CustomerSignup {
 	private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
 
 	
-	public CustomerDTO customerLogin(CustomerLoginDTO customerLoginDTO,@Context HttpServletRequest request,@Context HttpHeaders httpHeaders) throws ApplicationException{
+	public CustomerDTO customerLogin(CustomerLoginDTO customerLoginDTO) throws ApplicationException{
 
 		logger.info("login(String, String, HttpServletRequest) - Start");
 		CustomerDTO customerInfo = null;
@@ -53,9 +50,9 @@ public class CustomerLogin extends CustomerSignup {
 		try {
 			validateCustomerLoginDetails(customerLoginDTO);
 			
-			
 			LoginDetailsDTO loginDetails = new LoginDetailsDTO(customerLoginDTO.getEmailId());
 			loginDetails.setLoginType(LoginType.CUSTOMER);
+			logger.debug("Getting Email By Access token for {}",customerLoginDTO.getAccessToken());
 			getEmailByAccessToken(customerLoginDTO.getAccessToken(),loginDetails, customerLoginDTO.getExtension());
 			if(CommonUtils.isEmpty(customerLoginDTO.getEmailId())){
 				logger.info("email using access token : {}", loginDetails.getUsername());
@@ -124,6 +121,7 @@ public class CustomerLogin extends CustomerSignup {
 		if(extension != null){
 			switch (extension) {
 			case gmail:
+				logger.debug("Getting email by AccessToken : {}",accessToken);
 				getEmailByGoogleAccessToken(accessToken, loginDetails, extension);
 				break;
 			case facebook:
@@ -157,10 +155,11 @@ public class CustomerLogin extends CustomerSignup {
 
 	private void getEmailByGoogleAccessToken(String accessToken,
 			LoginDetailsDTO loginDetails, GoogleConstants extension) throws ApplicationException {
-		logger.trace("getEmailByGoogleAccessToken(String, LoginDetails) - Start");
+		logger.trace("getEmailByGoogleAccessToken({}, LoginDetails) - Start",accessToken);
 		if(!CommonUtils.isEmpty(accessToken)){
 			logger.debug("getting google profile info using token : {}", accessToken);
 			if(loginDetails.getLoginType() != null && loginDetails.getLoginType().equals(LoginType.CUSTOMER)){
+				logger.debug("Validation customer google access token");
 				validateCustomerGoogleAccessToken(accessToken, extension, loginDetails.getUsername());
 			}else{//To be implemented later for hotels
 				}
@@ -173,21 +172,25 @@ public class CustomerLogin extends CustomerSignup {
 		String emailId = null;
 		logger.trace("validateCustomerGoogleAccessToken(String, String, String) - Start");
 		try{
+			logger.debug("Finding emailId by access token: {}",accessToken);
 			emailId = (String)commonRepoServ.findSingleByNamedQuery(Customer.VALIDATE_GOOGLE_ACCESS_TOKEN, QueryParameter.with("TOKEN", accessToken).parameters());
 			if(!emailId.equalsIgnoreCase(email)){
 				logger.debug("access token : {} for email : {}", accessToken, emailId);
 				throw new ApplicationException(ApplicationConstants.INVALID_ACCESS_TOKEN);
 			}
 		}catch(ApplicationException applicationException){
+			logger.error("Processing error for Finding EmailId by Access token: {}",JsonUtils.toJson(applicationException));
 			if(applicationException.getLocalizedMessage().equals(ApplicationConstants.NO_RESULT)){
+				logger.debug("Validating Access token from google {} for extension {}",accessToken,extension);
 				emailId = validateGoogleAccessToken(accessToken, extension);
 				if(emailId == null || !emailId.equalsIgnoreCase(email)){
 					logger.debug("access token : {} for email : {}", accessToken, emailId);
 					throw new ApplicationException(ApplicationConstants.INVALID_ACCESS_TOKEN);
 				}
+				logger.debug("Updating the accessToken for the emailId: {}",email);
 				QueryParameter  queryParameter = QueryParameter.with("emailId", email);
 				queryParameter.and("TOKEN", accessToken);
-				logger.info("email id : {} login with android", email);
+				logger.info("email id : {} login with google", email);
 				commonRepoServ.insertOrUpdateByNamedQuery(Customer.UPDATE_GOOGLE_TOKEN_BY_EMAIL, queryParameter.parameters());
 			}
 		}
@@ -197,13 +200,15 @@ public class CustomerLogin extends CustomerSignup {
 	public String validateGoogleAccessToken(String token, GoogleConstants extension)
 			throws ApplicationException {
 		logger.trace("validateGoogleAccessToken(String, String) - Start");
-		String email = null;
+		String gmail = null;
 		String cid = null;
 		String clientId = null;
 		
 		if(extension != null) {
 			cid = extension.name();
 		}
+		clientId=cid;
+		logger.debug("Preparing the token verifer object with clientId: {}",clientId);
 		
 	if(!CommonUtils.isEmpty(clientId)){	
 			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(TRANSPORT, JSON_FACTORY)
@@ -213,6 +218,7 @@ public class CustomerLogin extends CustomerSignup {
 		// (Receive idTokenString by HTTPS POST)
 	
 		GoogleIdToken idToken = null;
+		logger.debug("using the verifier to verify the token: {}",token); 
 		try {
 			idToken = verifier.verify(token);
 		} catch (Exception e) {
@@ -220,10 +226,11 @@ public class CustomerLogin extends CustomerSignup {
 			  throw new ApplicationException(ApplicationConstants.INVALID_ACCESS_TOKEN);
 		}
 		if (idToken != null) {
+			logger.debug("Processing the payload");
 		  Payload payload = idToken.getPayload();
 		  if (cid.equals(payload.getAuthorizedParty())) {
 		    logger.info("Google email: {}" , payload.getEmail());
-		    email =  payload.getEmail();
+		    gmail =  payload.getEmail();
 		  } else {
 			  logger.error("invalid authorized party");
 			  throw new ApplicationException(ApplicationConstants.INVALID_ACCESS_TOKEN);
@@ -233,7 +240,7 @@ public class CustomerLogin extends CustomerSignup {
 			  throw new ApplicationException(ApplicationConstants.INVALID_ACCESS_TOKEN);
 		}
 	}
-	return email;
+	return gmail;
 }
 
 	private void validateUserRegistration(SignupType signupType) throws ApplicationException {

@@ -57,7 +57,7 @@ public class Customer extends AbsBaseEntity {
 		ACTIVE, IN_ACTIVE, SYSTEM_GENERATED, DISABLE
 	}
 	
-	public static final String PREFIX = "com.callcomm.eserve.persistence.entity.Customer.";
+	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.Customer.";
 	public static final String FIND_CUSTOMER_NAME_BY_SID = PREFIX + "findCustomerNameBySid";
 	public static final String FIND_BY_SID = PREFIX + "findBySid";
 	public static final String FIND_SID_BY_EMAIL = PREFIX + "findSidByEmail";

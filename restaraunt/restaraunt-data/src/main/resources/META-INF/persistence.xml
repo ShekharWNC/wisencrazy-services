@@ -8,12 +8,18 @@
 		<!-- <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode> -->
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Country</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.State</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.City</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Area</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Customer</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerAddress</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class>
+<!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
+<!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
+<!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 		<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/wisencrazy_restaraunt" />
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://localhost:3306/wisencrazy_restaraunt" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="Chhabi@82" />
 			<property name="hibernate.default_schema" value="wisencrazy_restaraunt" />
