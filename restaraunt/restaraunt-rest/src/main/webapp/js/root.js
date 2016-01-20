@@ -4,6 +4,7 @@ app.controller("HomeController",function($scope,$rootScope){
 		$scope.selectedTab = "login";
 		$scope.date = Date('hh');
 		 $scope.getLocation();
+		 $scope.restaurantData={"restaurantName":"Jiyo Natural","imgPath":"../img/food.jpg","ratings":"2","lastReview":"Food is good"};
 		// if($scope.date.getHours()>=7 && $scope.date.getHours()<=11){
 		// 	$scope.foodReady="Now Your Breakfast Is Ready";
 		// }else if($scope.date.getHours()>11 && $scope.date.getHours()<=15){
@@ -16,15 +17,22 @@ app.controller("HomeController",function($scope,$rootScope){
 		// 	$scope.foodReady="Free Hour";
 		// }
 	}
-	$scope.initAll();
 	
-	 $scope.getLocation=function() {
+	$scope.getLocation=function() {
 		if (navigator.geolocation) {
-			console.log(navigator.geolocation.getCurrentPosition());
+			navigator.geolocation.getCurrentPosition($scope.showPosition);
 		} else { 
 			x.innerHTML = "Geolocation is not supported by this browser.";
 		}
 	}
+
+	 $scope.showPosition=function(position) {
+	    $scope.latitudePosition= position.coords.latitude ;
+	    $scope.longitudePosition=position.coords.longitude;	
+	}
+	
+	$scope.initAll();
+	
 	
 	
 	function onSignIn(googleUser) 
