@@ -140,8 +140,8 @@ CREATE TABLE `restaraunt_has_reviews` (
   CONSTRAINT `fk_rhr2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 create view vw_restaraunt_location as 
-select r.id,unhex(r.sid) as `sid`,r.name,a.area_name,rht.photo_url,latitude,longitude,timing from restaraunt r 
+select r.id,unhex(r.sid) as `sid`,r.name,a.area_name,rht.photo_url,latitude,longitude,timing,'distance' from restaraunt r 
 join area a on r.area_id=a.id 
 left outer join restaraunt_has_timings rht on r.id=rht.restaraunt_id;
-
