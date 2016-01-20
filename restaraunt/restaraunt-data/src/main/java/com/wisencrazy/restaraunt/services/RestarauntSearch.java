@@ -9,6 +9,7 @@ import com.dto.AreaDTO;
 import com.dto.CityDTO;
 import com.dto.CustomerDTO;
 import com.dto.CustomerSignupDTO;
+import com.dto.RestarauntLocationViewDTO;
 import com.dto.StateDTO;
 import com.dto.constants.EnumConstants.SignupType;
 import com.wisencrazy.common.ApplicationConstants;
@@ -17,12 +18,16 @@ import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.QueryParameter;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.DuplicateEntryException;
+import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.restaraunt.datasource.CommonPersistenceImpl;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Area;
 import com.wisencrazy.restaraunt.datasource.entities.entity.City;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer.CustomerAccountStatus;
+import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings.Timings;
+import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView;
 import com.wisencrazy.restaraunt.datasource.entities.entity.State;
+import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
 
 public class RestarauntSearch {
 
@@ -76,6 +81,24 @@ public class RestarauntSearch {
 		}
 	}
 	
-	
+	public List<RestarauntLocationViewDTO> searchRestarauntNearBy(GoogleLocationInput input) throws IncorrectArgumentException,ApplicationException{
+		if(input==null)throw new IncorrectArgumentException("Null Search parameter passed for nearby Search");
+		if(CommonUtils.isEmpty(input.getLatitude()) || CommonUtils.isEmpty(input.getLongitude()) || CommonUtils.isEmpty(input.getDistance()) || CommonUtils.isEmpty(input.getTimings()))
+			throw new IncorrectArgumentException("Invalid Search parameters passed for nearby Search");
+		Timings timings=null;
+		try{
+			timings=Enum.valueOf(Timings.class, input.getTimings());				
+		}catch(Exception e){
+			throw new IncorrectArgumentException("Invalid value for Timing search passed must be BR,LU,DI");
+		}
+		try{
+			List<RestarauntLocationViewDTO> restaraunts=commonRepoServ.getDtoListByNamedQuery(RestarauntLocationView.class, RestarauntLocationViewDTO.class, RestarauntLocationView.FIND_RESTRO_BY_DISTANCE, QueryParameter.with("latitude", input.getLatitude()).and("longitude", input.getLongitude()).and("timing", timings).and("distance", input.getDistance()).parameters());
+			return restaraunts;
+		} catch (ApplicationException e) {
+			logger.error("Error while fethching cities for state: {}",e);
+			throw e;
+		}
+			
+	}
 	
 }

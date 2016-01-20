@@ -2,7 +2,7 @@ package com.wisencrazy.restaraunt.rest.dto;
 
 import java.io.Serializable;
 
-public class GoogleLocationInput implements Serializable {
+public class ManualLocationInput implements Serializable {
 	
 	/**
 	 * 
@@ -12,6 +12,8 @@ public class GoogleLocationInput implements Serializable {
 	private String areaSid;
 	
 	private String stateSid;
+	
+	private String timings;
 
 	public String getAreaSid() {
 		return areaSid;
@@ -27,5 +29,13 @@ public class GoogleLocationInput implements Serializable {
 
 	public void setStateSid(String stateSid) {
 		this.stateSid = stateSid;
+	}
+
+	public String getTimings() {
+		return timings;
+	}
+
+	public void setTimings(String timings) {
+		this.timings = timings;
 	}
 }

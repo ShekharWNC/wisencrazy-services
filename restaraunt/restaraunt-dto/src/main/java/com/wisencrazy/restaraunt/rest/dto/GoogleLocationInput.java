@@ -2,7 +2,7 @@ package com.wisencrazy.restaraunt.rest.dto;
 
 import java.io.Serializable;
 
-public class ManualLocationInput implements Serializable {
+public class GoogleLocationInput implements Serializable {
 	
 	/**
 	 * 
@@ -15,11 +15,11 @@ public class ManualLocationInput implements Serializable {
 	
 	private String distance;
 	
-	private boolean isKm;
-	
 	private String areaSid;
 	
 	private String stateSid;
+	
+	private String timings;
 
 	public String getLatitude() {
 		return latitude;
@@ -45,14 +45,6 @@ public class ManualLocationInput implements Serializable {
 		this.distance = distance;
 	}
 
-	public boolean getIsKm() {
-		return isKm;
-	}
-
-	public void setIsKm(boolean isKm) {
-		this.isKm = isKm;
-	}
-
 	public String getAreaSid() {
 		return areaSid;
 	}
@@ -67,5 +59,13 @@ public class ManualLocationInput implements Serializable {
 
 	public void setStateSid(String stateSid) {
 		this.stateSid = stateSid;
+	}
+
+	public String getTimings() {
+		return timings;
+	}
+
+	public void setTimings(String timings) {
+		this.timings = timings;
 	}
 }

@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
-import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
 import com.wisencrazy.restaraunt.rest.dto.ManualLocationInput;
+import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
 import com.wisencrazy.restaraunt.services.RestarauntSearch;
 
 @Path("/restaraunt")
@@ -26,7 +26,11 @@ public class RestarauntRest {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response findNearByRestaraunts(GoogleLocationInput locationInput){
-			return null;
+			try {
+				return Response.status(Status.OK).entity(restaraunt.searchRestarauntNearBy(locationInput)).build();
+			} catch (ApplicationException e) {
+				return ErrorCode.getErrorResponse(e);
+			}
 		}
 		
 		@GET
