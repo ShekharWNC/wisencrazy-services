@@ -146,15 +146,13 @@ join area a on r.area_id=a.id
 left outer join restaraunt_has_timings rht on r.id=rht.restaraunt_id;
 
 
-
-
 -- Insert queries
+INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
+INSERT INTO state (state_name,country_id,sid) VALUES ('Karnataka',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
+
 INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
 INSERT INTO city(city_name,state_id,sid) VALUES ('Bengaluru',1,unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
 
 INSERT INTO area(area_name,city_id,sid) VALUES ('JP Nagar',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
 INSERT INTO area(area_name,city_id,sid) VALUES ('Hanumanth Namgar',1,unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
 
-
-INSERT INTO state (state_name,country_id,sid) VALUES ('Karnataka',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
-INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
