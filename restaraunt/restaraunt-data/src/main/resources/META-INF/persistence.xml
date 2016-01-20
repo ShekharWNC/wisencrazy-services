@@ -13,6 +13,7 @@
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Customer</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerAddress</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView</class>
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->

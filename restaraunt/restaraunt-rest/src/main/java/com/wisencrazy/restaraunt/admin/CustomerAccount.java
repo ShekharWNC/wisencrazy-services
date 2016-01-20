@@ -38,6 +38,7 @@ public class CustomerAccount {
 	@Path("signup")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response customerSignup(CustomerSignupDTO customerSignupDTO,
 			@Context HttpServletRequest request) {
 		logger.debug("customerSignup(CustomerSignupDTO, HttpServletRequest)",JsonUtils.toJson(customerSignupDTO));

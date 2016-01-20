@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -14,10 +15,6 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings
 
 @Entity
 @Table(name="vw_restaraunt_location")
-@NamedQueries({
-	@NamedQuery(name=RestarauntLocationView.FIND_RESTRO_BY_DISTANCE,query="select sid,restroName,areaName,photoUrl,"+" (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) "
-			+ "- RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(latitude)))) AS distance from RestarauntLocationView where timing=:timing having distance <=:distance order by distance ASC")
-})
 public class RestarauntLocationView implements Serializable {
 
 	/**
@@ -27,8 +24,10 @@ public class RestarauntLocationView implements Serializable {
 
 	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView.";
 
-	public static final String FIND_RESTRO_BY_DISTANCE = PREFIX + "serachRestroByDistance";
+	public static final String FIND_RESTRO_BY_DISTANCE = "select sid,name,area_name,photo_url,(6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) "
+			+ "- RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(latitude)))) AS distance from RestarauntLocationView where timing=:timing having distance <=:distance order by distance ASC";
 	
+	@Id
 	@Column(name="id")
 	private int id;
 	

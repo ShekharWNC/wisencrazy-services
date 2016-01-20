@@ -44,8 +44,8 @@ public class RestarauntSearch {
 			commonRepoServ=new CommonPersistenceImpl();
 			dozerUtil=DozerUtil.getDozerUtils();
 		} catch (ApplicationException e) {
-			e.printStackTrace();
 			logger.error("Error while setting up Repo services");
+			e.printStackTrace();
 		}		
 	}
 
@@ -92,8 +92,9 @@ public class RestarauntSearch {
 			throw new IncorrectArgumentException("Invalid value for Timing search passed must be BR,LU,DI");
 		}
 		try{
-			List<RestarauntLocationViewDTO> restaraunts=commonRepoServ.getDtoListByNamedQuery(RestarauntLocationView.class, RestarauntLocationViewDTO.class, RestarauntLocationView.FIND_RESTRO_BY_DISTANCE, QueryParameter.with("latitude", input.getLatitude()).and("longitude", input.getLongitude()).and("timing", timings).and("distance", input.getDistance()).parameters());
-			return restaraunts;
+			List<RestarauntLocationView> restaraunts=commonRepoServ.findEntityListByNativeQuery(RestarauntLocationView.FIND_RESTRO_BY_DISTANCE, QueryParameter.with("latitude", input.getLatitude()).and("longitude", input.getLongitude()).and("timing", timings).and("distance", input.getDistance()).parameters(), RestarauntLocationView.class);
+			List<RestarauntLocationViewDTO> restarauntsDTO=dozerUtil.convertList(restaraunts, RestarauntLocationViewDTO.class);
+			return restarauntsDTO;
 		} catch (ApplicationException e) {
 			logger.error("Error while fethching cities for state: {}",e);
 			throw e;
