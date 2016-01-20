@@ -46,7 +46,7 @@ public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 		List<U> dtos = null;
 		entities = findEntityListByNamedQuery(queryName, parameters);
 		if(entities == null || entities.size() == 0){
-			throw new ApplicationException(ApplicationConstants.DOZER_MAP_EXP); //No result found exception.
+			throw new ApplicationException(ApplicationConstants.NO_RESULT); //No result found exception.
 		}
 		dtos = mapper.convertList(entities, dtoClass);
 		logger.trace("getDtoListByNamedQuery(Class,Class,String,Map<String,Object>) - End");

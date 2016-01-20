@@ -16,8 +16,8 @@ public class StateDTO extends AbsCommonDTO implements Serializable {
 
 	private String stateName;
 
-	//bi-directional many-to-one association to Country
-	private CountryDTO country;
+//	//bi-directional many-to-one association to Country
+//	private CountryDTO country;
 
 	public StateDTO() {
 	}
@@ -25,7 +25,7 @@ public class StateDTO extends AbsCommonDTO implements Serializable {
 	public StateDTO(String stateName, CountryDTO country) {
 		super();
 		this.stateName = stateName;
-		this.country = country;
+//		this.country = country;
 	}
 	public String getStateName() {
 		return this.stateName;
@@ -35,12 +35,12 @@ public class StateDTO extends AbsCommonDTO implements Serializable {
 		this.stateName = stateName;
 	}
 
-	public CountryDTO getCountry() {
-		return this.country;
-	}
-
-	public void setCountry(CountryDTO country) {
-		this.country = country;
-	}
+//	public CountryDTO getCountry() {
+//		return this.country;
+//	}
+//
+//	public void setCountry(CountryDTO country) {
+//		this.country = country;
+//	}
 
 }

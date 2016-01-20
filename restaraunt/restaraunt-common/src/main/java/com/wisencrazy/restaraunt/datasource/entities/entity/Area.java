@@ -26,7 +26,7 @@ public class Area extends AbsBaseEntity {
 
     //bi-directional many-to-one association to Country
     @ManyToOne
-    @JoinColumn(name = "area_id", referencedColumnName = "id")
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
     public Area() {

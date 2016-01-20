@@ -73,7 +73,7 @@ public class RestarauntSearch {
 	public List<CityDTO> getCityByStateName(String stateName) throws ApplicationException{
 		logger.debug("Fetching Cities for StateName {}",stateName);
 		try {
-			List<CityDTO> cities=commonRepoServ.getDtoListByNamedQuery(City.class, CityDTO.class, City.FIND_CITY_BY_STATE_NAME, QueryParameter.with("stateName", stateName).parameters());
+			List<CityDTO> cities=commonRepoServ.getDtoListByNamedQuery(City.class, CityDTO.class, City.FIND_CITY_BY_STATE_NAME, QueryParameter.with("stateName", stateName.trim()).parameters());
 			return cities;
 		} catch (ApplicationException e) {
 			logger.error("Error while fethching cities for state: {}",e);
