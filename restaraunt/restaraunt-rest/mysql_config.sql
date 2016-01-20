@@ -1,4 +1,3 @@
-CREATE SCHEMA `wisencrazy_restaraunt` DEFAULT CHARACTER SET utf8 ;
 
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
