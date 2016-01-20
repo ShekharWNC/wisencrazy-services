@@ -21,7 +21,7 @@
 			<property name="hibernate.connection.url"
 				value="jdbc:mysql://localhost:3306/wisencrazy_restaraunt" />
 			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="Chhabi@82" />
+			<property name="hibernate.connection.password" value="root" />
 			<property name="hibernate.default_schema" value="wisencrazy_restaraunt" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		</properties>
