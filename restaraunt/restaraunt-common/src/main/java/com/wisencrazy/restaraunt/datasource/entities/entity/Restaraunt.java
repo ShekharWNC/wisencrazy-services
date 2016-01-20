@@ -27,7 +27,7 @@ import com.dto.constants.EnumConstants.SignupType;
 @Entity
 @Table(name="restaraunt")
 @NamedQueries({
-	@NamedQuery(name = Customer.FIND_BY_SID, query = "select r from Restaraunt r where hex(r.sid) = :sid"),
+	@NamedQuery(name = Restaraunt.FIND_BY_SID, query = "select r from Restaraunt r where hex(r.sid) = :sid"),
 })
 public class Restaraunt extends AbsBaseEntity {
 

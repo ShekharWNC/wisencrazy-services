@@ -142,7 +142,7 @@ CREATE TABLE `restaraunt_has_reviews` (
 
 
 create view vw_restaraunt_location as 
-select r.id,unhex(r.sid) as `sid`,r.name,a.area_name,rht.photo_url,latitude,longitude,timing,'distance' from restaraunt r 
+select r.id,hex(r.sid) as `sid`,r.name,a.area_name,rht.photo_url,latitude,longitude,timing,'distance' from restaraunt r 
 join area a on r.area_id=a.id 
 left outer join restaraunt_has_timings rht on r.id=rht.restaraunt_id;
 
@@ -155,5 +155,9 @@ INSERT INTO city(city_name,state_id,sid) VALUES ('Bengaluru',1,unhex('86b5bcd2ca
 
 INSERT INTO area(area_name,city_id,sid) VALUES ('JP Nagar',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
 INSERT INTO area(area_name,city_id,sid) VALUES ('Hanumanth Namgar',1,unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
+
+INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('1', 'BR', 'br_photo_url');
+INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('1', 'LU', 'lu_photo-url');
+INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('2', 'DI', 'di-photo');
 
 

@@ -92,7 +92,7 @@ public class RestarauntSearch {
 			throw new IncorrectArgumentException("Invalid value for Timing search passed must be BR,LU,DI");
 		}
 		try{
-			List<RestarauntLocationView> restaraunts=commonRepoServ.findEntityListByNativeQuery(RestarauntLocationView.FIND_RESTRO_BY_DISTANCE, QueryParameter.with("latitude", input.getLatitude()).and("longitude", input.getLongitude()).and("timing", timings).and("distance", input.getDistance()).parameters(), RestarauntLocationView.class);
+			List<RestarauntLocationView> restaraunts=commonRepoServ.findEntityListByNativeQuery(RestarauntLocationView.FIND_RESTRO_BY_DISTANCE, QueryParameter.with("latitude", input.getLatitude()).and("longitude", input.getLongitude()).and("timing", timings.name()).and("distance", input.getDistance()).parameters(), RestarauntLocationView.class);
 			List<RestarauntLocationViewDTO> restarauntsDTO=dozerUtil.convertList(restaraunts, RestarauntLocationViewDTO.class);
 			return restarauntsDTO;
 		} catch (ApplicationException e) {

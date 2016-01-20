@@ -3,6 +3,7 @@ package com.wisencrazy.restaraunt.rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -10,19 +11,22 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.dto.RestarauntDTO;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
 import com.wisencrazy.restaraunt.rest.dto.ManualLocationInput;
 import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
+import com.wisencrazy.restaraunt.services.RestarauntManage;
 import com.wisencrazy.restaraunt.services.RestarauntSearch;
 
 @Path("/restaraunt")
 public class RestarauntRest {
 
 		private static RestarauntSearch restaraunt=new RestarauntSearch();
+		private static RestarauntManage restarauntM=new RestarauntManage();
 	
 		@POST
-		@Path("/search/nearest/")
+		@Path("/search/nearby/")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response findNearByRestaraunts(GoogleLocationInput locationInput){
@@ -72,5 +76,17 @@ public class RestarauntRest {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response findRestaraunts(ManualLocationInput locationInput){
 			return null;
+		}
+		
+		@PUT
+		@Path("/create")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response createRestaraunt(RestarauntDTO dto){
+			try {
+				return Response.status(Status.OK).entity(restarauntM.createRestaraunt(dto)).build();
+			} catch (ApplicationException e) {
+				return ErrorCode.getErrorResponse(e);
+			}			
 		}
 }
