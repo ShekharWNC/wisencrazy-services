@@ -3,7 +3,7 @@ app.controller("HomeController",function($scope,$rootScope){
 	$scope.initAll=function(){
 		$scope.selectedTab = "login";
 		$scope.date = Date('hh');
-		
+		 $scope.getLocation();
 		// if($scope.date.getHours()>=7 && $scope.date.getHours()<=11){
 		// 	$scope.foodReady="Now Your Breakfast Is Ready";
 		// }else if($scope.date.getHours()>11 && $scope.date.getHours()<=15){
@@ -17,6 +17,16 @@ app.controller("HomeController",function($scope,$rootScope){
 		// }
 	}
 	$scope.initAll();
+	
+	 $scope.getLocation=function() {
+		if (navigator.geolocation) {
+			console.log(navigator.geolocation.getCurrentPosition());
+		} else { 
+			x.innerHTML = "Geolocation is not supported by this browser.";
+		}
+	}
+	
+	
 	function onSignIn(googleUser) 
     {
         // var myParams = {
