@@ -28,6 +28,8 @@ public class CustomerSignupDTO extends AbsCommonDTO {
 	
 	public boolean isShow;
 	
+	private String googleAccessToken;
+	
 	
 	public String getEmail() {
 		return email;
@@ -89,6 +91,14 @@ public class CustomerSignupDTO extends AbsCommonDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getGoogleAccessToken() {
+		return googleAccessToken;
+	}
+
+	public void setGoogleAccessToken(String googleAccessToken) {
+		this.googleAccessToken = googleAccessToken;
 	}
 
 }
