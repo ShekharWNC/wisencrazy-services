@@ -18,10 +18,12 @@
 
     <!-- Custom CSS -->
     <link href="css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
     <meta name="google-signin-scope" content="profile email">
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <script src="js/angular.js"></script>
     <script src="js/root.js"></script>
    
@@ -181,6 +183,31 @@
         <div class="item active">
              <div class="row">
                 <div class="col-sm-6 col-lg-3 col-md-4 col-xs-12 thumb">
+                <a href="#" >
+                    <!--<img class="img-responsive" src="img/food.jpg" alt="" width="400px" height="300px">-->
+                 <div class="restoDiv">
+                        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12 restaurantName"> {{restaurantData.restaurantName}}</div>
+                         <div class="cont">
+                          <div class="stars">
+                            <form action="">
+                              <input class="star star-5" id="star-5-2" type="radio" name="star"/>
+                              <label class="star star-5" for="star-5-2"></label>
+                              <input class="star star-4" id="star-4-2" type="radio" name="star"/>
+                              <label class="star star-4" for="star-4-2"></label>
+                              <input class="star star-3" id="star-3-2" type="radio" name="star"/>
+                              <label class="star star-3" for="star-3-2"></label>
+                              <input class="star star-2" id="star-2-2" type="radio" name="star"/>
+                              <label class="star star-2" for="star-2-2"></label>
+                              <input class="star star-1" id="star-1-2" type="radio" name="star"/>
+                              <label class="star star-1" for="star-1-2"></label>
+                            </form>
+                          </div>
+                        </div>
+                 
+                 </div>
+                </a>
+            </div>
+                <div class="col-sm-6 col-lg-3 col-md-4 col-xs-12 thumb">
                 <a href="#">
                     <img class="img-responsive" src="img/cosmetics.jpg" alt=""  width="400" height="300px">
                 </a>
@@ -195,11 +222,7 @@
                     <img class="img-responsive" src="img/gift.jpg" alt="" width="400px" height="300px">
                 </a>
             </div>
-            <div class="col-sm-6 col-lg-3 col-md-4 col-xs-12 thumb">
-                <a href="#" >
-                    <img class="img-responsive" src="img/food.jpg" alt="" width="400px" height="300px">
-                </a>
-            </div>
+            
             <div class="col-sm-6 col-lg-3 col-md-4 col-xs-12 thumb">
                 <a href="#" >
                     <img class="img-responsive" src="img/dress.jpg" alt=""  width="400px" height="300px">
@@ -288,7 +311,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-11">
-                    <p>Copyright &copy; WizenCrazy 2014</p>
+                    <p>Copyright &copy; WizenCrazy 2016</p>
                 </div>
             </div>
         </footer>
@@ -301,7 +324,18 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+<script>
+ function onSignIn(googleUser) 
+    {
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
 
+    };
+
+</script>
 </body>
 <style type="text/css">
 .signUp{

@@ -1,0 +1,85 @@
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
+.restoDiv{
+	background-image: url("../img/food.jpg");
+	 background-repeat: repeat-x;    
+    height: 250px;
+    width: 100%; 
+}
+
+.restaurantName{
+	text-align: center;
+	font-size: 1.4em;
+	font-weight: 600;
+	background-color: rgba(250,250,250,0.7);
+	color: #444;
+	opacity: 0.8;
+	padding: 10px !important;
+}
+.restaurantreview{
+	font-size: 1em;
+	background-color: rgba(250,250,250,0.7);
+	color: #444;
+	margin-top: 45%;
+    padding: 4px !important;
+    position: relative !important;
+    text-align: center;
+    z-index: 999;
+}
+
+.cont {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  color: #EEE;
+  border-radius: 5px;
+}
+
+hr {
+  margin: 10px;
+  border: none;
+  border-bottom: thin solid rgba(255,255,255,.1);
+}
+
+div.title { font-size: 2em; }
+
+h1 span {
+  font-weight: 300;
+  color: #Fd4;
+}
+
+.stars {
+    color: #f00;
+    margin-left: 15px;
+    margin-top: 45%;
+    position: absolute;
+    z-index: 999;
+}
+input.star { display: none; }
+
+label.star {
+  float: right;
+  font-size: 36px;
+  color: #fff;
+  transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+  content: '\f005';
+  color: #FD4;
+  transition: all .25s;
+}
+
+input.star-5:checked ~ label.star:before {
+  color: #FE7;
+  text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before { color: #F62; }
+
+label.star:hover { transform: rotate(-15deg) scale(1.3); }
+
+label.star:before {
+  content: '\f006';
+  font-family: FontAwesome;
+}
