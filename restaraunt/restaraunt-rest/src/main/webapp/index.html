@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <script src="js/angular.js"></script>
+    <script src="js/constant.js"></script>
     <script src="js/root.js"></script>
    
 
@@ -203,7 +204,7 @@
                             </form>
                           </div>
                         </div>
-                 
+                       <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12 restaurantreview"> {{restaurantData.lastReview}}</div>
                  </div>
                 </a>
             </div>
@@ -332,7 +333,7 @@
         console.log("Name: " + profile.getName());
         console.log("Image URL: " + profile.getImageUrl());
         console.log("Email: " + profile.getEmail());
-
+  
     };
 
 </script>
