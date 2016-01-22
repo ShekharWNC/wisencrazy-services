@@ -1,29 +1,34 @@
 package com.wisencrazy.restaraunt.services;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
 import com.dozer.mapper.DozerUtil;
 import com.dto.AreaDTO;
 import com.dto.CityDTO;
-import com.dto.CustomerDTO;
-import com.dto.CustomerSignupDTO;
+import com.dto.RestarauntDTO;
+import com.dto.RestarauntHasReviewsDTO;
 import com.dto.RestarauntLocationViewDTO;
 import com.dto.StateDTO;
-import com.dto.constants.EnumConstants.SignupType;
-import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.CommonUtils;
 import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.QueryParameter;
 import com.wisencrazy.common.exception.ApplicationException;
-import com.wisencrazy.common.exception.DuplicateEntryException;
 import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.restaraunt.datasource.CommonPersistenceImpl;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Area;
 import com.wisencrazy.restaraunt.datasource.entities.entity.City;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer;
-import com.wisencrazy.restaraunt.datasource.entities.entity.Customer.CustomerAccountStatus;
+import com.wisencrazy.restaraunt.datasource.entities.entity.Restaraunt;
+import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasReviews;
+import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasReviewsPK;
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings.Timings;
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView;
 import com.wisencrazy.restaraunt.datasource.entities.entity.State;
@@ -100,6 +105,83 @@ public class RestarauntSearch {
 			throw e;
 		}
 			
+	}
+	
+	public List<RestarauntHasReviewsDTO> searchpageRestarauntReview(List<RestarauntDTO> restarauntDTOs) throws IncorrectArgumentException{
+		if(restarauntDTOs==null)throw new IncorrectArgumentException("Null search parameter passed");
+		List<RestarauntHasReviewsDTO> restarauntReviews = new ArrayList<RestarauntHasReviewsDTO>();
+		for(RestarauntDTO restarauntDTO:restarauntDTOs){
+			if(!CommonUtils.isEmpty(restarauntDTO.getSid())){
+				RestarauntHasReviewsDTO dto=new RestarauntHasReviewsDTO();
+				//Fetch the average rating
+				BigDecimal avgRating = null;
+				logger.debug("Finding Average Rating for restarauntSid: {}",restarauntDTO.getSid());
+				try{
+					Query avgQuery=commonRepoServ.getEntityManager().createNativeQuery(RestarauntHasReviews.FIND_RESTARAUNT_AVERAGE_RATING);
+					avgQuery.setParameter("restroSid", restarauntDTO.getSid());
+					avgRating=(BigDecimal) avgQuery.getSingleResult();
+				}catch(Exception e){
+					logger.error("Error while fetching Average rating for restroSid : {}, {}",restarauntDTO.getSid(),e);					
+				}
+				dto.setRating(avgRating.intValue());
+				//fetch the last review informarion
+				RestarauntHasReviewsDTO hasReviewsDTO = null;
+				try {
+					hasReviewsDTO = commonRepoServ.getDtoListByNamedQuery(RestarauntHasReviews.class, RestarauntHasReviewsDTO.class, RestarauntHasReviews.FIND_LAST_REVIEW_RESTARAUNT, QueryParameter.with("restroSid", restarauntDTO.getSid()).parameters()).get(0);
+				} catch (ApplicationException e) {
+					logger.error("Error while fetching Last Review for restroSid : {}, {}",restarauntDTO.getSid(),e);
+				}
+				if(hasReviewsDTO!=null){
+					hasReviewsDTO.setRating(avgRating.intValue());
+					restarauntReviews.add(hasReviewsDTO);
+					dto=null;
+				}else
+					restarauntReviews.add(dto);
+				
+			}
+			return restarauntReviews;
+		}
+		return restarauntReviews;
+	}
+	
+	public boolean submitReview(RestarauntHasReviewsDTO restarauntHasReviewsDTO) throws IncorrectArgumentException,ApplicationException,Exception{
+		logger.debug("Submitting review for DTO: {}",JsonUtils.toJson(restarauntHasReviewsDTO));
+		if(restarauntHasReviewsDTO==null || CommonUtils.isEmpty(restarauntHasReviewsDTO.getCustomer().getSid()) || CommonUtils.isEmpty(restarauntHasReviewsDTO.getRestarauntSid()) || restarauntHasReviewsDTO.getRating()<=0 || restarauntHasReviewsDTO.getRating()>5)
+			throw new IncorrectArgumentException("Illegal Review being submitted");
+		logger.debug("Fetching Restaraunt Id By Sid: {}",restarauntHasReviewsDTO.getRestarauntSid());
+		Integer restroId=0;
+		try {
+			restroId=commonRepoServ.findIdBySid(Restaraunt.class.getName(), restarauntHasReviewsDTO.getRestarauntSid());
+		} catch (Exception e) {
+			logger.error("Error while getting ID for restarauntSid : {} {}",restarauntHasReviewsDTO.getRestarauntSid(),e);
+			e.printStackTrace();
+			throw e;
+		}
+		logger.debug("Fetching Customer Id by Sid : {}",restarauntHasReviewsDTO.getCustomer());
+		Integer customerId=0;
+		try {
+			customerId=commonRepoServ.findIdBySid(Customer.class.getName(), restarauntHasReviewsDTO.getCustomer().getSid());
+		} catch (Exception e) {
+			logger.error("Error while getting ID for customerSid : {} {}",restarauntHasReviewsDTO.getCustomer().getSid(),e);
+			e.printStackTrace();
+			throw e;
+		}
+		logger.debug("preparing the review entity");
+		RestarauntHasReviews hasReviews=dozerUtil.convert(restarauntHasReviewsDTO, RestarauntHasReviews.class);
+		hasReviews.setReviewsPK(new RestarauntHasReviewsPK(restroId,customerId));
+		hasReviews.setCustomer(null);
+		if(hasReviews.getTimestamp()==null)hasReviews.setTimestamp(new Timestamp(new Date().getTime()));
+		logger.debug("Saving the review Entity: {}",JsonUtils.toJson(hasReviews));
+		try {
+			commonRepoServ.save(hasReviews);
+		} catch (ApplicationException e) {
+			logger.error("Error while saving review: {}",e);
+			e.printStackTrace();
+			throw e;
+		}
+		logger.debug("Review submitted successfully:");
+		return true;
+		
 	}
 	
 }

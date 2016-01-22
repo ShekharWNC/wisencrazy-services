@@ -16,6 +16,7 @@
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Restaraunt</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasReviews</class>
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->

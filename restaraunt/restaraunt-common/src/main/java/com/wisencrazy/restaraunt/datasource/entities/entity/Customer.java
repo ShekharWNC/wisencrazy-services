@@ -112,6 +112,7 @@ public class Customer extends AbsBaseEntity {
 	@Column(name="signup_type")
 	private SignupType signupType;
 	
+	
 	public String getEmail() {
 		return this.email;
 	}

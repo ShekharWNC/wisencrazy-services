@@ -77,8 +77,8 @@ public class Restaraunt extends AbsBaseEntity {
 	@Column(name="cost_for_2")
 	private int costFor2;
 
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="area_id")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "area_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Area area;
 
 	public Area getArea() {

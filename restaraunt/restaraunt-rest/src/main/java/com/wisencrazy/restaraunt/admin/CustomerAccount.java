@@ -21,8 +21,10 @@ import org.slf4j.LoggerFactory;
 
 import com.dto.AreaDTO;
 import com.dto.CustomerDTO;
+import com.dto.CustomerReviewDTO;
 import com.dto.CustomerSignupDTO;
 import com.dto.RestarauntDTO;
+import com.dto.RestarauntHasReviewsDTO;
 import com.dto.constants.EnumConstants.SignupType;
 import com.google.dto.CustomerLoginDTO;
 import com.wisencrazy.common.JsonUtils;
@@ -77,11 +79,17 @@ public class CustomerAccount {
 //		dto.setCreatedDate(new Timestamp(new Date().getTime()));
 //		dto.setLatitude("");dto.setLongitude("");
 //		dto.setArea(areaDTO);
-		GoogleLocationInput dto=new GoogleLocationInput();
-		dto.setDistance("8");
-		dto.setLatitude("12.85");
-		dto.setLongitude("77.6");
-		dto.setTimings(Timings.BR.name());
+//		GoogleLocationInput dto=new GoogleLocationInput();
+//		dto.setDistance("8");
+//		dto.setLatitude("12.85");
+//		dto.setLongitude("77.6");
+//		dto.setTimings(Timings.BR.name());
+		RestarauntHasReviewsDTO dto=new RestarauntHasReviewsDTO();
+		dto.setComment("Comment");dto.setRating(5);
+		dto.setRestarauntSid("retroSid");
+		CustomerReviewDTO customerReviewDTO=new CustomerReviewDTO();
+		customerReviewDTO.setSid("customerSid");
+		dto.setCustomer(customerReviewDTO);
 		return Response.status(Status.OK).entity(dto).build();//Customer registered successfully.
 	}
 	
