@@ -69,13 +69,14 @@ app.controller("HomeController",function($scope,$rootScope,$http){
                 alert(data);
       	    break;
 			case "getCity":
-				
+				console.log(data);
 				break;
 			case "getArea":
 				
 				break;
 			case "getAllStates":
-				console.log(data);
+				$currentState=data[0].stateName;
+				$scope.getCities($currentState);
 				break;
         }   
     }
