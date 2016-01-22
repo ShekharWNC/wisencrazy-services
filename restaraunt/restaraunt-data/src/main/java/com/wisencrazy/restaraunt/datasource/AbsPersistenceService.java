@@ -72,6 +72,7 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 			logger.error("save(T)", exception);
 			throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);			
 		}catch(Exception exception){
+			exception.printStackTrace();
 			if(exception.getCause().toString().contains(ConstraintViolationException.class.getSimpleName())){
 				throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);
 			}

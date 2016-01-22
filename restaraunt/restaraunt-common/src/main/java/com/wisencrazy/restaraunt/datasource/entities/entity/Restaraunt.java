@@ -27,7 +27,7 @@ import com.dto.constants.EnumConstants.SignupType;
 @Entity
 @Table(name="restaraunt")
 @NamedQueries({
-	@NamedQuery(name = Customer.FIND_BY_SID, query = "select r from Restaraunt r where hex(r.sid) = :sid"),
+	@NamedQuery(name = Restaraunt.FIND_BY_SID, query = "select r from Restaraunt r where hex(r.sid) = :sid"),
 })
 public class Restaraunt extends AbsBaseEntity {
 
@@ -77,8 +77,8 @@ public class Restaraunt extends AbsBaseEntity {
 	@Column(name="cost_for_2")
 	private int costFor2;
 
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="area_id")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "area_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Area area;
 
 	public Area getArea() {
