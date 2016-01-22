@@ -1,5 +1,5 @@
 var app=angular.module("shop",[]);
-app.controller("HomeController",function($scope,$rootScope){
+app.controller("HomeController",function($scope,$rootScope,$http){
 	$scope.initAll=function(){
 		$scope.selectedTab = "login";
 		$scope.signUp={
