@@ -182,4 +182,4 @@ app.controller("HomeController",function($scope,$rootScope,$http){
     }
     $scope.selectedTab = "login";
 	$scope.initAll();
-})
+});
