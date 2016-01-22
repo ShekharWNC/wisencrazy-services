@@ -14,7 +14,15 @@ app.controller("HomeController",function($scope,$rootScope){
 			"isShow": false,
 			"show": false,
 			"googleAccessToken":null
-		  }
+		  };
+		  $scope.nearBy={
+						  "latitude": null,
+						  "longitude": null,
+						  "distance": 8,
+						  "areaSid": null,
+						  "stateSid": null,
+						  "timings": "BR"
+						};
 		$scope.date = Date('hh');
 		 $scope.getLocation();
 		 $scope.restaurantData={"restaurantName":"Jiyo Natural","imgPath":"../img/food.jpg","ratings":"2","lastReview":"Food is good"};
@@ -29,6 +37,7 @@ app.controller("HomeController",function($scope,$rootScope){
 		// }else if($scope.date.getHours()<7 && $scope.date.getHours()>21){
 		// 	$scope.foodReady="Free Hour";
 		// }
+		$scope.getStates();
 	}
 	
 	
@@ -65,6 +74,9 @@ app.controller("HomeController",function($scope,$rootScope){
 			case "getArea":
 				
 				break;
+			case "getAllStates":
+				console.log(data);
+				break;
         }   
     }
     
@@ -86,6 +98,9 @@ app.controller("HomeController",function($scope,$rootScope){
 			case "getArea":
 				
 				break;
+			case "getAllStates":
+				console.log(data);
+				break;
         }
     }
 	
@@ -98,12 +113,13 @@ app.controller("HomeController",function($scope,$rootScope){
 	}
 
 	$scope.showPosition=function(position) {
-	    $scope.latitudePosition= position.coords.latitude ;
-	    $scope.longitudePosition=position.coords.longitude;	
+	    $scope.nearBy.latitude= position.coords.latitude ;
+	    $scope.nearBy.longitude=position.coords.longitude;	
 	};
 	
-	$rootScope.googlesignup = function($scope.userData)
+	$rootScope.googlesignup = function(userData)
     {
+		$scope.userData = userData ;
        if ($scope.userData && $scope.userData.email && $scope.userData.googleAccessToken && $scope.userData.name) {
                $scope.remoteCommunication(CONSTANTS.RESTAPIS.SIGNUPWITHGOOGLE, "POST",$scope.signUp, {'Content-type': 'application/json'}, null, "AuthenticationAction");
        }
@@ -155,6 +171,10 @@ app.controller("HomeController",function($scope,$rootScope){
 		}
     };
 	
+	$scope.getStates = function()
+    {
+		$scope.remoteCommunication(CONSTANTS.RESTAPIS.GETALLSTATES, "GET",null, {'Content-type': 'application/json'}, null, "getAllStates");
+    };
 	
     $scope.loadTab = function(t) {
         $scope.selectedTab = t;

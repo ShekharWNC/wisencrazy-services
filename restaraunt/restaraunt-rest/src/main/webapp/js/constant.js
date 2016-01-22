@@ -8,7 +8,7 @@ var CONSTANTS = (function(){
         this.CITYBYSTATENAME = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/cities/state/";
         this.AREABYCITY = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/areas/city/";
         this.SIGNUPWITHGOOGLE = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/customer/signup";
-        
+        this.GETALLSTATES = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/states";
         return this;
     })();
     
