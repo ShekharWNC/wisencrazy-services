@@ -54,6 +54,20 @@ public class CommonPersistenceImpl extends	AbsPersistenceService<Serializable>{
 		return dtos;
 	}
 	
+	public <T,U> List<U> getDtoListByNamedQueryWithLimits(Class<T> entityClass, Class<U> dtoClass, 
+			String queryName, Map<String, Object> parameters,Integer limits)throws ApplicationException{
+		logger.trace("getDtoListByNamedQuery(Class,Class,String,Map<String,Object>) - Start");
+		List<T> entities =null;
+		List<U> dtos = null;
+		entities = findEntityListByNamedQuery(queryName, parameters,limits);
+		if(entities == null || entities.size() == 0){
+			throw new ApplicationException(ApplicationConstants.NO_RESULT); //No result found exception.
+		}
+		dtos = mapper.convertList(entities, dtoClass);
+		logger.trace("getDtoListByNamedQuery(Class,Class,String,Map<String,Object>) - End");
+
+		return dtos;
+	}
 	
 	public <T,U> List<U> getDtoListByNamedQueryByMap(Class<T> entityClass, Class<U> dtoClass, 
 			String queryName, Map<String, Object> parameters, String mapId)throws ApplicationException{

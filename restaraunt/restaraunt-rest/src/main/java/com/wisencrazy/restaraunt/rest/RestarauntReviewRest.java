@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.dto.RestarauntDTO;
 import com.dto.RestarauntHasReviewsDTO;
+import com.dto.RestarauntHasReviewsInput;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
 import com.wisencrazy.restaraunt.rest.dto.ManualLocationInput;
@@ -54,5 +55,19 @@ public class RestarauntReviewRest {
 				return ErrorCode.getErrorResponse(e);
 			}
 			
+		}
+		
+		@Path("/{sid}")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response getReviews(@PathParam("sid")String restroSid,RestarauntHasReviewsInput input){
+			try {
+				return Response.status(Status.OK).entity(restaraunt.getRestarauntReviews(restroSid, input)).build();
+			} catch (ApplicationException e) {
+				return ErrorCode.getErrorResponse(e);
+			} catch (Exception e) {
+				return ErrorCode.getErrorResponse(e);
+			}
 		}
 }

@@ -15,6 +15,7 @@ import com.dto.AreaDTO;
 import com.dto.CityDTO;
 import com.dto.RestarauntDTO;
 import com.dto.RestarauntHasReviewsDTO;
+import com.dto.RestarauntHasReviewsInput;
 import com.dto.RestarauntLocationViewDTO;
 import com.dto.StateDTO;
 import com.wisencrazy.common.CommonUtils;
@@ -33,6 +34,7 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView;
 import com.wisencrazy.restaraunt.datasource.entities.entity.State;
 import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
+import com.wisencrazy.restaraunt.rest.dto.ManualLocationInput;
 
 public class RestarauntSearch {
 
@@ -106,7 +108,27 @@ public class RestarauntSearch {
 		}
 			
 	}
-	
+
+	public List<RestarauntLocationViewDTO> searchRestarauntNearBy(ManualLocationInput input) throws IncorrectArgumentException,ApplicationException{
+		if(input==null)throw new IncorrectArgumentException("Null Search parameter passed for nearby Search");
+		if(CommonUtils.isEmpty(input.getAreaSid()) || CommonUtils.isEmpty(input.getTimings()))
+			throw new IncorrectArgumentException("Invalid Search parameters passed for nearby Search");
+		Timings timings=null;
+		try{
+			timings=Enum.valueOf(Timings.class, input.getTimings());				
+		}catch(Exception e){
+			throw new IncorrectArgumentException("Invalid value for Timing search passed must be BR,LU,DI");
+		}
+		try{
+			List<RestarauntLocationViewDTO> restarauntsDTO=commonRepoServ.getDtoListByNamedQuery(RestarauntLocationView.class, RestarauntLocationViewDTO.class, RestarauntLocationView.FIND_BY_AREA_SID, QueryParameter.with("areaSid", input.getAreaSid()).and("timing", timings).parameters());
+			return restarauntsDTO;
+		} catch (ApplicationException e) {
+			logger.error("Error while fethching cities for state: {}",e);
+			throw e;
+		}
+			
+	}
+
 	public List<RestarauntHasReviewsDTO> searchpageRestarauntReview(List<RestarauntDTO> restarauntDTOs) throws IncorrectArgumentException{
 		if(restarauntDTOs==null)throw new IncorrectArgumentException("Null search parameter passed");
 		List<RestarauntHasReviewsDTO> restarauntReviews = new ArrayList<RestarauntHasReviewsDTO>();
@@ -120,10 +142,10 @@ public class RestarauntSearch {
 					Query avgQuery=commonRepoServ.getEntityManager().createNativeQuery(RestarauntHasReviews.FIND_RESTARAUNT_AVERAGE_RATING);
 					avgQuery.setParameter("restroSid", restarauntDTO.getSid());
 					avgRating=(BigDecimal) avgQuery.getSingleResult();
+					dto.setRating(avgRating.intValue());
 				}catch(Exception e){
 					logger.error("Error while fetching Average rating for restroSid : {}, {}",restarauntDTO.getSid(),e);					
 				}
-				dto.setRating(avgRating.intValue());
 				//fetch the last review informarion
 				RestarauntHasReviewsDTO hasReviewsDTO = null;
 				try {
@@ -182,6 +204,14 @@ public class RestarauntSearch {
 		logger.debug("Review submitted successfully:");
 		return true;
 		
+	}
+	
+	public List<RestarauntHasReviewsDTO> getRestarauntReviews(String restarauntSid,RestarauntHasReviewsInput input) throws ApplicationException{
+		logger.debug("Getting review for restaraunt: {} with input info {}",restarauntSid,JsonUtils.toJson(input));
+		if(CommonUtils.isEmpty(restarauntSid) || input==null || input.getLimit()<=0 || input.getTimestamp()==null)throw new IncorrectArgumentException("Invalid search input");
+		QueryParameter parameter=QueryParameter.with("restroSid", restarauntSid);
+		parameter.and("timestamp", input.getTimestamp());
+		return commonRepoServ.getDtoListByNamedQueryWithLimits(RestarauntHasReviews.class, RestarauntHasReviewsDTO.class, RestarauntHasReviews.FIND_REVIEWS_RESTARAUNT, parameter.parameters(), input.getLimit());
 	}
 	
 }

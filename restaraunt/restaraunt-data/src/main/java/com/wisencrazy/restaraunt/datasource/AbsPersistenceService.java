@@ -76,7 +76,8 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 			if(exception.getCause().toString().contains(ConstraintViolationException.class.getSimpleName())){
 				throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);
 			}
-			logger.error("save(T)", exception); 
+			logger.error("save(T)", exception);
+			entityManager.flush();
 			throw new ApplicationException(ApplicationConstants.GENERAL_EXCEPTION, exception);
 		}
 		logger.trace("save(T) - end"); 
@@ -530,6 +531,11 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 		return (List<T>) findEntityListByNamedQuery(queryName, parameters, 0);
 	}
 
+	public List findEntityListByNamedQuery(String queryName,
+			Map<String, Object> parameters,Integer limits)
+			throws ApplicationException {
+		return (List<T>) findEntityListByNamedQuery(queryName, parameters, limits);
+	}
 	
 	
 	/* (non-Javadoc)

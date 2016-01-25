@@ -76,6 +76,9 @@ public class Restaraunt extends AbsBaseEntity {
 	
 	@Column(name="cost_for_2")
 	private int costFor2;
+	
+	@Column(name="area_id")
+	private int areaId;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "area_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -183,6 +186,14 @@ public class Restaraunt extends AbsBaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(int areaId) {
+		this.areaId = areaId;
 	}
 
 

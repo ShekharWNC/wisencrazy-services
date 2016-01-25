@@ -10,6 +10,8 @@ import com.dto.CityDTO;
 import com.dto.CustomerDTO;
 import com.dto.CustomerSignupDTO;
 import com.dto.RestarauntDTO;
+import com.dto.RestarauntHasReviewsDTO;
+import com.dto.RestarauntHasReviewsInput;
 import com.dto.RestarauntLocationViewDTO;
 import com.dto.StateDTO;
 import com.dto.constants.EnumConstants.SignupType;
@@ -25,6 +27,7 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.Area;
 import com.wisencrazy.restaraunt.datasource.entities.entity.City;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Restaraunt;
+import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasReviews;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer.CustomerAccountStatus;
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings.Timings;
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView;
@@ -56,8 +59,17 @@ public class RestarauntManage {
 		Area area=commonRepoServ.getEntityBySid(Area.class, restarauntDTO.getArea().getSid());
 		restaraunt.generateUuid();
 		restaraunt.setArea(area);
+		restaraunt.setAreaId(area.getId());
 		logger.debug("Saving Retaraunt: {}",JsonUtils.toJson(restaraunt));
 		commonRepoServ.save(restaraunt);
-		return false;
+		return true;
 	}
+	
+	public RestarauntDTO getRestarauntInfo(String restarauntSid) throws ApplicationException{
+		logger.info("Finding information for sid : {}",restarauntSid);
+		RestarauntDTO restaraunt = null;
+		restaraunt = commonRepoServ.getDtoByNamedQuery(Restaraunt.class, RestarauntDTO.class, Restaraunt.FIND_BY_SID, QueryParameter.with("sid", restarauntSid).parameters());
+		return restaraunt;
+	}
+	
 }

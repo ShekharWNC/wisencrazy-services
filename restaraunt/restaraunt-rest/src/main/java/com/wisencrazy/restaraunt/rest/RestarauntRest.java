@@ -75,7 +75,11 @@ public class RestarauntRest {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response findRestaraunts(ManualLocationInput locationInput){
-			return null;
+			try {
+				return Response.status(Status.OK).entity(restaraunt.searchRestarauntNearBy(locationInput)).build();
+			} catch (ApplicationException e) {
+				return ErrorCode.getErrorResponse(e);
+			}
 		}
 		
 		@PUT
@@ -88,5 +92,17 @@ public class RestarauntRest {
 			} catch (ApplicationException e) {
 				return ErrorCode.getErrorResponse(e);
 			}			
+		}
+		
+		@GET
+		@Path("/{sid}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response getRestarauntInfo(@PathParam("sid")String restarauntSid){
+			try {
+				return Response.status(Status.OK).entity(restarauntM.getRestarauntInfo(restarauntSid)).build();
+			} catch (ApplicationException e) {
+				return ErrorCode.getErrorResponse(e);
+			}
+			
 		}
 }

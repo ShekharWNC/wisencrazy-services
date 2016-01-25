@@ -15,6 +15,9 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings
 
 @Entity
 @Table(name="vw_restaraunt_location")
+@NamedQueries({
+	@NamedQuery(name=RestarauntLocationView.FIND_BY_AREA_SID,query="select rlv from RestarauntLocationView rlv where rlv.areaSid=:areaSid and timing=:timing")
+})
 public class RestarauntLocationView implements Serializable {
 
 	/**
@@ -26,6 +29,8 @@ public class RestarauntLocationView implements Serializable {
 
 	public static final String FIND_RESTRO_BY_DISTANCE = "select id,sid,name,area_name,photo_url,latitude,longitude,timing,(6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) "
 			+ "- RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(latitude)))) AS distance from vw_restaraunt_location where timing=:timing having distance <=:distance order by distance ASC";
+	
+	public static final String FIND_BY_AREA_SID=PREFIX+"findByAreaSid";
 	
 	@Id
 	@Column(name="id")
@@ -39,6 +44,9 @@ public class RestarauntLocationView implements Serializable {
 	
 	@Column(name="area_name")
 	private String areaName;
+	
+	@Column(name="area_sid")
+	private String areaSid;
 	
 	@Column(name="photo_url")
 	private String photoUrl;
@@ -126,6 +134,14 @@ public class RestarauntLocationView implements Serializable {
 
 	public void setDistance(String distance) {
 		this.distance = distance;
+	}
+
+	public String getAreaSid() {
+		return areaSid;
+	}
+
+	public void setAreaSid(String areaSid) {
+		this.areaSid = areaSid;
 	}
 	
 	
