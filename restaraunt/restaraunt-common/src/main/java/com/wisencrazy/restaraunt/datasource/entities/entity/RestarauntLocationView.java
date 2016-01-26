@@ -27,7 +27,7 @@ public class RestarauntLocationView implements Serializable {
 
 	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntLocationView.";
 
-	public static final String FIND_RESTRO_BY_DISTANCE = "select id,sid,name,area_name,photo_url,latitude,longitude,timing,(6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) "
+	public static final String FIND_RESTRO_BY_DISTANCE = "select id,sid,name,area_name,photo_url,latitude,longitude,area_sid,timing,(6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) "
 			+ "- RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(latitude)))) AS distance from vw_restaraunt_location where timing=:timing having distance <=:distance order by distance ASC";
 	
 	public static final String FIND_BY_AREA_SID=PREFIX+"findByAreaSid";

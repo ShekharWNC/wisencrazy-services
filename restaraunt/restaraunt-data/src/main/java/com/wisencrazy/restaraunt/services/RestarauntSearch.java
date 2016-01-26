@@ -1,6 +1,7 @@
 package com.wisencrazy.restaraunt.services;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -137,12 +138,17 @@ public class RestarauntSearch {
 				RestarauntHasReviewsDTO dto=new RestarauntHasReviewsDTO();
 				//Fetch the average rating
 				BigDecimal avgRating = null;
+				BigInteger countRating=null;
 				logger.debug("Finding Average Rating for restarauntSid: {}",restarauntDTO.getSid());
 				try{
 					Query avgQuery=commonRepoServ.getEntityManager().createNativeQuery(RestarauntHasReviews.FIND_RESTARAUNT_AVERAGE_RATING);
 					avgQuery.setParameter("restroSid", restarauntDTO.getSid());
-					avgRating=(BigDecimal) avgQuery.getSingleResult();
+					Object[] result=(Object[]) avgQuery.getSingleResult();
+					logger.debug("Avg Count : {}",JsonUtils.toJson(result));
+					avgRating=(BigDecimal)result[0];
+					countRating= (BigInteger) result[1];
 					dto.setRating(avgRating.intValue());
+					dto.setRatingCount(countRating.intValue());
 				}catch(Exception e){
 					logger.error("Error while fetching Average rating for restroSid : {}, {}",restarauntDTO.getSid(),e);					
 				}
@@ -155,6 +161,7 @@ public class RestarauntSearch {
 				}
 				if(hasReviewsDTO!=null){
 					hasReviewsDTO.setRating(avgRating.intValue());
+					hasReviewsDTO.setRatingCount(countRating.intValue());
 					restarauntReviews.add(hasReviewsDTO);
 					dto=null;
 				}else

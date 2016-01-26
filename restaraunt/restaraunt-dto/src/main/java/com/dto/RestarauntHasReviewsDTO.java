@@ -29,6 +29,7 @@ public class RestarauntHasReviewsDTO implements Serializable {
 	private CustomerReviewDTO customer;
 	
 	private String restarauntSid;
+	private int ratingCount;
 	
 	public int getRating() {
 		return rating;
@@ -68,6 +69,14 @@ public class RestarauntHasReviewsDTO implements Serializable {
 
 	public void setRestarauntSid(String restarauntSid) {
 		this.restarauntSid = restarauntSid;
+	}
+
+	public int getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(int ratingCount) {
+		this.ratingCount = ratingCount;
 	}
 
 	

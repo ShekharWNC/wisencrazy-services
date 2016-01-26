@@ -31,7 +31,7 @@ public class RestarauntHasReviews implements Serializable {
 	private static final long serialVersionUID = 8404958547219976969L;
 
 	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasReviews.";
-	public static final String FIND_RESTARAUNT_AVERAGE_RATING="select avg(rating) as AVERAGE_RATING from restaraunt_has_reviews, restaraunt r where hex(r.sid)=:restroSid";
+	public static final String FIND_RESTARAUNT_AVERAGE_RATING="select avg(rating) as AVERAGE_RATING,count(rating) as COUNT from restaraunt_has_reviews, restaraunt r where hex(r.sid)=:restroSid";
 	public static final String FIND_LAST_REVIEW_RESTARAUNT=PREFIX+"findLastRevwRating";
 	public static final String FIND_REVIEWS_RESTARAUNT=PREFIX+"findReviewForRestaraunt";
 	

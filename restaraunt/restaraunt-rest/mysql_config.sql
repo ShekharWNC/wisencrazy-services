@@ -141,11 +141,65 @@ CREATE TABLE `restaraunt_has_reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-Alter view vw_restaraunt_location as 
+create view vw_restaraunt_location as 
 select r.id,hex(r.sid) as `sid`,r.name,a.area_name,hex(a.sid) as `area_sid`,rht.photo_url,latitude,longitude,timing,'distance' from restaraunt r 
 join area a on r.area_id=a.id 
 left outer join restaraunt_has_timings rht on r.id=rht.restaraunt_id;
 
+
+CREATE TABLE `item_category` (
+  `id` INT(11) NOT NULL COMMENT '',
+  `sid` BINARY(32) NOT NULL COMMENT '',
+  `name` VARCHAR(100) NOT NULL COMMENT '',
+  `description` MEDIUMTEXT NULL COMMENT '',
+  `tag_name` VARCHAR(250) NULL COMMENT '',
+  `photo_url` MEDIUMTEXT NULL COMMENT '',
+  `restro_id` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
+  INDEX `fk_restro_key_idx` (`restro_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_restro_key`
+    FOREIGN KEY (`restro_id`)
+    REFERENCES `wisencrazy_restaraunt`.`restaraunt` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `item` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `sid` BINARY(32) NOT NULL COMMENT '',
+  `name` MEDIUMTEXT NULL COMMENT '',
+  `size` VARCHAR(255) NULL COMMENT '',
+  `price` FLOAT NOT NULL DEFAULT 0.00 COMMENT '',
+  `url` MEDIUMTEXT NULL COMMENT '',
+  `description` MEDIUMTEXT NULL COMMENT '',
+  `item_type` VARCHAR(45) NULL COMMENT '',
+  `tag_name` VARCHAR(255) NULL COMMENT '',
+  `isVeg` TINYINT(1) NOT NULL COMMENT '',
+  `item_category_id` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
+  INDEX `fk_item_category_idx` (`item_category_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_item_category`
+    FOREIGN KEY (`item_category_id`)
+    REFERENCES `wisencrazy_restaraunt`.`item_category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `item_has_size` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `sid` BINARY(32) NOT NULL COMMENT '',
+  `name` VARCHAR(255) NULL COMMENT '',
+  `price` FLOAT NOT NULL DEFAULT 0.00 COMMENT '',
+  `description` MEDIUMTEXT NULL COMMENT '',
+  `item_id` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
+  INDEX `fk_item_id_idx` (`item_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `wisencrazy_restaraunt`.`item` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
