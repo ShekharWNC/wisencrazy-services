@@ -150,7 +150,9 @@ public class RestarauntSearch {
 					dto.setRating(avgRating.intValue());
 					dto.setRatingCount(countRating.intValue());
 				}catch(Exception e){
-					logger.error("Error while fetching Average rating for restroSid : {}, {}",restarauntDTO.getSid(),e);					
+					logger.error("Error while fetching Average rating for restroSid : {}, {}",restarauntDTO.getSid(),e);
+					dto.setRating(0);
+					dto.setRatingCount(0);
 				}
 				//fetch the last review informarion
 				RestarauntHasReviewsDTO hasReviewsDTO = null;
@@ -162,6 +164,7 @@ public class RestarauntSearch {
 				if(hasReviewsDTO!=null){
 					hasReviewsDTO.setRating(avgRating.intValue());
 					hasReviewsDTO.setRatingCount(countRating.intValue());
+					hasReviewsDTO.setRestarauntSid(dto.getRestarauntSid());
 					restarauntReviews.add(hasReviewsDTO);
 					dto=null;
 				}else

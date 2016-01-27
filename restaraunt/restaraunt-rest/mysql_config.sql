@@ -174,7 +174,7 @@ CREATE TABLE `item` (
   `description` MEDIUMTEXT NULL COMMENT '',
   `item_type` VARCHAR(45) NULL COMMENT '',
   `tag_name` VARCHAR(255) NULL COMMENT '',
-  `isVeg` TINYINT(1) NOT NULL COMMENT '',
+  `is_veg` TINYINT(1) NOT NULL COMMENT '',
   `item_category_id` INT(11) NOT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
@@ -200,6 +200,12 @@ CREATE TABLE `item_has_size` (
     REFERENCES `wisencrazy_restaraunt`.`item` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    
+ALTER TABLE `wisencrazy_restaraunt`.`restaraunt` 
+ADD COLUMN `delivery_time` INT(11) NULL COMMENT '' AFTER `cost_for_2`,
+ADD COLUMN `delivery_charge` INT(11) NOT NULL default 0 COMMENT '' AFTER `delivery_time`,
+ADD COLUMN `min_delivery` INT(11) NULL COMMENT '' AFTER `delivery_charge`,
+ADD COLUMN `tags` VARCHAR(255) NULL COMMENT '' AFTER `min_delivery`;    
 
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));

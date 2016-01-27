@@ -21,9 +21,6 @@ public class ItemHasSize extends AbsBaseEntity {
 	@Column(name = "price")
 	private Float price;
 	
-	@Column(name = "is_available")
-	private Boolean avail;
-	
 	@Column(name = "description")
 	private String desc;
 	
@@ -47,13 +44,6 @@ public class ItemHasSize extends AbsBaseEntity {
 		this.price = price;
 	}
 
-	public Boolean getAvail() {
-		return avail;
-	}
-
-	public void setAvail(Boolean avail) {
-		this.avail = avail;
-	}
 
 	public String getDesc() {
 		return desc;

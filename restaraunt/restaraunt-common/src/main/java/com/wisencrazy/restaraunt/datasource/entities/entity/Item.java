@@ -45,7 +45,7 @@ public class Item extends AbsBaseEntity {
 	@Column(name="tag_name")
 	private String tagName;
 	
-	@Column(name="is_veg")
+	@Column(name="isVeg")
 	private boolean isVeg;
 	
 	@JoinColumn(name = "item_category_id", referencedColumnName = "id", nullable = false)

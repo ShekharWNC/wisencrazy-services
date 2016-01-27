@@ -83,6 +83,18 @@ public class Restaraunt extends AbsBaseEntity {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "area_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Area area;
+    
+    @Column(name="delivery_time")
+    private int deliveryTime;
+    
+    @Column(name="delivery_charge")
+    private int deliveryCharge;
+    
+    @Column(name="min_delivery")
+    private int minDelivery;
+    
+    @Column(name="tags")
+    private String tags;
 
 	public Area getArea() {
 		return area;
@@ -194,6 +206,38 @@ public class Restaraunt extends AbsBaseEntity {
 
 	public void setAreaId(int areaId) {
 		this.areaId = areaId;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public int getMinDelivery() {
+		return minDelivery;
+	}
+
+	public void setMinDelivery(int minDelivery) {
+		this.minDelivery = minDelivery;
+	}
+
+	public int getDeliveryCharge() {
+		return deliveryCharge;
+	}
+
+	public void setDeliveryCharge(int deliveryCharge) {
+		this.deliveryCharge = deliveryCharge;
+	}
+
+	public int getDeliveryTime() {
+		return deliveryTime;
+	}
+
+	public void setDeliveryTime(int deliveryTime) {
+		this.deliveryTime = deliveryTime;
 	}
 
 

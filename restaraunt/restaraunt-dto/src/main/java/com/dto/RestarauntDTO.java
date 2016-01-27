@@ -53,6 +53,46 @@ public class RestarauntDTO extends AbsCommonDTO {
 	private int costFor2;
 
 	private AreaDTO area;
+	
+    private int deliveryTime;
+    
+    private int deliveryCharge;
+    
+    private int minDelivery;
+    
+    private String tags;
+
+	public int getDeliveryTime() {
+		return deliveryTime;
+	}
+
+	public void setDeliveryTime(int deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
+
+	public int getDeliveryCharge() {
+		return deliveryCharge;
+	}
+
+	public void setDeliveryCharge(int deliveryCharge) {
+		this.deliveryCharge = deliveryCharge;
+	}
+
+	public int getMinDelivery() {
+		return minDelivery;
+	}
+
+	public void setMinDelivery(int minDelivery) {
+		this.minDelivery = minDelivery;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 
 	public int getCostFor2() {
 		return costFor2;

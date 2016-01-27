@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "item_category")
 @NamedQueries({
-	@NamedQuery(name=ItemCategory.FIND_BY_RESTRO_SID,query="select ic from ItemCategory hex(ic.restaraunt.sid)=:sid"),
+	@NamedQuery(name=ItemCategory.FIND_BY_RESTRO_SID,query="select ic from ItemCategory ic where hex(ic.restaraunt.sid) = :sid"),
 })
 public class ItemCategory extends AbsBaseEntity {
 
@@ -43,7 +43,7 @@ public class ItemCategory extends AbsBaseEntity {
 	@ManyToOne(optional = false)
 	private Restaraunt restaraunt;
 	
-	@OneToMany(mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval = true)
+	@OneToMany(mappedBy = "itemCategory", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<Item> item;
 	
 	public String getDesc() {
@@ -84,6 +84,14 @@ public class ItemCategory extends AbsBaseEntity {
 
 	public void setRestaraunt(Restaraunt restaraunt) {
 		this.restaraunt = restaraunt;
+	}
+
+	public List<Item> getItem() {
+		return item;
+	}
+
+	public void setItem(List<Item> item) {
+		this.item = item;
 	}
 
 }

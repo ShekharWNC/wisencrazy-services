@@ -14,6 +14,7 @@ public class ItemCategoryDTO extends AbsCommonDTO{
 	private String tagName;
 	private String photo_url;
 	private List<ItemDTO> item;
+	
 	public String getNm() {
 		return nm;
 	}
@@ -44,6 +45,4 @@ public class ItemCategoryDTO extends AbsCommonDTO{
 	public void setItem(List<ItemDTO> item) {
 		this.item = item;
 	}
-
-	
 }
