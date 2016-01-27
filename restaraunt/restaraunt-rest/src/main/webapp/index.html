@@ -57,9 +57,9 @@
                <p class="time-text">Now Your Breakfast Is Ready!!</p>
             </div>
              <div class="col-md-6 col-sm-8 col-lg-6">
-                <input type="text" class="headerinput col-lg-6 col-md-6 col-sm-8 col-xs-12" ng-model="city" placeholder="City">
-
-                <input type="text" class="headerinput col-lg-6 col-md-6 col-sm-8 col-xs-12" ng-model="area" placeholder="Area">
+              <select class="headerinput col-lg-6 col-md-6 col-sm-8 col-xs-12" ng-options="city as city.name for city in cities " ng-model="item" ng-change="update()"></select>
+              <select class="headerinput col-lg-6 col-md-6 col-sm-8 col-xs-12" ng-options="area as area.name for area in areas " ng-model="item" ng-change="update()"></select>
+               
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

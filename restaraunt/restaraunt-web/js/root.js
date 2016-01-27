@@ -1,4 +1,5 @@
 var app=angular.module("shop",[]);
+var  googleSignInSuccess=null;
 app.controller("HomeController",function($scope,$rootScope,$http){
 	$scope.initAll=function(){
 		$scope.selectedTab = "login";
@@ -16,27 +17,29 @@ app.controller("HomeController",function($scope,$rootScope,$http){
 			"googleAccessToken":null
 		  };
 		  $scope.nearBy={
-						  "latitude": null,
-						  "longitude": null,
-						  "distance": 8,
-						  "areaSid": null,
-						  "stateSid": null,
-						  "timings": "BR"
-						};
-		$scope.date = Date('hh');
+						"latitude": "12.85",
+						"longitude": "77.6",
+						"distance": "8",
+						"areaSid": null,
+						"stateSid": null,
+						"timings": "BR"
+					  };
+		 $scope.date =new Date();
+
 		 $scope.getLocation();
-		 $scope.restaurantData={"restaurantName":"Jiyo Natural","imgPath":"../img/food.jpg","ratings":"2","lastReview":"Food is good"};
-		// if($scope.date.getHours()>=7 && $scope.date.getHours()<=11){
-		// 	$scope.foodReady="Now Your Breakfast Is Ready";
-		// }else if($scope.date.getHours()>11 && $scope.date.getHours()<=15){
-		// 	$scope.foodReady="Now Your Lunch Is Ready";
-		// }else if($scope.date.getHours()>15 && $scope.date.getHours()<=17){
-		// 	$scope.foodReady="Now Your Snacks Is Ready";
-		// }else if($scope.date.getHours()>17 && $scope.date.getHours()<=20){
-		// 	$scope.foodReady="Now Your Dinner Is Ready";
-		// }else if($scope.date.getHours()<7 && $scope.date.getHours()>21){
-		// 	$scope.foodReady="Free Hour";
-		// }
+		 $scope.getNearestLocation();
+	
+		 if($scope.date.getHours()>=7 && $scope.date.getHours()<=11){
+		 	$scope.foodReady="Now Your Breakfast Is Ready";
+		 }else if($scope.date.getHours()>11 && $scope.date.getHours()<=15){
+		 	$scope.foodReady="Now Your Lunch Is Ready";
+		 }else if($scope.date.getHours()>15 && $scope.date.getHours()<=17){
+		 	$scope.foodReady="Now Your Snacks Is Ready";
+		 }else if($scope.date.getHours()>17 && $scope.date.getHours()<=20){
+		 	$scope.foodReady="Now Your Dinner Is Ready";
+		 }else if($scope.date.getHours()<7 || $scope.date.getHours()>21){
+		 	$scope.foodReady="Free Hour";
+		 }
 		$scope.getStates();
 	}
 	
@@ -66,17 +69,23 @@ app.controller("HomeController",function($scope,$rootScope,$http){
         switch(callBackOption)
         {
       	    case "getNear":
-                alert(data);
+                 $scope.restaurantData=data;
       	    break;
 			case "getCity":
-				console.log(data);
+				$scope.cities=data;
 				break;
 			case "getArea":
-				
+				$scope.area=data;		
 				break;
 			case "getAllStates":
 				$currentState=data[0].stateName;
 				$scope.getCities($currentState);
+				break;
+			case "AuthenticationAction":
+				$rootScope.userInfo=data;
+				break;
+			case "getAllreviewData":
+				console.log(data)
 				break;
         }   
     }
@@ -91,19 +100,41 @@ app.controller("HomeController",function($scope,$rootScope,$http){
         switch(callBackOption)
         {
 		    case "getNear":
-	               alert(data.errorMessage);
+	               	$scope.restaurantData=null;
 		    break;
 			case "getCity":
-				
-				break;
+				$scope.cities=null;
+			break;
 			case "getArea":
-				
-				break;
+				$scope.area=null;		
+			break;
 			case "getAllStates":
 				console.log(data);
+			break;
+			case "AuthenticationAction":
+				$rootScope.userInfo=null;
+				break;
+			case "getAllreviewData":
+				break;
+        }	
+    }
+	
+	
+	$scope.setCoreScreen=function(pageName){
+		switch (pageName.toUpperCase()) {
+            case "HOME":
+				$rootScope.mainScreen=CONSTANTS.SCREENS.HOME;
+				break;
+			case "ORDER":
+				$rootScope.mainScreen=CONSTANTS.SCREENS.ORDER;
 				break;
         }
-    }
+	}
+	
+	$scope.openHotel=function(sid){
+		$scope.setCoreScreen('order');
+	}
+	
 	
 	$scope.getLocation=function() {
 		if (navigator.geolocation) {
@@ -114,14 +145,23 @@ app.controller("HomeController",function($scope,$rootScope,$http){
 	}
 
 	$scope.showPosition=function(position) {
-	    $scope.nearBy.latitude= position.coords.latitude ;
-	    $scope.nearBy.longitude=position.coords.longitude;	
+	    //$scope.nearBy.latitude= position.coords.latitude ;
+	    //$scope.nearBy.longitude=position.coords.longitude;
+		$scope.getNearestLocation();
 	};
 	
 	$rootScope.googlesignup = function(userData)
     {
 		$scope.userData = userData ;
        if ($scope.userData && $scope.userData.email && $scope.userData.googleAccessToken && $scope.userData.name) {
+               $scope.remoteCommunication(CONSTANTS.RESTAPIS.SIGNUPWITHGOOGLE, "POST",$scope.signUp, {'Content-type': 'application/json'}, null, "AuthenticationAction");
+       }
+    }
+	
+	$scope.userRegistration = function(userData)
+    {
+		$scope.userData = userData ;
+       if ($scope.signUp.primaryContact && $scope.signUp.email && $scope.signUp.password && $scope.signUp.name) {
                $scope.remoteCommunication(CONSTANTS.RESTAPIS.SIGNUPWITHGOOGLE, "POST",$scope.signUp, {'Content-type': 'application/json'}, null, "AuthenticationAction");
        }
     }
@@ -141,18 +181,20 @@ app.controller("HomeController",function($scope,$rootScope,$http){
 	
 	$scope.getNearestLocation = function()
     {
-        if ( $scope.latitudePosition && $scope.longitudePosition) {
+{
 			$scope.axisJson={
-				"latitude": $scope.latitudePosition,
-				"longitude": $scope.longitudePosition,
-				"distance": "8",
-				"areaSid": null,
-				"stateSid": null,
-				"timings": "BR"
-			}
+						"latitude": "12.85",
+						"longitude": "77.6",
+						"distance": "8",
+						"areaSid": null,
+						"stateSid": null,
+						"timings": "BR"
+					  }
 			$scope.remoteCommunication(CONSTANTS.RESTAPIS.SEARCHNEARBY, "POST",$scope.axisJson, {'Content-type': 'application/json'}, null, "getNear");
-        }
+}
     };
+	
+	
     
 	$scope.getCities = function(stateName)
     {
@@ -165,8 +207,22 @@ app.controller("HomeController",function($scope,$rootScope,$http){
 	
 	$scope.getAreas = function(citySid)
     {
-        if (citySid) {
-			$scope.remoteCommunication(CONSTANTS.RESTAPIS.AREABYCITY + citySid, "GET",null, {'Content-type': 'application/json'}, null, "getArea");
+        if (citySid.sid) {
+			$scope.remoteCommunication(CONSTANTS.RESTAPIS.AREABYCITY + citySid.sid, "GET",null, {'Content-type': 'application/json'}, null, "getArea");
+        }else{
+			alert(CONSTANTS.MESSAGES.STATENOTFOUND);
+		}
+    };
+	
+	$scope.getAllReview = function(restoDetails)
+    {
+        if (restoDetails) {
+			$scope.restoSids=[];
+			for(var i=0;i<restoDetails.length;i++){
+				$scope.currentSid={"sid":restoDetails[i].sid}
+				$scope.restoSids.push($scope.currentSid);
+			}
+			$scope.remoteCommunication(CONSTANTS.RESTAPIS.GETALLREVIEW, "GET",null, {'Content-type': 'application/json'}, null, "getAllreviewData");
         }else{
 			alert(CONSTANTS.MESSAGES.STATENOTFOUND);
 		}

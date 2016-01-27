@@ -1,14 +1,15 @@
-var HOST = window.location.origin+":80"; 
+var HOST =window.location.origin;  //"http://54.169.209.237";//window.location.origin+":80"; 
 var CONSTANTS = (function(){
     //Application RESTfulApi's
     this.RESTAPIS = (function()
     {
         //Common API's
-        this.SEARCHNEARBY = HOST + "/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/search/nearby";
-        this.CITYBYSTATENAME = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/cities/state/";
-        this.AREABYCITY = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/areas/city/";
-        this.SIGNUPWITHGOOGLE = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/customer/signup";
-        this.GETALLSTATES = HOST +"/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/states";
+        this.SEARCHNEARBY =  "http://54.169.43.80/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/search/nearby";
+        this.CITYBYSTATENAME = "http://54.169.43.80/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/cities/state/";
+        this.AREABYCITY = "http://54.169.43.80/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/areas/city/";
+        this.SIGNUPWITHGOOGLE = "http://54.169.43.80/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/customer/signup";
+        this.GETALLSTATES = "http://54.169.43.80/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/states";
+        this.GETALLREVIEW="http://54.169.43.80/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/review/info";
         return this;
     })();
     
@@ -17,7 +18,8 @@ var CONSTANTS = (function(){
     this.SCREENS = (function()
     {
         //Common Screens
-        this.HEADER = HOST + "/web/pages/header.html";
+        this.ORDER = HOST + "/pages/menuinfo.html";
+        this.HOME = HOST + "/pages/home.html";
         
         return this;
     })();
