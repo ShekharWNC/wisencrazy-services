@@ -1,17 +1,7 @@
 package com.dto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import java.util.Date;
 
 public class RestarauntHasReviewsInput implements Serializable {
 	
@@ -20,15 +10,8 @@ public class RestarauntHasReviewsInput implements Serializable {
 	 */
 	private static final long serialVersionUID = 6169701313254790571L;
 	
-	private Timestamp timestamp;
+	private Date timestamp;
 	private Integer limit;
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
 
 	public Integer getLimit() {
 		return limit;
@@ -38,5 +21,13 @@ public class RestarauntHasReviewsInput implements Serializable {
 		this.limit = limit;
 	}
 
-	
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+
 }

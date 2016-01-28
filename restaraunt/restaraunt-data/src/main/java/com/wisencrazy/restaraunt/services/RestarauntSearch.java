@@ -219,9 +219,7 @@ public class RestarauntSearch {
 	public List<RestarauntHasReviewsDTO> getRestarauntReviews(String restarauntSid,RestarauntHasReviewsInput input) throws ApplicationException{
 		logger.debug("Getting review for restaraunt: {} with input info {}",restarauntSid,JsonUtils.toJson(input));
 		if(CommonUtils.isEmpty(restarauntSid) || input==null || input.getLimit()<=0 || input.getTimestamp()==null)throw new IncorrectArgumentException("Invalid search input");
-		QueryParameter parameter=QueryParameter.with("restroSid", restarauntSid);
-		parameter.and("timestamp", input.getTimestamp());
-		return commonRepoServ.getDtoListByNamedQueryWithLimits(RestarauntHasReviews.class, RestarauntHasReviewsDTO.class, RestarauntHasReviews.FIND_REVIEWS_RESTARAUNT, parameter.parameters(), input.getLimit());
+		return commonRepoServ.getDtoListByNamedQueryWithLimits(RestarauntHasReviews.class, RestarauntHasReviewsDTO.class, RestarauntHasReviews.FIND_REVIEWS_RESTARAUNT, QueryParameter.with("restroSid", restarauntSid).and("timestamp", input.getTimestamp()).parameters(), input.getLimit());
 	}
 	
 }

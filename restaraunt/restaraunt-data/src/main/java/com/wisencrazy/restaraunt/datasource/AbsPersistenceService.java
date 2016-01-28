@@ -531,11 +531,11 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 		return (List<T>) findEntityListByNamedQuery(queryName, parameters, 0);
 	}
 
-	public List findEntityListByNamedQuery(String queryName,
-			Map<String, Object> parameters,Integer limits)
-			throws ApplicationException {
-		return (List<T>) findEntityListByNamedQuery(queryName, parameters, limits);
-	}
+//	public List findEntityListByNamedQuery(String queryName,
+//			Map<String, Object> parameters,Integer limits)
+//			throws ApplicationException {
+//		return (List<T>) findEntityListByNamedQuery(queryName, parameters, limits);
+//	}
 	
 	
 	/* (non-Javadoc)

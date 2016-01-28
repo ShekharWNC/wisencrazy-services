@@ -202,10 +202,10 @@ CREATE TABLE `item_has_size` (
     ON UPDATE NO ACTION)ENGINE=InnoDB DEFAULT CHARSET=utf8;
     
 ALTER TABLE `wisencrazy_restaraunt`.`restaraunt` 
-ADD COLUMN `delivery_time` INT(11) NULL COMMENT '' AFTER `cost_for_2`,
-ADD COLUMN `delivery_charge` INT(11) NOT NULL default 0 COMMENT '' AFTER `delivery_time`,
-ADD COLUMN `min_delivery` INT(11) NULL COMMENT '' AFTER `delivery_charge`,
-ADD COLUMN `tags` VARCHAR(255) NULL COMMENT '' AFTER `min_delivery`;    
+ADD COLUMN `delivery_time` INT(11) NULL  default 0 COMMENT '' AFTER `cost_for_2`,
+ADD COLUMN `delivery_charge` INT(11) NOT NULL default 50 COMMENT '' AFTER `delivery_time`,
+ADD COLUMN `min_delivery` INT(11) NULL default 0 COMMENT '' AFTER `delivery_charge`,
+ADD COLUMN `tags` VARCHAR(255) NULL default 0 COMMENT '' AFTER `min_delivery`;    
 
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
@@ -219,5 +219,4 @@ INSERT INTO area(area_name,city_id,sid) VALUES ('Hanumanth Namgar',1,unhex('86b5
 INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('1', 'BR', 'br_photo_url');
 INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('1', 'LU', 'lu_photo-url');
 INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('2', 'DI', 'di-photo');
-
 
