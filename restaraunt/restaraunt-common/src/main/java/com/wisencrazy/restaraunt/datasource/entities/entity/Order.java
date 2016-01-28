@@ -45,6 +45,11 @@ public class Order extends AbsBaseEntity {
 	public static final String FIND_BY_CUSTOMER_SID=PREFIX + "findByCustomerSid";
 	public static final String FIND_BY_RESTARAUNT_SID=PREFIX + "findByRestroSid";
 	
+	public enum DeliveryType{
+		TO,
+		DE
+	}
+	
 	@Column(name="restaraunt_id")
 	private Integer restroId;
 	
@@ -93,7 +98,9 @@ public class Order extends AbsBaseEntity {
 	@OneToMany(mappedBy = "order", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<OrderHasItems> orderHasItems;
 
-
+	@Column(name="order_delivery_type")
+	private DeliveryType deliveryType;
+	
     public Integer getRestroId() {
 		return restroId;
 	}
@@ -196,6 +203,14 @@ public class Order extends AbsBaseEntity {
 
 	public void setOrderHasItems(List<OrderHasItems> orderHasItems) {
 		this.orderHasItems = orderHasItems;
+	}
+
+	public DeliveryType getDeliveryType() {
+		return deliveryType;
+	}
+
+	public void setDeliveryType(DeliveryType deliveryType) {
+		this.deliveryType = deliveryType;
 	}
 
 }

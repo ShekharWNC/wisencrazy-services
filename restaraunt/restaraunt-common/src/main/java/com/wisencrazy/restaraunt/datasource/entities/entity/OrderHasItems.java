@@ -19,6 +19,11 @@ import javax.persistence.Table;
 public class OrderHasItems extends AbsBaseEntity {
 		
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5558798029779642735L;
+
 	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems.";
 	
 	@Column(name="order_id")

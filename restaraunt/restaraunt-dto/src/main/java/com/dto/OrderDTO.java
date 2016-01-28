@@ -2,6 +2,7 @@ package com.dto;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 public class OrderDTO extends AbsCommonDTO {
 		
 	
@@ -35,6 +36,8 @@ public class OrderDTO extends AbsCommonDTO {
 	private CustomerAddressDTO customerAddress;
 
 	private List<OrderHasItemsDTO> orderHasItems;
+	
+	private String deliveryType;
 	
 	public Integer getRestroId() {
 		return restroId;
@@ -138,6 +141,14 @@ public class OrderDTO extends AbsCommonDTO {
 
 	public void setOrderHasItems(List<OrderHasItemsDTO> orderHasItems) {
 		this.orderHasItems = orderHasItems;
+	}
+
+	public String getDeliveryType() {
+		return deliveryType;
+	}
+
+	public void setDeliveryType(String deliveryType) {
+		this.deliveryType = deliveryType;
 	}
 
 }

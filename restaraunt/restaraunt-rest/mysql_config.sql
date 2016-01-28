@@ -201,11 +201,76 @@ CREATE TABLE `item_has_size` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)ENGINE=InnoDB DEFAULT CHARSET=utf8;
     
-ALTER TABLE `wisencrazy_restaraunt`.`restaraunt` 
+ALTER TABLE `restaraunt` 
 ADD COLUMN `delivery_time` INT(11) NULL  default 0 COMMENT '' AFTER `cost_for_2`,
 ADD COLUMN `delivery_charge` INT(11) NOT NULL default 50 COMMENT '' AFTER `delivery_time`,
 ADD COLUMN `min_delivery` INT(11) NULL default 0 COMMENT '' AFTER `delivery_charge`,
-ADD COLUMN `tags` VARCHAR(255) NULL default 0 COMMENT '' AFTER `min_delivery`;    
+ADD COLUMN `tags` VARCHAR(255) NULL default 0 COMMENT '' AFTER `min_delivery`;  
+
+
+CREATE TABLE `order` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `sid` BINARY(32) NOT NULL COMMENT '',
+  `restaraunt_id` INT(11) NOT NULL COMMENT '',
+  `customer_id` INT(11) NOT NULL COMMENT '',
+  `ordered_on` DATETIME NOT NULL COMMENT '',
+  `delivered_on` DATETIME NULL COMMENT '',
+  `total_amount` FLOAT NOT NULL COMMENT '',
+  `taxes` FLOAT NULL COMMENT '',
+  `delivery_charges` INT NOT NULL DEFAULT 0 COMMENT '',
+  `discounts` FLOAT NULL COMMENT '',
+  `billedAmount` FLOAT NOT NULL COMMENT '',
+  `customer_address_id` INT(11) NOT NULL COMMENT '',
+  `order_delivery_type` ENUM('TO', 'DE') NOT NULL DEFAULT 'DE' COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
+  INDEX `fk_restaraunt_idx` (`restaraunt_id` ASC)  COMMENT '',
+  INDEX `fk_customer_idx` (`customer_id` ASC)  COMMENT '',
+  INDEX `fk_customer_add_idx` (`customer_address_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_restaraunt`
+    FOREIGN KEY (`restaraunt_id`)
+    REFERENCES `wisencrazy_restaraunt`.`restaraunt` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `wisencrazy_restaraunt`.`customer` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer_add`
+    FOREIGN KEY (`customer_address_id`)
+    REFERENCES `wisencrazy_restaraunt`.`customer_address` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `wisencrazy_restaraunt`.`order_has_items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `sid` BINARY(32) NOT NULL COMMENT '',
+  `order_id` INT(11) NOT NULL COMMENT '',
+  `item_id` INT(11) NOT NULL COMMENT '',
+  `item_has_size_id` INT(11) NULL COMMENT '',
+  `quantity` INT NOT NULL DEFAULT 0 COMMENT '',
+  `item_bill` FLOAT NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
+  INDEX `fk_order_idx` (`order_id` ASC)  COMMENT '',
+  INDEX `fk_item_idx` (`item_id` ASC)  COMMENT '',
+  INDEX `fk_item_has_size_idx` (`item_has_size_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_order`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `wisencrazy_restaraunt`.`order` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_item`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `wisencrazy_restaraunt`.`item` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_item_has_size`
+    FOREIGN KEY (`item_has_size_id`)
+    REFERENCES `wisencrazy_restaraunt`.`item_has_size` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
