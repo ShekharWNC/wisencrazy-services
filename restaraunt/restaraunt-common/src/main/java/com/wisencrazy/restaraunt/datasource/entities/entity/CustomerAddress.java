@@ -34,6 +34,12 @@ public class CustomerAddress extends AbsBaseEntity {
 	@ManyToOne
 	@JoinColumn(name="state_id")
 	private State state;
+	
+	@Column(name="state_id")
+	private Integer stateId;
+	
+	@Column(name="country_id")
+	private Integer countryId;
 
 	public CustomerAddress() {
 	}
@@ -84,5 +90,21 @@ public class CustomerAddress extends AbsBaseEntity {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public Integer getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Integer countryId) {
+		this.countryId = countryId;
+	}
+
+	public Integer getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(Integer stateId) {
+		this.stateId = stateId;
 	}
 }

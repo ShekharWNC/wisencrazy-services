@@ -95,7 +95,10 @@ public class Restaraunt extends AbsBaseEntity {
     
     @Column(name="tags")
     private String tags;
-
+    
+    @Column(name="taxes")
+    private Double taxes;
+    
 	public Area getArea() {
 		return area;
 	}
@@ -238,6 +241,14 @@ public class Restaraunt extends AbsBaseEntity {
 
 	public void setDeliveryTime(int deliveryTime) {
 		this.deliveryTime = deliveryTime;
+	}
+
+	public Double getTaxes() {
+		return taxes;
+	}
+
+	public void setTaxes(Double taxes) {
+		this.taxes = taxes;
 	}
 
 

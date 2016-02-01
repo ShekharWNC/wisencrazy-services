@@ -171,7 +171,6 @@ public class RestarauntSearch {
 					restarauntReviews.add(dto);
 				
 			}
-			return restarauntReviews;
 		}
 		return restarauntReviews;
 	}

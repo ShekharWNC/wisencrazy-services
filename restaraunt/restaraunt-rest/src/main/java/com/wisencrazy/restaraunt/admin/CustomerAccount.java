@@ -2,13 +2,16 @@ package com.wisencrazy.restaraunt.admin;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -20,17 +23,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dto.AreaDTO;
+import com.dto.CustomerAddressDTO;
 import com.dto.CustomerDTO;
+import com.dto.CustomerHasAddressDTO;
 import com.dto.CustomerReviewDTO;
 import com.dto.CustomerSignupDTO;
+import com.dto.ItemDTO;
+import com.dto.OrderDTO;
+import com.dto.OrderHasItemsDTO;
 import com.dto.RestarauntDTO;
 import com.dto.RestarauntHasReviewsDTO;
+import com.dto.RestarauntOrderDTO;
 import com.dto.constants.EnumConstants.SignupType;
 import com.google.dto.CustomerLoginDTO;
 import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
 import com.wisencrazy.restaraunt.account.CustomerLogin;
+import com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems;
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings.Timings;
 import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
 
@@ -66,7 +76,7 @@ public class CustomerAccount {
 	@GET
 	@Path("/json/{className}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response customerSignup(@PathParam("className")String className) {
+	public Response printJson(@PathParam("className")String className) {
 //		AreaDTO areaDTO=new AreaDTO();
 //		areaDTO.setAreaName("New Area");
 //		areaDTO.setSid("areaSid");
@@ -84,12 +94,23 @@ public class CustomerAccount {
 //		dto.setLatitude("12.85");
 //		dto.setLongitude("77.6");
 //		dto.setTimings(Timings.BR.name());
-		RestarauntHasReviewsDTO dto=new RestarauntHasReviewsDTO();
-		dto.setComment("Comment");dto.setRating(5);
-		dto.setRestarauntSid("retroSid");
+//		RestarauntHasReviewsDTO dto=new RestarauntHasReviewsDTO();
+//		dto.setComment("Comment");dto.setRating(5);
+//		dto.setRestarauntSid("retroSid");
+//		CustomerReviewDTO customerReviewDTO=new CustomerReviewDTO();
+//		customerReviewDTO.setSid("customerSid");
+//		dto.setCustomer(customerReviewDTO);
+		OrderDTO dto=new OrderDTO();
+		RestarauntOrderDTO dto2=new RestarauntOrderDTO();
 		CustomerReviewDTO customerReviewDTO=new CustomerReviewDTO();
-		customerReviewDTO.setSid("customerSid");
-		dto.setCustomer(customerReviewDTO);
+		CustomerAddressDTO addressDTO=new CustomerAddressDTO();
+		OrderHasItemsDTO dto3=new OrderHasItemsDTO();
+		ItemDTO dto4=new ItemDTO();
+		dto3.setItem(dto4);
+		dto.setCustomer(customerReviewDTO);dto.setRestaraunt(dto2);dto.setCustomerAddress(addressDTO);
+		List<OrderHasItemsDTO> hasItems=new ArrayList<OrderHasItemsDTO>();
+		hasItems.add(dto3);
+		dto.setOrderHasItems(hasItems);
 		return Response.status(Status.OK).entity(dto).build();//Customer registered successfully.
 	}
 	
@@ -115,4 +136,12 @@ public class CustomerAccount {
 			return ErrorCode.getErrorResponse(e);
 		}		
 	}
+	
+	@PUT
+	@Path("/address")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response saveCustomerAddress(CustomerHasAddressDTO addressDTO){
+		return null;
+	}	
+	
 }

@@ -25,7 +25,7 @@ import com.dto.constants.EnumConstants.SignupType;
  * 
  */
 @Entity
-@Table(name="order")
+@Table(name="eorder")
 @NamedQueries({
 	@NamedQuery(name = Order.FIND_BY_SID, query = "select o from Order o where hex(o.sid) = :sid"),
 	@NamedQuery(name = Order.FIND_BY_DATE, query = "select o from Order o where o.orderedOn = :timestamp"),
@@ -82,23 +82,21 @@ public class Order extends AbsBaseEntity {
 	
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "restaraunt_id", referencedColumnName = "id", insertable = false, updatable = false)
-	private
-    Restaraunt restaraunt;
+	private Restaraunt restaraunt;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
-	private
-    Customer customer;
+	private Customer customer;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "customer_address_id", referencedColumnName = "id", insertable = false, updatable = false)
-	private
-    CustomerAddress customerAddress;
+	private CustomerAddress customerAddress;
     
 	@OneToMany(mappedBy = "order", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<OrderHasItems> orderHasItems;
 
 	@Column(name="order_delivery_type")
+	@Enumerated(EnumType.STRING)
 	private DeliveryType deliveryType;
 	
     public Integer getRestroId() {
@@ -211,6 +209,14 @@ public class Order extends AbsBaseEntity {
 
 	public void setDeliveryType(DeliveryType deliveryType) {
 		this.deliveryType = deliveryType;
+	}
+
+	public Integer getCustomerAddressId() {
+		return customerAddressId;
+	}
+
+	public void setCustomerAddressId(Integer customerAddressId) {
+		this.customerAddressId = customerAddressId;
 	}
 
 }

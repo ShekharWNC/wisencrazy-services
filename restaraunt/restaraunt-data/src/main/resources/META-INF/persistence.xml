@@ -20,6 +20,8 @@
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Item</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.ItemCategory</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.ItemHasSize</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Order</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems</class>
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 <!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->

@@ -59,13 +59,12 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 		return null;
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)	
 	public void save(T t) throws ApplicationException {
 		logger.trace("save(T) - start"); 
 		entityManager.getTransaction().begin();
 		try{
-//			entityManager.merge(t);
-			entityManager.persist(t);
+			entityManager.merge(t);
+//			entityManager.persist(t);
 			logger.debug("Commiting Transaction");
 			entityManager.getTransaction().commit();
 		}catch(ConstraintViolationException exception){
@@ -83,6 +82,24 @@ class AbsPersistenceService<T> implements Serializable, IPersistenceService<T> {
 		logger.trace("save(T) - end"); 
 	}
 	
+	public void saveWOTransaction(T t) throws ApplicationException {
+		logger.trace("save(T) - start"); 
+		try{
+			entityManager.merge(t);
+		}catch(ConstraintViolationException exception){
+			logger.error("save(T)", exception);
+			throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);			
+		}catch(Exception exception){
+			exception.printStackTrace();
+			if(exception.getCause().toString().contains(ConstraintViolationException.class.getSimpleName())){
+				throw new DuplicateEntryException("Error while saving ".concat(t.getClass().getSimpleName()),exception);
+			}
+			logger.error("save(T)", exception);
+			throw new ApplicationException(ApplicationConstants.GENERAL_EXCEPTION, exception);
+		}
+		logger.trace("save(T) - end"); 
+	}
+
 	public void persist(T t) throws DuplicateEntryException,ApplicationException {
 		logger.trace("persist(T) - start"); 
 		try{

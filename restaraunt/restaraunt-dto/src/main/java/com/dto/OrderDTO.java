@@ -11,10 +11,6 @@ public class OrderDTO extends AbsCommonDTO {
 	 */
 	private static final long serialVersionUID = 8315588192531475994L;
 
-	private Integer restroId;
-	
-	private Integer customerId;
-	
 	private Timestamp orderedOn;
 	
 	private Timestamp deliveredOn;
@@ -39,21 +35,6 @@ public class OrderDTO extends AbsCommonDTO {
 	
 	private String deliveryType;
 	
-	public Integer getRestroId() {
-		return restroId;
-	}
-
-	public void setRestroId(Integer restroId) {
-		this.restroId = restroId;
-	}
-
-	public Integer getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
-	}
 
 	public Timestamp getOrderedOn() {
 		return orderedOn;

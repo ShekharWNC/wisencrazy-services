@@ -20,7 +20,8 @@
                 com.wisencrazy.restaraunt.admin.CustomerAccount,
                 com.wisencrazy.restaraunt.rest.RestarauntRest,
                 com.wisencrazy.restaraunt.rest.RestarauntReviewRest,
-                com.wisencrazy.restaraunt.rest.MenuRest
+                com.wisencrazy.restaraunt.rest.MenuRest,
+                com.wisencrazy.restaraunt.rest.OrderRest
             </param-value>
         </init-param>
         <init-param>

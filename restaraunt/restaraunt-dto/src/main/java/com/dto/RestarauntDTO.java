@@ -62,7 +62,9 @@ public class RestarauntDTO extends AbsCommonDTO {
     
     private String tags;
 
-	public int getDeliveryTime() {
+    private Double taxes;
+
+    public int getDeliveryTime() {
 		return deliveryTime;
 	}
 
@@ -196,6 +198,14 @@ public class RestarauntDTO extends AbsCommonDTO {
 
 	public void setArea(AreaDTO area) {
 		this.area = area;
+	}
+
+	public Double getTaxes() {
+		return taxes;
+	}
+
+	public void setTaxes(Double taxes) {
+		this.taxes = taxes;
 	}
 
 

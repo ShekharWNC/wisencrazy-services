@@ -219,7 +219,7 @@ CREATE TABLE `order` (
   `taxes` FLOAT NULL COMMENT '',
   `delivery_charges` INT NOT NULL DEFAULT 0 COMMENT '',
   `discounts` FLOAT NULL COMMENT '',
-  `billedAmount` FLOAT NOT NULL COMMENT '',
+  `billed_amount` FLOAT NOT NULL COMMENT '',
   `customer_address_id` INT(11) NOT NULL COMMENT '',
   `order_delivery_type` ENUM('TO', 'DE') NOT NULL DEFAULT 'DE' COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
@@ -272,14 +272,25 @@ CREATE TABLE `wisencrazy_restaraunt`.`order_has_items` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+ALTER TABLE `wisencrazy_restaraunt`.`eorder` 
+CHANGE COLUMN `billedAmount` `billed_amount` FLOAT NOT NULL;
+
+ALTER TABLE `wisencrazy_restaraunt`.`restaraunt` 
+ADD COLUMN `taxes` DOUBLE NOT NULL DEFAULT 0.00 COMMENT '' AFTER `tags`;
+
+
 -- Insert queries
-INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
+INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
+INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
 INSERT INTO state (state_name,country_id,sid) VALUES ('Karnataka',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
 
 INSERT INTO city(city_name,state_id,sid) VALUES ('Bengaluru',1,unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
 
 INSERT INTO area(area_name,city_id,sid) VALUES ('JP Nagar',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));
 INSERT INTO area(area_name,city_id,sid) VALUES ('Hanumanth Namgar',1,unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
+
+INSERT INTO `customer_address` (`sid`,`address_line1`, `address_line2`, `address_line3`, `pin`,`country_id`,`state_id`) VALUES (unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'),'Line#1', 'Line#2', 'Line#3', '560102',1,1);
+
 
 INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('1', 'BR', 'br_photo_url');
 INSERT INTO `wisencrazy_restaraunt`.`restaraunt_has_timings` (`restaraunt_id`, `timing`, `photo_url`) VALUES ('1', 'LU', 'lu_photo-url');
