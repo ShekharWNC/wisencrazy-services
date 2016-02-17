@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -39,10 +39,12 @@ import com.google.dto.CustomerLoginDTO;
 import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
+import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.restaraunt.account.CustomerLogin;
 import com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems;
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings.Timings;
 import com.wisencrazy.restaraunt.rest.dto.GoogleLocationInput;
+import com.wisencrazy.restaraunt.services.CustomerMgmtServices;
 
 /**
  * User: Wisencrazy
@@ -54,6 +56,7 @@ public class CustomerAccount {
 	private static Logger logger=LoggerFactory.getLogger(MessageRestService.class);
 
 	private static CustomerLogin customerLogin=new CustomerLogin();
+	private static CustomerMgmtServices customerMgmt=new CustomerMgmtServices();
 	
 	@Path("signup")
 	@POST
@@ -100,17 +103,25 @@ public class CustomerAccount {
 //		CustomerReviewDTO customerReviewDTO=new CustomerReviewDTO();
 //		customerReviewDTO.setSid("customerSid");
 //		dto.setCustomer(customerReviewDTO);
-		OrderDTO dto=new OrderDTO();
-		RestarauntOrderDTO dto2=new RestarauntOrderDTO();
-		CustomerReviewDTO customerReviewDTO=new CustomerReviewDTO();
+//		OrderDTO dto=new OrderDTO();
+//		RestarauntOrderDTO dto2=new RestarauntOrderDTO();
+//		CustomerReviewDTO customerReviewDTO=new CustomerReviewDTO();
+//		CustomerAddressDTO addressDTO=new CustomerAddressDTO();
+//		OrderHasItemsDTO dto3=new OrderHasItemsDTO();
+//		ItemDTO dto4=new ItemDTO();
+//		dto3.setItem(dto4);
+//		dto.setCustomer(customerReviewDTO);dto.setRestaraunt(dto2);dto.setCustomerAddress(addressDTO);
+//		List<OrderHasItemsDTO> hasItems=new ArrayList<OrderHasItemsDTO>();
+//		hasItems.add(dto3);
+//		dto.setOrderHasItems(hasItems);
+		CustomerHasAddressDTO dto=new CustomerHasAddressDTO();
+		dto.setCustomerSid("");
 		CustomerAddressDTO addressDTO=new CustomerAddressDTO();
-		OrderHasItemsDTO dto3=new OrderHasItemsDTO();
-		ItemDTO dto4=new ItemDTO();
-		dto3.setItem(dto4);
-		dto.setCustomer(customerReviewDTO);dto.setRestaraunt(dto2);dto.setCustomerAddress(addressDTO);
-		List<OrderHasItemsDTO> hasItems=new ArrayList<OrderHasItemsDTO>();
-		hasItems.add(dto3);
-		dto.setOrderHasItems(hasItems);
+		addressDTO.setAddressLine1("Line#21");
+		addressDTO.setAddressLine2("Line#22");
+		addressDTO.setAddressLine3("Line#23");
+		addressDTO.setPin("pin");
+		dto.setCustomerAddress(addressDTO);
 		return Response.status(Status.OK).entity(dto).build();//Customer registered successfully.
 	}
 	
@@ -141,7 +152,24 @@ public class CustomerAccount {
 	@Path("/address")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveCustomerAddress(CustomerHasAddressDTO addressDTO){
-		return null;
+		try {
+			return Response.status(Status.OK).entity(customerMgmt.saveCustomerHasAdrress(addressDTO)).build();
+		} catch (IncorrectArgumentException e) {
+			return ErrorCode.getErrorResponse(e);
+		} catch (ApplicationException e) {
+			return ErrorCode.getErrorResponse(e);
+		}
 	}	
+	
+	@GET
+	@Path("/addresses/{customerSid}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getcustomerAddress(@PathParam("customerSid") String customerSid){
+		try {
+			return Response.status(Status.OK).entity(customerMgmt.getAddressForCustomer(customerSid)).build();
+		} catch (ApplicationException e) {
+			return ErrorCode.getErrorResponse(e);
+		}		
+	}
 	
 }

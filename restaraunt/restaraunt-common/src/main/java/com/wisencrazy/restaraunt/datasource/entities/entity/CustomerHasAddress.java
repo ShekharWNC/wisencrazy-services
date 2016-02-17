@@ -1,12 +1,17 @@
 package com.wisencrazy.restaraunt.datasource.entities.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -16,30 +21,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="customer_has_address")
-@NamedQueries({
-	@NamedQuery(name=CustomerHasAddress.FIND_BY_CUSTOMER_SID,query="select cha from CustomerHasAddress cha where hex(cha.customer.sid)=:sid")
-})
-public class CustomerHasAddress extends AbsBaseEntity {
-	private static final long serialVersionUID = 1L;
+public class CustomerHasAddress implements Serializable {
 	
-	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress.";
-	public static final String FIND_BY_CUSTOMER_SID=PREFIX+"findByCustomerSid";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6846576122653261388L;
+	@EmbeddedId
+	private
+	CustomerHasAddressPK addressPK;
 	
-	@ManyToOne(cascade = {CascadeType.REMOVE})
-	@JoinColumn(name="customer_address_id")
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="customer_address_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private CustomerAddress customerAddress;
 	
-	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customer customer;
-	
-	@Column(name="customer_address_id")
-	private Integer customerAddressId;
-	
-	@Column(name="customer_id")
-	private Integer customerId;
-	
-
 	public CustomerHasAddress() {
 	}
 
@@ -51,28 +46,12 @@ public class CustomerHasAddress extends AbsBaseEntity {
 		this.customerAddress = customerAddress;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public CustomerHasAddressPK getAddressPK() {
+		return addressPK;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setAddressPK(CustomerHasAddressPK addressPK) {
+		this.addressPK = addressPK;
 	}
 
-	public Integer getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
-	}
-
-	public Integer getCustomerAddressId() {
-		return customerAddressId;
-	}
-
-	public void setCustomerAddressId(Integer customerAddressId) {
-		this.customerAddressId = customerAddressId;
-	}
-	
 }

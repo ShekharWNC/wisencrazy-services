@@ -1,6 +1,7 @@
 package com.wisencrazy.restaraunt.datasource.entities.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -42,6 +43,7 @@ import com.dto.constants.EnumConstants.SignupType;
    @NamedQuery(name = Customer.UPDATE_MOBILE_STATUS, query = "UPDATE Customer c set c.primaryContact = :contact, c.isMobileVerified = :status where c.sid = unhex(:sid)"),
    @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_PHONE, query = "Select hex(c.sid) from Customer c where c.primaryContact = :phone"),
    @NamedQuery(name = Customer.FIND_CUSTOMER_SID_BY_EMAIL, query = "Select hex(c.sid) from Customer c where c.email = :emailId"),
+   @NamedQuery(name=Customer.FIND_CUSTOMER_ADDRESSES_BY_SID,query="select c.customerHasAddresses from Customer c where hex(c.sid)=:sid")
 })
 public class Customer extends AbsBaseEntity {
 	/**
@@ -75,6 +77,8 @@ public class Customer extends AbsBaseEntity {
 	public static final String UPDATE_MOBILE_STATUS = PREFIX + "updateMobileStatus";
 	public static final String FIND_CUSTOMER_SID_BY_EMAIL = PREFIX + "findCustomerSidByEmail";
 	public static final String FIND_CUSTOMER_SID_BY_PHONE = PREFIX + "findCustomerSidByPhone";
+	
+	public static final String FIND_CUSTOMER_ADDRESSES_BY_SID=PREFIX+"findCustomerAddressBySid";
 	
 	
 	@Column(name="email_id")
@@ -194,5 +198,13 @@ public class Customer extends AbsBaseEntity {
 
 	public void setSignupType(SignupType signupType) {
 		this.signupType = signupType;
+	}
+	
+	public void addCustomerAddress(CustomerHasAddress address){
+		if(customerHasAddresses==null){
+			customerHasAddresses=new ArrayList<CustomerHasAddress>();
+		}
+		customerHasAddresses.add(address);
+		
 	}
 }

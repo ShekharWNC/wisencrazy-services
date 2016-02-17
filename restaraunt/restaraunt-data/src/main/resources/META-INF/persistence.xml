@@ -22,9 +22,6 @@
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.ItemHasSize</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Order</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems</class>
-<!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
-<!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
-<!-- 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.CustomerHasAddress</class> -->
 		<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.url"
