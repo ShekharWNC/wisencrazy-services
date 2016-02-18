@@ -14,9 +14,11 @@ import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.CommonUtils;
 import com.wisencrazy.common.JsonUtils;
 import com.wisencrazy.common.QueryParameter;
+import com.wisencrazy.common.SmsServiceProvider;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.common.exception.NoResultException;
+import com.wisencrazy.common.exception.SmsDeliveryException;
 import com.wisencrazy.restaraunt.datasource.CommonPersistenceImpl;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer;
 import com.wisencrazy.restaraunt.datasource.entities.entity.CustomerAddress;
@@ -77,10 +79,10 @@ public class OrderManagementServices {
 		order.setBilledAmount(orderDTO.getBilledAmount());
 		//call the discount system to check for discount
 		//get the restaraunt
-		Integer restaraunt=null;
+		Restaraunt restaraunt=null;
 		try {
-			restaraunt=commonRepoServ.findIdBySid(Restaraunt.class.getName(), orderDTO.getRestaraunt().getSid());
-			order.setRestroId(restaraunt);
+			restaraunt=commonRepoServ.getEntityBySid(Restaraunt.class.getName(), orderDTO.getRestaraunt().getSid());
+			order.setRestroId(restaraunt.getId());
 		} catch (NoResultException e) {
 			logger.error("Error while fetching Restaraunt for sid {}, {}",orderDTO.getRestaraunt().getSid(),e);
 			throw e;
@@ -93,10 +95,10 @@ public class OrderManagementServices {
 		}
 		
 		//get the customer
-		Integer customer=null;
+		Customer customer=null;
 		try {
-			customer=commonRepoServ.findIdBySid(Customer.class.getName(), orderDTO.getCustomer().getSid());
-			order.setCustomerId(customer);
+			customer=commonRepoServ.getEntityBySid(Customer.class.getName(), orderDTO.getCustomer().getSid());
+			order.setCustomerId(customer.getId());
 		} catch (NoResultException e) {
 			logger.error("Error while fetching Customer for sid {}, {}",orderDTO.getCustomer().getSid(),e);
 			throw e;
@@ -131,13 +133,43 @@ public class OrderManagementServices {
 			commonRepoServ.saveWOTransaction(order);
 			saveItemDTO2Items(orderDTO.getOrderHasItems(), order);
 			commonRepoServ.getEntityManager().getTransaction().commit();
+			sendOrderSms(restaraunt, orderDTO);
+			sendConfirmationSms(restaraunt, customer);
 		} catch (ApplicationException e) {
 			logger.error("Error while saving Order: {}",e);
 			throw e;
 		}
+		
 		return order.bytesToHexString();
 	}
+
+	private void sendOrderSms(Restaraunt restaraunt,OrderDTO dto){
+		if(restaraunt == null || dto == null)return;
+		String restroPhoneNumber=restaraunt.getPrimaryContact();
+		StringBuilder message=new StringBuilder("Customer --NAME-- has placed an order");
+		message.append("please click the link to view the order -  ");
+		try {
+			SmsServiceProvider.sendSingleSms(restroPhoneNumber, message.toString(), true, restroPhoneNumber);
+		} catch (SmsDeliveryException e) {
+			logger.error("Error while sending Order Sms: {}",e);
+		}
+		
+
+	}
 	
+	private void sendConfirmationSms(Restaraunt restaraunt,Customer customer){
+		if(restaraunt == null || customer == null)return;
+		String customerPhoneNumber=customer.getPrimaryContact();
+		StringBuilder message=new StringBuilder("Thank you for placing an order with us at ").append(restaraunt.getName());
+		message.append("your order will be delivered within ").append(restaraunt.getDeliveryTime());
+		try {
+			SmsServiceProvider.sendSingleSms(customerPhoneNumber, message.toString(), true, customerPhoneNumber);
+		} catch (SmsDeliveryException e) {
+			logger.error("Error while sending Order Sms: {}",e);
+		}
+
+	}
+
 	private void saveItemDTO2Items(List<OrderHasItemsDTO> hasItemsDTOs,Order order) throws IncorrectArgumentException,ApplicationException{
 		logger.debug("Converting List {}",JsonUtils.toJson(hasItemsDTOs));
 		//validate list incoming
