@@ -77,7 +77,7 @@ public class CustomerSignup {
 	
 	public CustomerDTO getCustomerEmail(String email) throws ApplicationException{
 		logger.debug("Fetching customer with email: {}",email);
-		return commonRepoServ.getDtoByNamedQuery(Customer.class, CustomerDTO.class, Customer.FIND_CUSTOMER_BY_EMAIL, QueryParameter.with("email", "email@test.com").parameters());
+		return commonRepoServ.getDtoByNamedQuery(Customer.class, CustomerDTO.class, Customer.FIND_CUSTOMER_BY_EMAIL, QueryParameter.with("email", email).parameters());
 	}
 
 	private void validateCustomerDTO(CustomerSignupDTO customerSignupDTO) throws ApplicationException {
