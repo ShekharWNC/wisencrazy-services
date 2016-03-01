@@ -133,8 +133,8 @@ public class OrderManagementServices {
 			commonRepoServ.saveWOTransaction(order);
 			saveItemDTO2Items(orderDTO.getOrderHasItems(), order);
 			commonRepoServ.getEntityManager().getTransaction().commit();
-			sendOrderSms(restaraunt, orderDTO);
-			sendConfirmationSms(restaraunt, customer);
+			/*sendOrderSms(restaraunt, orderDTO);
+			sendConfirmationSms(restaraunt, customer);*/
 		} catch (ApplicationException e) {
 			logger.error("Error while saving Order: {}",e);
 			throw e;

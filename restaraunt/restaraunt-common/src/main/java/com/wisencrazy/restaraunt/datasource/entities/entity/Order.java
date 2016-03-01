@@ -99,9 +99,9 @@ public class Order extends AbsBaseEntity {
 	@Enumerated(EnumType.STRING)
 	private DeliveryType deliveryType;
 	
-	@OneToOne(optional=true)
-	@JoinColumn(name="order_id",unique=true,nullable=true,updatable=false)
-	private Payment payment;
+//	@OneToOne(optional=true)
+//	@JoinColumn(name="order_id",unique=true,nullable=true,updatable=false)
+//	private Payment payment;
 	
     public Integer getRestroId() {
 		return restroId;
@@ -223,12 +223,12 @@ public class Order extends AbsBaseEntity {
 		this.customerAddressId = customerAddressId;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
+//	public Payment getPayment() {
+//		return payment;
+//	}
+//
+//	public void setPayment(Payment payment) {
+//		this.payment = payment;
+//	}
 
 }

@@ -27,7 +27,7 @@ import com.dto.constants.EnumConstants.SignupType;
 @Entity
 @Table(name="payment_history")
 @NamedQueries({
-	@NamedQuery(name = Payment.FIND_BY_SID, query = "select o from Payment o where hex(o.sid) = :sid"),
+	//@NamedQuery(name = Payment.FIND_BY_SID, query = "select o from Payment o where hex(o.sid) = :sid"),
 })
 public class Payment extends AbsBaseEntity {
 		
@@ -68,8 +68,8 @@ public class Payment extends AbsBaseEntity {
 	@Column(name="payment_status_time")
 	private Timestamp paymentStatusTime;
 	
-	@OneToOne(optional=false,mappedBy="payment")
-	private Order order;
+//	@OneToOne(optional=false,mappedBy="payment")
+//	private Order order;
 
 	public PaymentMode getPaymentMode() {
 		return paymentMode;
@@ -103,12 +103,12 @@ public class Payment extends AbsBaseEntity {
 		this.paymentStatusTime = paymentStatusTime;
 	}
 
-	public Order getOrder() {
+/*	public Order getOrder() {
 		return order;
 	}
 
 	public void setOrder(Order order) {
 		this.order = order;
-	}
+	}*/
 	
 }
