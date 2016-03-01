@@ -290,6 +290,22 @@ DROP COLUMN `sid`,
 DROP INDEX `sid` ;
 
 
+CREATE TABLE `wisencrazy_restaraunt`.`payment_history` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `sid` BINARY(32) NOT NULL COMMENT '',
+  `payment_mode` ENUM('COD', 'ONLINE') NOT NULL COMMENT '',
+  `payment_amout` DOUBLE NOT NULL COMMENT '',
+  `payment_status` ENUM('STARTED', 'PENDING', 'COMPLETED', 'PENDING_CONFIRM') NOT NULL COMMENT '',
+  `order_id` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC)  COMMENT '',
+  UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_order_id`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `wisencrazy_restaraunt`.`eorder` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
 
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));

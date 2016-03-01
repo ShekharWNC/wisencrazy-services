@@ -21,6 +21,7 @@
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.ItemCategory</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.ItemHasSize</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Order</class>
+		<class>com.wisencrazy.restaraunt.datasource.entities.entity.Payment</class>
 		<class>com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems</class>
 		<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
