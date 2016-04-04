@@ -28,7 +28,7 @@ public class AdminRest {
 	private static final String UPLOAD_FILE_SERVER = "/tmp/imports/";
 	private static RestarauntAdmin admin = new RestarauntAdmin();
 
-	@Path("/import/")
+/*	@Path("/import/")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response submitOrder(MultipartFormDataInput inputData) {
@@ -65,14 +65,14 @@ public class AdminRest {
 		}
 		return Response.ok("File uploaded successfully at " + uploadFilePath)
 				.build();
-	}
+	}*/
 
-	private String getFileName(MultivaluedMap<String, String> multivaluedMap) {
+/*	private String getFileName(MultivaluedMap<String, String> multivaluedMap) {
 
 		Date date=new Date();
 		String fileName=
 		return "UnknownFile";
-	}
+	}*/
 
 	private String writeToFileServer(InputStream inputStream, String fileName)
 			throws IOException {
