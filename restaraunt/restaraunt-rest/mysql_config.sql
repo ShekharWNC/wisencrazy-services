@@ -1,5 +1,7 @@
 CREATE SCHEMA `wisencrazy_restaraunt` DEFAULT CHARACTER SET utf8 ;
 
+USE  `wisencrazy_restaraunt`;
+
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -272,11 +274,8 @@ CREATE TABLE `wisencrazy_restaraunt`.`order_has_items` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-ALTER TABLE `wisencrazy_restaraunt`.`eorder` 
-CHANGE COLUMN `billedAmount` `billed_amount` FLOAT NOT NULL;
 
-ALTER TABLE `wisencrazy_restaraunt`.`restaraunt` 
-ADD COLUMN `taxes` DOUBLE NOT NULL DEFAULT 0.00 COMMENT '' AFTER `tags`;
+ALTER TABLE `order` RENAME eorder;
 
 
 ALTER TABLE `wisencrazy_restaraunt`.`customer_has_address` 
