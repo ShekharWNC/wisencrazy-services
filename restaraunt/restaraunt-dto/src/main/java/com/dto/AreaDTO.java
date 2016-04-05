@@ -16,7 +16,7 @@ public class AreaDTO extends AbsCommonDTO implements Serializable {
 	private String areaName;
 
 //	//bi-directional many-to-one association to Country
-//	private CityDTO city;
+	private CityDTO city;
 
 	public AreaDTO() {
 	}
@@ -35,6 +35,14 @@ public class AreaDTO extends AbsCommonDTO implements Serializable {
 
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+
+	public CityDTO getCity() {
+		return city;
+	}
+
+	public void setCity(CityDTO city) {
+		this.city = city;
 	}
 
 }

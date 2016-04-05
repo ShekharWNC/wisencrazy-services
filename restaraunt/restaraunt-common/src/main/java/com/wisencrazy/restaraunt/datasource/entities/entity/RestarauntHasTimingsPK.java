@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 import com.wisencrazy.restaraunt.datasource.entities.entity.RestarauntHasTimings.Timings;
@@ -25,6 +27,7 @@ public class RestarauntHasTimingsPK implements Serializable {
 	@Basic(optional=false)
 	@NotNull
 	@Column(name="timing")
+	@Enumerated(EnumType.STRING)
 	private Timings timing;
 
 	public Timings getTiming() {
