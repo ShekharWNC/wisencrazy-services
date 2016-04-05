@@ -51,10 +51,13 @@ public class RestarauntSearch {
 			logger.debug("Setting up profile");
 			commonRepoServ=new CommonPersistenceImpl();
 			dozerUtil=DozerUtil.getDozerUtils();
+			logger.debug("Profile set");
 		} catch (ApplicationException e) {
 			logger.error("Error while setting up Repo services");
-			e.printStackTrace();
-		}		
+			logger.error("Error : {}",e);
+		}catch(Exception e){
+			logger.error("Error : {}",e);
+		}	
 	}
 
 	public List<StateDTO> getStates() throws ApplicationException{

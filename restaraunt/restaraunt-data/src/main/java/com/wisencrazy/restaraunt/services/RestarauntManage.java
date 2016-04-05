@@ -45,13 +45,16 @@ public class RestarauntManage {
 	
 	public RestarauntManage(){
 		try {
-			logger.debug("Setting up profile");
+			logger.debug("Setting up Manage");
 			commonRepoServ=new CommonPersistenceImpl();
 			dozerUtil=DozerUtil.getDozerUtils();
+			logger.debug("Setting up Manage");
 		} catch (ApplicationException e) {
 			logger.error("Error while setting up Repo services");
-			e.printStackTrace();
-		}		
+			logger.error("Error : {}",e);
+		}catch(Exception e){
+			logger.error("Error : {}",e);
+		}	
 	}
 
 	public boolean createRestaraunt(RestarauntDTO restarauntDTO) throws ApplicationException{
