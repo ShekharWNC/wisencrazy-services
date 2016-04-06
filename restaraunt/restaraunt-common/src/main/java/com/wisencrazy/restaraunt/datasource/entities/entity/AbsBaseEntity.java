@@ -37,17 +37,6 @@ public abstract class AbsBaseEntity extends AbsCompositeEntity {
 		this.id = id;
 	}
 
-	public void setIdBySid(String sid){
-		Integer id = null;
-		try {
-			if(sid != null && !sid.isEmpty()){
-				id = AbstractCommonDTO.getDtoPersistence().findIdBySid(this.getClass().getSimpleName(), sid);
-				this.id = id;
-			}
-		} catch (Exception e) {
-			logger.error("Error at setIdBySid - {} is {}", this.getClass().getSimpleName(),e.getMessage());
-		}
-	}
 	
 	/*@Override
 	public int hashCode() {

@@ -27,16 +27,6 @@ public abstract class AbsCommonDTO extends AbstractCommonDTO implements Serializ
 	public Integer id;
 
 	public AbsCommonDTO(){
-		try {
-			if (dtoPersistence == null) {
-				Object obj = new InitialContext().lookup("java:global/repositoryservice/repositoryservice-ejb/DtoPersistenceImpl!com.dto.persistence.IDtoPersistence");
-				if(obj instanceof IDtoPersistence){
-					dtoPersistence = (com.dto.persistence.IDtoPersistence) obj;
-				}
-			}
-		} catch (Exception e) {
-			logger.error("Error at AbsCommonDTO - {} is {}", this.getClass().getSimpleName(),e.getMessage());
-		}
 	}
 	
 	public Integer populateIdBySid(){
