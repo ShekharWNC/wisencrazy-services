@@ -109,20 +109,6 @@ public abstract class AbstractCommonDTO implements Serializable {
 	    return new String(hexChars);
 	}
 	
-	public static IDtoPersistence getDtoPersistence() {
-		try {
-			if (dtoPersistence == null) {
-				Object obj = new InitialContext().lookup("java:global/repositoryservice/repositoryservice-ejb/DtoPersistenceImpl!com.dto.persistence.IDtoPersistence");
-				if(obj instanceof IDtoPersistence){
-					dtoPersistence = (com.dto.persistence.IDtoPersistence) obj;
-				}
-			}
-		} catch (Exception e) {
-			logger.error("Error at getDtoPersistence is - ",e.getMessage());
-		}
-		return dtoPersistence;
-	}
-	
 	/*public <T> T populateEntityBySid(){
 		try{
 			return dtoPersistence.getEntityBySid(DtoMappingUtils.getInstance().getEntityClass(this.getClass().getSimpleName()), sid);
