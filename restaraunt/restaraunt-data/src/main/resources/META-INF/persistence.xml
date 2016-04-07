@@ -26,7 +26,7 @@
 		<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.url"
-				value="jdbc:mysql://52.77.255.204:3306/wisencrazy_restaraunt" />
+				value="jdbc:mysql://localhost:3306/wisencrazy_restaraunt" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
 			<property name="hibernate.default_schema" value="wisencrazy_restaraunt" />
