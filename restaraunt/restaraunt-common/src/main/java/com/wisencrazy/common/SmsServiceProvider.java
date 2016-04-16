@@ -3,6 +3,7 @@ package com.wisencrazy.common;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -17,7 +18,7 @@ public class SmsServiceProvider {
 	private static Logger logger=LoggerFactory.getLogger(SmsServiceProvider.class);
 	
 	public static void sendSingleSms(String telNum, String message, boolean msgType,
-			String senderid) throws SmsDeliveryException {
+			String senderid) throws SmsDeliveryException, UnsupportedEncodingException {
 		String smsWebUri = null;
 		
 		boolean isIndianTelNum = IsIndianTelNum(telNum);
@@ -42,6 +43,7 @@ public class SmsServiceProvider {
 		BufferedReader reader=null;
 		try {
 			// prepare connection
+			System.out.println(smsWebUri);
 			URL myURL = new URL(smsWebUri);
 			URLConnection myURLConnection = myURL.openConnection();
 			myURLConnection.connect();
@@ -49,11 +51,13 @@ public class SmsServiceProvider {
 					myURLConnection.getInputStream()));
 			while ((response = reader.readLine()) != null) {
 				// print response
+				System.out.println(response);
 				if (response != null) {
 					msgID = response;
 				}
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			logger.error("IOException : {}",e.toString());
 			throw new SmsDeliveryException("SMS Delivery failed");
 		}finally{
@@ -69,17 +73,20 @@ public class SmsServiceProvider {
 
 	
 	private static String  constructWebUrl(String telNum, String message, boolean msgType,
-            String senderid) {
-      String mainUrl="http://203.212.70.200/smpp/sendsms?";
-      String username = "";
-      String apikey = "";
+            String senderid) throws UnsupportedEncodingException {
+      String mainUrl="http://www.smsgatewaycenter.com/library/send_sms_2.php?";
+      String username = "fresh4you";
+      String apikey = "kywRxt0r";
       StringBuilder sbPostData= new StringBuilder(mainUrl);
-      String encoded_message=URLEncoder.encode(message);
-      sbPostData.append("username="+username);
-      sbPostData.append("&password="+apikey);
-      sbPostData.append("&text="+encoded_message);
-      sbPostData.append("&to="+telNum);
-      sbPostData.append("&from=????&dlr-mask=19");
+      String encoded_message=URLEncoder.encode(message,"UTF-8");
+      sbPostData.append("UserName="+username);
+      sbPostData.append("&Password="+URLEncoder.encode(apikey,"UTF-8"));
+      sbPostData.append("&Type=Individual");
+      sbPostData.append("&Mask=FRESHU");
+      sbPostData.append("&Message="+encoded_message);
+      telNum=telNum.substring(telNum.length()-10);
+      sbPostData.append("&To="+telNum);
+//      sbPostData.append("&from=????&dlr-mask=19");
       return sbPostData.toString();
    }
 
@@ -88,6 +95,16 @@ public class SmsServiceProvider {
 		return telNum.startsWith("+91") || telNum.startsWith("0091");
 	}
 
-
+/*	public static void main(String[] params){
+		try {
+			sendSingleSms("+919632688020", "Hi Text", false, "");
+		} catch (SmsDeliveryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
 
 }
