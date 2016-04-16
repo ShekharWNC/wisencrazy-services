@@ -1,25 +1,16 @@
 package com.wisencrazy.restaraunt.rest;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.apache.commons.httpclient.HttpStatus;
 
+import com.wisencrazy.common.exception.ErrorCode;
+import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.restaraunt.services.RestarauntAdmin;
 
 @Path("/admin")
@@ -65,14 +56,14 @@ public class AdminRest {
 		}
 		return Response.ok("File uploaded successfully at " + uploadFilePath)
 				.build();
-	}*/
+	}
 
-/*	private String getFileName(MultivaluedMap<String, String> multivaluedMap) {
+	private String getFileName(MultivaluedMap<String, String> multivaluedMap) {
 
 		Date date=new Date();
 		String fileName=
 		return "UnknownFile";
-	}*/
+	}
 
 	private String writeToFileServer(InputStream inputStream, String fileName)
 			throws IOException {
@@ -96,5 +87,35 @@ public class AdminRest {
 			outputStream.close();
 		}
 		return qualifiedUploadFilePath;
+	}*/
+	
+	
+	@Path("/import/area")
+	@GET
+	public Response submitOrder(){
+		String fileName="/home/shirshendu/Documents/WNC-git/Area1.xlsx";
+		try {
+			admin.addAreas(fileName);
+			return Response.status(Status.OK).build();
+		} catch (IOException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} catch (IncorrectArgumentException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} 
 	}
+	
+	@Path("/import/restaraunts")
+	@GET
+	public Response submitRestarauntData(){
+		String fileName="/home/shirshendu/Documents/WNC-git/Excel Data Import1.xlsx";
+		try {
+			admin.importRestarauntData(fileName);
+			return Response.status(Status.OK).build();
+		} catch (IOException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} catch (IncorrectArgumentException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} 
+	}
+	
 }

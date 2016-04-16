@@ -21,7 +21,8 @@
                 com.wisencrazy.restaraunt.rest.RestarauntRest,
                 com.wisencrazy.restaraunt.rest.RestarauntReviewRest,
                 com.wisencrazy.restaraunt.rest.MenuRest,
-                com.wisencrazy.restaraunt.rest.OrderRest
+                com.wisencrazy.restaraunt.rest.OrderRest,
+                com.wisencrazy.restaraunt.rest.AdminRest
             </param-value>
         </init-param>
         <init-param>

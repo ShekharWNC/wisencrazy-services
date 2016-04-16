@@ -15,8 +15,12 @@ import javax.validation.constraints.Size;
 	@NamedQuery(name=City.FIND_CITY_BY_STATE_NAME,query="from City s where s.state.stateName=:stateName")
 	})
 public class City extends AbsBaseEntity {
-    private static final long serialVersionUID = 1L;
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1763832886832691396L;
+	
 	public static final String PREFIX = "com.wisencrazy.restaraunt.datasource.entities.entity.City.";
 	public static final String FIND_CITY_BY_STATE_ID = PREFIX + "findCityByState";
 	public static final String FIND_CITY_BY_STATE_NAME=PREFIX + "findCityByStateName";

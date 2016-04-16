@@ -29,33 +29,10 @@
 			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>log4j</groupId> -->
-<!-- 			<artifactId>log4j</artifactId> -->
-<!-- 			<version>1.2.17</version> -->
-<!-- 		</dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.jboss.weld.servlet</groupId> -->
-		<!-- <artifactId>weld-servlet</artifactId> -->
-		<!-- <version>2.2.9.Final</version> -->
-		<!-- <scope>runtime</scope> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>javax</groupId> -->
-		<!-- <artifactId>javaee-api</artifactId> -->
-		<!-- <version>6.0</version> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.0.6.Final</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>jboss-logging</artifactId>
-					<groupId>org.jboss.logging</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
@@ -67,6 +44,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.37</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -77,12 +60,6 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>2.3.2.Final</version>
-			<!-- <exclusions> -->
-			<!-- <exclusion> -->
-			<!-- <artifactId>httpclient</artifactId> -->
-			<!-- <groupId>org.apache.httpcomponents</groupId> -->
-			<!-- </exclusion> -->
-			<!-- </exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>com.wisencrazy</groupId>
