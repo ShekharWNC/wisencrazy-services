@@ -107,7 +107,7 @@ public class AdminRest {
 	@Path("/import/restaraunts")
 	@GET
 	public Response submitRestarauntData(){
-		String fileName="/home/shirshendu/Documents/WNC-git/Excel Data Import1.xlsx";
+		String fileName="/home/shirshendu/Documents/WNC-git/Excel Data Import4.xlsx";
 		try {
 			admin.importRestarauntData(fileName);
 			return Response.status(Status.OK).build();

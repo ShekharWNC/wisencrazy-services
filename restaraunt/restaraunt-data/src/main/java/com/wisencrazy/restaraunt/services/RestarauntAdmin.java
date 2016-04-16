@@ -176,9 +176,9 @@ public class RestarauntAdmin {
 			restaraunt.setMinDelivery(getDoubleCellValueFromRow(row, 13).intValue());
 			restaraunt.setName(restroName);
 			restaraunt.setPhotoUrl(getStringCellValueFromRow(row, 4));
-			restaraunt.setPrimaryContact(String.valueOf(getDoubleCellValueFromRow(row, 5)));
+			restaraunt.setPrimaryContact(getStringCellValueFromRow(row, 5));
 			restaraunt.setTaxes(getDoubleCellValueFromRow(row, 15));
-			restaraunt.setPin(String.valueOf(getDoubleCellValueFromRow(row, 7)));
+			restaraunt.setPin(getStringCellValueFromRow(row, 7));
 			restaraunt.generateUuid();
 			Double areaId=row.getCell(11).getNumericCellValue();
 			restaraunt.setAreaId(areaId.intValue());			
@@ -370,7 +370,7 @@ public class RestarauntAdmin {
 				item.setNm(getStringCellValueFromRow(row, 2));
 				item.setPrice(getDoubleCellValueFromRow(row, 4).floatValue());
 				item.setItemCategory(ic);
-				item.setVeg(getStringCellValueFromRow(row, 6).equalsIgnoreCase("N"));
+				item.setVeg(!getStringCellValueFromRow(row, 6).equalsIgnoreCase("N"));
 				logger.debug("Found ic ID {} for excelId+Sid map ",icSid);
 			} catch (ApplicationException e) {
 				logger.error("Error while fetching ic by sid : {}, {}",icSid,e);
