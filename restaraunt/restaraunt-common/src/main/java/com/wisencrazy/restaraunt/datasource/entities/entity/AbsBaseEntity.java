@@ -37,7 +37,6 @@ public abstract class AbsBaseEntity extends AbsCompositeEntity {
 		this.id = id;
 	}
 
-	
 	/*@Override
 	public int hashCode() {
 		return id.hashCode();

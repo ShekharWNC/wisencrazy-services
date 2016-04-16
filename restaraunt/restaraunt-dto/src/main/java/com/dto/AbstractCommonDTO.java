@@ -109,7 +109,6 @@ public abstract class AbstractCommonDTO implements Serializable {
 	    return new String(hexChars);
 	}
 	
-	
 	/*public <T> T populateEntityBySid(){
 		try{
 			return dtoPersistence.getEntityBySid(DtoMappingUtils.getInstance().getEntityClass(this.getClass().getSimpleName()), sid);

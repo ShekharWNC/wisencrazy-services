@@ -1,5 +1,6 @@
 package com.wisencrazy.restaraunt.services;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -133,8 +134,8 @@ public class OrderManagementServices {
 			commonRepoServ.saveWOTransaction(order);
 			saveItemDTO2Items(orderDTO.getOrderHasItems(), order);
 			commonRepoServ.getEntityManager().getTransaction().commit();
-			/*sendOrderSms(restaraunt, orderDTO);
-			sendConfirmationSms(restaraunt, customer);*/
+			sendOrderSms(restaraunt, orderDTO);
+			sendConfirmationSms(restaraunt, customer);
 		} catch (ApplicationException e) {
 			logger.error("Error while saving Order: {}",e);
 			throw e;
@@ -152,6 +153,8 @@ public class OrderManagementServices {
 			SmsServiceProvider.sendSingleSms(restroPhoneNumber, message.toString(), true, restroPhoneNumber);
 		} catch (SmsDeliveryException e) {
 			logger.error("Error while sending Order Sms: {}",e);
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Error while sending Order Sms: {}",e);
 		}
 		
 
@@ -165,6 +168,8 @@ public class OrderManagementServices {
 		try {
 			SmsServiceProvider.sendSingleSms(customerPhoneNumber, message.toString(), true, customerPhoneNumber);
 		} catch (SmsDeliveryException e) {
+			logger.error("Error while sending Order Sms: {}",e);
+		} catch (UnsupportedEncodingException e) {
 			logger.error("Error while sending Order Sms: {}",e);
 		}
 
