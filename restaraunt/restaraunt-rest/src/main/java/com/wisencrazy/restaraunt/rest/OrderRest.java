@@ -19,6 +19,7 @@ import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.ErrorCode;
 import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.common.exception.NoResultException;
+import com.wisencrazy.restaraunt.rest.dto.OrderSearchDTO;
 import com.wisencrazy.restaraunt.services.MenuViewServices;
 import com.wisencrazy.restaraunt.services.OrderManagementServices;
 
@@ -57,4 +58,19 @@ public class OrderRest {
 			return ErrorCode.getErrorResponse(e,HttpStatus.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@Path("/orders/{sid}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findOrdersForRestaraunt(@PathParam("sid")String restarauntSid,OrderSearchDTO searchDTO){
+		try {
+			return Response.status(Status.OK).entity(orderService.getOrderBySid(restarauntSid)).build();
+		} catch (IncorrectArgumentException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} catch (NoResultException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_NOT_FOUND);
+		} catch (ApplicationException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_INTERNAL_SERVER_ERROR);
+		}
+	}	
 }
