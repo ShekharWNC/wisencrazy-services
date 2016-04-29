@@ -142,6 +142,38 @@ public class RestarauntAdmin {
 		return true;		
 	}
 	
+	public boolean importRestarauntMenuImageData(String fileName,String restroSid) throws IncorrectArgumentException, IOException{
+		
+		//loop thru the sheets
+		for(int i=0;i<getTotalNumberOfSheetInWorkbook(fileName);i++){
+			Sheet sheet=getSheetObject(fileName, i);
+			logger.debug("Processing Sheet : {}",sheet.getSheetName());
+			//check if the sheet is null
+			if(sheet==null)
+				throw new IncorrectArgumentException();
+			switch (i) {
+			case 0:
+				//process restaraunt timings
+				addRestroTimings(sheet,restroSid);
+				break;	
+			case 1:
+				//process restaraunt item category
+				addItemCategory(sheet,restroSid);
+				break;
+			case 2:
+				//process restaraunt items
+				addItemsForCategory(sheet);
+				break;	
+			default:
+
+				break;
+			}
+			
+		}
+		return true;		
+	}
+		
+	
 	private void addRestaraunts(Sheet restroSheet){
 		
 		int rowCount=getLastNumberOfPhisycalRowFromSheet(restroSheet);
@@ -214,6 +246,56 @@ public class RestarauntAdmin {
 		}			
 	}
 	
+	private void addRestroTimings(Sheet timingSheet,String restroSid){
+		int rowCount=getLastNumberOfPhisycalRowFromSheet(timingSheet);
+		logger.debug("RowCount for {} : {}",timingSheet.getSheetName(),rowCount);
+		//Skipping the first 2 row as it the header
+		for(int r=1;r<rowCount;r++){
+			logger.debug("Processing rowNum: {}",r);
+			//iterate thru the rows and prepare the list of data				
+			Row row=timingSheet.getRow(r);
+			if(row==null)continue;
+			if(CommonUtils.isEmpty(restroSid)){
+				logger.warn("Ignoring Inserting restroSid {} has timings",restroSid);
+			}
+
+			logger.debug("Processing restaraunt has timing for sid : {}",restroSid);
+			RestarauntHasTimings hasTimings=new RestarauntHasTimings();
+			RestarauntHasTimingsPK hasTimingsPK=new RestarauntHasTimingsPK();
+
+			try {
+				int restarauntId=commonRepoServ.findIdBySid(Restaraunt.class.getName(), restroSid);
+				hasTimingsPK.setTiming(Enum.valueOf(Timings.class, getStringCellValueFromRow(row, 1)));
+				hasTimingsPK.setRestarauntId(restarauntId);
+				hasTimings.setPhotoUrl(getStringCellValueFromRow(row, 2));
+				hasTimings.setTimingsPK(hasTimingsPK);
+				logger.debug("Found restro ID {} for excelId+Sid map ",restroSid);
+			} catch (ApplicationException e) {
+				logger.error("Error while fetching restro by sid : {}, {}",restroSid,e);
+				logger.warn("Ignoring restaraunt timings for : {} in row number {}",r+1);
+				continue;
+			} catch (Exception e) {
+				logger.error("Error while fetching restro by sid : {}, {}",restroSid,e);
+				logger.warn("Ignoring restaraunt timings for : {} in row number {}",r+1);
+				continue;
+			}
+			
+			logger.info("Saving restaraunt Timings : {}",JsonUtils.toJson(hasTimings));
+			try {
+				commonRepoServ.save(hasTimings);
+				logger.debug("restaraunt has timings saved ID: {}");
+			} catch (DuplicateEntryException e) {
+				logger.error("Error while saving restarauntTiming {}",restroSid);
+				logger.warn("Ignoring restarauntTiming for : {} in row number {}",restroSid,r);
+				continue;
+			} catch (ApplicationException e) {
+				logger.error("Error while saving restarauntTiming {}",restroSid);
+				logger.warn("Ignoring restarauntTiming for : {} in row number {}",restroSid,r);
+				continue;
+			}
+		}				
+	}
+	
 	private void addRestroTimings(Sheet timingSheet){
 		
 		int rowCount=getLastNumberOfPhisycalRowFromSheet(timingSheet);
@@ -273,6 +355,60 @@ public class RestarauntAdmin {
 				continue;
 			}
 		}			
+		
+	}
+	
+	private void addItemCategory(Sheet icSheet,String restroSid){
+		int rowCount=getLastNumberOfPhisycalRowFromSheet(icSheet);
+		logger.debug("RowCount for {} : {}",icSheet.getSheetName(),rowCount);
+		//Skipping the first 2 row as it the header
+		for(int r=1;r<rowCount;r++){
+			logger.debug("Processing rowNum: {}",r);
+			//iterate thru the rows and prepare the list of data				
+			Row row=icSheet.getRow(r);
+			if(row==null)continue;
+			if(CommonUtils.isEmpty(restroSid)){
+				logger.warn("Ignoring Inserting restroSid {} has timings",restroSid);
+				continue;
+			}
+			String categoryXLId=String.valueOf(getDoubleCellValueFromRow(row, 1));
+
+			logger.debug("Processing restaraunt IC for sid : {}",restroSid);
+			ItemCategory itemCategory=new ItemCategory();
+			
+
+			try {
+				Restaraunt restaraunt=commonRepoServ.getEntityBySid(Restaraunt.class.getName(), restroSid);
+				itemCategory.setNm(getStringCellValueFromRow(row, 2));
+				itemCategory.setRestaraunt(restaraunt);
+				itemCategory.generateUuid();
+				logger.debug("Found restro ID {} for excelId+Sid map ",restroSid);
+			} catch (ApplicationException e) {
+				logger.error("Error while fetching restro by sid : {}, {}",restroSid,e);
+				logger.warn("Ignoring item category in excel cat number {}",categoryXLId);
+				continue;
+			} catch (Exception e) {
+				logger.error("Error while fetching restro by sid : {}, {}",restroSid,e);
+				logger.warn("Ignoring item category in excel cat number {}",categoryXLId);
+				continue;
+			}
+			
+			logger.info("Saving restaraunt IC : {}",JsonUtils.toJson(itemCategory));
+			try {
+				commonRepoServ.save(itemCategory);
+				logger.debug("IC saved ID: {}");
+				mapICSids.put(categoryXLId, itemCategory.bytesToHexString());
+			} catch (DuplicateEntryException e) {
+				logger.error("Error while saving IC for restaraunt {}",restroSid);
+				logger.warn("Ignoring IC for : {} in row number {}",restroSid,categoryXLId);
+				continue;
+			} catch (ApplicationException e) {
+				logger.error("Error while saving restarauntTiming {}",restroSid);
+				logger.warn("Ignoring restarauntTiming for : {} in row number {}",restroSid,r);
+				continue;
+			}
+		}			
+		
 		
 	}
 	

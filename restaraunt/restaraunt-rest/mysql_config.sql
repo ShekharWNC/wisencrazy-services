@@ -245,6 +245,7 @@ CREATE TABLE `order` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+
 CREATE TABLE `wisencrazy_restaraunt`.`order_has_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `sid` BINARY(32) NOT NULL COMMENT '',
@@ -305,6 +306,8 @@ CREATE TABLE `wisencrazy_restaraunt`.`payment_history` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+ALTER TABLE `wisencrazy_restaraunt`.`eorder` 
+ADD COLUMN `order_delivery_status` ENUM('PLACED','OFD','DEL') NOT NULL AFTER `order_delivery_type`;
 
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));

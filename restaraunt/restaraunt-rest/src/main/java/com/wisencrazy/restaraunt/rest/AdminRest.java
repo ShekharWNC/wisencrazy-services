@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -117,5 +118,19 @@ public class AdminRest {
 			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
 		} 
 	}
+	
+	@Path("/import/menu/{restroSid}")
+	@GET
+	public Response submitRestarauntMenu(@PathParam("restroSid") String restarauntSid){
+		String fileName="/home/shirshendu/Documents/WNC-git/Excel Data Import4.xlsx";
+		try {
+			admin.importRestarauntMenuImageData(fileName, restarauntSid);
+			return Response.status(Status.OK).build();
+		} catch (IOException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} catch (IncorrectArgumentException e) {
+			return ErrorCode.getErrorResponse(e,HttpStatus.SC_BAD_REQUEST);
+		} 
+	}	
 	
 }

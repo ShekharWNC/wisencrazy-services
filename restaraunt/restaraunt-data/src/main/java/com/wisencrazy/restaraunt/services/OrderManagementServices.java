@@ -11,6 +11,8 @@ import com.dozer.mapper.DozerUtil;
 import com.dto.MaxMinRecordDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderHasItemsDTO;
+import com.dto.PaymentDTO;
+import com.dto.PaymentDTO.PaymentStatus;
 import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.CommonUtils;
 import com.wisencrazy.common.JsonUtils;
@@ -19,6 +21,7 @@ import com.wisencrazy.common.SmsServiceProvider;
 import com.wisencrazy.common.exception.ApplicationException;
 import com.wisencrazy.common.exception.IncorrectArgumentException;
 import com.wisencrazy.common.exception.NoResultException;
+import com.wisencrazy.common.exception.PersistenceException;
 import com.wisencrazy.common.exception.SmsDeliveryException;
 import com.wisencrazy.restaraunt.datasource.CommonPersistenceImpl;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Customer;
@@ -26,19 +29,31 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.CustomerAddress;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Item;
 import com.wisencrazy.restaraunt.datasource.entities.entity.ItemHasSize;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Order;
+import com.wisencrazy.restaraunt.datasource.entities.entity.Order.DeliveryStatus;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Order.DeliveryType;
 import com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems;
+import com.wisencrazy.restaraunt.datasource.entities.entity.Payment;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Restaraunt;
 import com.wisencrazy.restaraunt.rest.dto.OrderSearchDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OrderManagementServices.
+ */
 public class OrderManagementServices {
 
+	/** The logger. */
 	private Logger logger=org.slf4j.LoggerFactory.getLogger(OrderManagementServices.class);
 
+	/** The common repo serv. */
 	protected CommonPersistenceImpl commonRepoServ;
 	
+	/** The dozer util. */
 	protected DozerUtil dozerUtil;
 	
+	/**
+	 * Instantiates a new order management services.
+	 */
 	public OrderManagementServices(){
 		try {
 			logger.debug("Setting up profile");
@@ -50,6 +65,15 @@ public class OrderManagementServices {
 		}		
 	}
 
+	/**
+	 * Creates the order.
+	 *
+	 * @param orderDTO the order dto
+	 * @return the string
+	 * @throws IncorrectArgumentException the incorrect argument exception
+	 * @throws NoResultException the no result exception
+	 * @throws ApplicationException the application exception
+	 */
 	public String createOrder(OrderDTO orderDTO) throws IncorrectArgumentException,NoResultException,ApplicationException{
 		//validate
 		logger.debug("Incoming OrderDTO:{}",JsonUtils.toJson(orderDTO));
@@ -145,6 +169,12 @@ public class OrderManagementServices {
 		return order.bytesToHexString();
 	}
 
+	/**
+	 * Send order sms.
+	 *
+	 * @param restaraunt the restaraunt
+	 * @param dto the dto
+	 */
 	private void sendOrderSms(Restaraunt restaraunt,OrderDTO dto){
 		if(restaraunt == null || dto == null)return;
 		String restroPhoneNumber=restaraunt.getPrimaryContact();
@@ -159,6 +189,12 @@ public class OrderManagementServices {
 
 	}
 	
+	/**
+	 * Send confirmation sms.
+	 *
+	 * @param restaraunt the restaraunt
+	 * @param customer the customer
+	 */
 	private void sendConfirmationSms(Restaraunt restaraunt,Customer customer){
 		if(restaraunt == null || customer == null)return;
 		String customerPhoneNumber=customer.getPrimaryContact();
@@ -172,6 +208,14 @@ public class OrderManagementServices {
 
 	}
 
+	/**
+	 * Save item dt o2 items.
+	 *
+	 * @param hasItemsDTOs the has items dt os
+	 * @param order the order
+	 * @throws IncorrectArgumentException the incorrect argument exception
+	 * @throws ApplicationException the application exception
+	 */
 	private void saveItemDTO2Items(List<OrderHasItemsDTO> hasItemsDTOs,Order order) throws IncorrectArgumentException,ApplicationException{
 		logger.debug("Converting List {}",JsonUtils.toJson(hasItemsDTOs));
 		//validate list incoming
@@ -216,6 +260,15 @@ public class OrderManagementServices {
 		}
 	}  
 	
+	/**
+	 * Gets the order by sid.
+	 *
+	 * @param sid the sid
+	 * @return the order by sid
+	 * @throws IncorrectArgumentException the incorrect argument exception
+	 * @throws NoResultException the no result exception
+	 * @throws ApplicationException the application exception
+	 */
 	public OrderDTO getOrderBySid(String sid) throws IncorrectArgumentException,NoResultException,ApplicationException{
 		if(CommonUtils.isEmpty(sid))
 			throw new IncorrectArgumentException("Invalid order Sid passed");
@@ -229,6 +282,16 @@ public class OrderManagementServices {
 		}
 	}
 	
+	/**
+	 * Gets the orders by restro sid.
+	 *
+	 * @param restroSid the restro sid
+	 * @param searchDTO the search dto
+	 * @return the orders by restro sid
+	 * @throws IncorrectArgumentException the incorrect argument exception
+	 * @throws NoResultException the no result exception
+	 * @throws ApplicationException the application exception
+	 */
 	public List<OrderDTO> getOrdersByRestroSid(String restroSid,OrderSearchDTO searchDTO) throws IncorrectArgumentException,NoResultException,ApplicationException{
 		if(CommonUtils.isEmpty(restroSid) || searchDTO==null)
 			throw new IncorrectArgumentException("Invalid order Sid passed");
@@ -243,6 +306,55 @@ public class OrderManagementServices {
 			return orderDTOs;
 		} catch (ApplicationException e) {
 			logger.error("Error while fetching Order: {} , {}",restroSid,e);
+			throw e;
+		}
+	}
+	
+	/**
+	 * Update delivery status.
+	 *
+	 * @param orderSid the order sid
+	 * @param status the status
+	 * @return true, if successful
+	 * @throws ApplicationException the application exception
+	 * @throws PersistenceException the persistence exception
+	 */
+	public boolean updateDeliveryStatus(String orderSid,String status) throws ApplicationException, PersistenceException{
+		if(CommonUtils.isEmpty(status) || CommonUtils.isEmpty(orderSid))
+			throw new IncorrectArgumentException();
+		Order order=null;
+		try {
+			order = commonRepoServ.getEntityBySid(Order.class, orderSid);
+			order.setDeliveryStatus(Enum.valueOf(DeliveryStatus.class, status));
+		} catch (ApplicationException e) {
+			logger.error("Error while fetching Order: {} , {}",orderSid,e);
+			throw e;
+		}
+		try {
+			commonRepoServ.update(order);
+			return true;
+		} catch (PersistenceException e) {
+			logger.error("Error while Saving Order: {} , {}",orderSid,e);
+			throw e;
+		}
+	}
+	
+	public String insertPayment(String orderSid,PaymentDTO paymentDTO) throws IncorrectArgumentException,ApplicationException{
+		if(CommonUtils.isEmpty(orderSid) || paymentDTO== null)
+			throw new IncorrectArgumentException();
+		if(paymentDTO.getPaymentAmount() == 0.00 || paymentDTO.getPaymentMode()==null)
+			throw new IncorrectArgumentException("Invalid Payment information");
+		logger.debug("Processing Payment for OrderSid : {} : {}",orderSid,JsonUtils.toJson(paymentDTO));
+		try {
+			Payment payment=dozerUtil.convert(paymentDTO, Payment.class);
+			payment.generateUuid();
+			payment.setPaymentStatus(com.wisencrazy.restaraunt.datasource.entities.entity.Payment.PaymentStatus.STARTED);
+			payment.setPaymentStatusTime(new Timestamp(new Date().getTime()));
+			commonRepoServ.save(payment);
+			logger.debug("Payment processed for OrderSid : {} ",orderSid);
+			return payment.bytesToHexString();
+		} catch (ApplicationException e) {
+			logger.error("Error while Saving Order: {} , {}",orderSid,e);
 			throw e;
 		}
 	}
