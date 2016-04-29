@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 
 import com.dozer.mapper.DozerUtil;
+import com.dto.MaxMinRecordDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderHasItemsDTO;
 import com.wisencrazy.common.ApplicationConstants;
@@ -28,6 +29,7 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.Order;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Order.DeliveryType;
 import com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Restaraunt;
+import com.wisencrazy.restaraunt.rest.dto.OrderSearchDTO;
 
 public class OrderManagementServices {
 
@@ -227,4 +229,21 @@ public class OrderManagementServices {
 		}
 	}
 	
+	public List<OrderDTO> getOrdersByRestroSid(String restroSid,OrderSearchDTO searchDTO) throws IncorrectArgumentException,NoResultException,ApplicationException{
+		if(CommonUtils.isEmpty(restroSid) || searchDTO==null)
+			throw new IncorrectArgumentException("Invalid order Sid passed");
+		List<OrderDTO> orderDTOs=new ArrayList<OrderDTO>();
+		int startLimit=(searchDTO.getPageIndex()*searchDTO.getCount())-searchDTO.getCount();
+		int endLimit=startLimit+searchDTO.getCount();
+		try {
+			List<Order> orders=commonRepoServ.findEntityListUsingNamedQueryByPagination(Order.FIND_BY_RESTARAUNT_SID, QueryParameter.with("sid", restroSid).and("fromDate", searchDTO.getFromDate()).and("toDate", searchDTO.getToDate()).parameters(), startLimit, endLimit);
+			if(orders==null)
+				throw new NoResultException("No order found for the query.");
+			orderDTOs=dozerUtil.convertList(orders, OrderDTO.class);
+			return orderDTOs;
+		} catch (ApplicationException e) {
+			logger.error("Error while fetching Order: {} , {}",restroSid,e);
+			throw e;
+		}
+	}
 }
