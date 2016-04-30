@@ -30,7 +30,8 @@ import com.dto.constants.EnumConstants.SignupType;
 	@NamedQuery(name = Order.FIND_BY_SID, query = "select o from Order o where hex(o.sid) = :sid"),
 	@NamedQuery(name = Order.FIND_BY_DATE, query = "select o from Order o where o.orderedOn = :timestamp"),
 	@NamedQuery(name = Order.FIND_BY_CUSTOMER_SID, query = "select o from Order o where hex(o.customer.sid) = :sid"),
-	@NamedQuery(name = Order.FIND_BY_RESTARAUNT_SID, query = "select o from Order o where hex(o.restaraunt.sid) = :sid"),
+	@NamedQuery(name = Order.FIND_BY_RESTARAUNT_SID, query = "select o from Order o where hex(o.restaraunt.sid) = :sid and orderOn <= :fromDate and orderOn >=:toDate"),
+	@NamedQuery(name = Order.UPDATE_DEL_STATUS_BY_SID, query = "Update Order set deliveryStatus=:status  where hex(sid) = :sid "),
 })
 public class Order extends AbsBaseEntity {
 		
@@ -44,10 +45,17 @@ public class Order extends AbsBaseEntity {
 	public static final String FIND_BY_DATE=PREFIX + "findByDate";
 	public static final String FIND_BY_CUSTOMER_SID=PREFIX + "findByCustomerSid";
 	public static final String FIND_BY_RESTARAUNT_SID=PREFIX + "findByRestroSid";
+	public static final String UPDATE_DEL_STATUS_BY_SID=PREFIX + "updateDelStatus";
 	
 	public enum DeliveryType{
 		TO,
 		DE
+	}
+	
+	public enum DeliveryStatus{
+		PLACED,
+		OFD,
+		DEL
 	}
 	
 	@Column(name="restaraunt_id")
@@ -98,6 +106,11 @@ public class Order extends AbsBaseEntity {
 	@Column(name="order_delivery_type")
 	@Enumerated(EnumType.STRING)
 	private DeliveryType deliveryType;
+	
+	@Column(name="order_delivery_status")
+	@Enumerated(EnumType.STRING)
+	private DeliveryStatus deliveryStatus;
+
 	
 //	@OneToOne(optional=true)
 //	@JoinColumn(name="order_id",unique=true,nullable=true,updatable=false)
@@ -222,6 +235,15 @@ public class Order extends AbsBaseEntity {
 	public void setCustomerAddressId(Integer customerAddressId) {
 		this.customerAddressId = customerAddressId;
 	}
+
+	public DeliveryStatus getDeliveryStatus() {
+		return deliveryStatus;
+	}
+
+	public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
+	}
+
 
 //	public Payment getPayment() {
 //		return payment;
