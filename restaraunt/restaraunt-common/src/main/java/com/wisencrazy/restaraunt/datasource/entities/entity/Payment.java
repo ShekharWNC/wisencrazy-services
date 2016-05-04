@@ -68,8 +68,9 @@ public class Payment extends AbsBaseEntity {
 	@Column(name="payment_status_time")
 	private Timestamp paymentStatusTime;
 	
-//	@OneToOne(optional=false,mappedBy="payment")
-//	private Order order;
+	@OneToOne(optional=false)
+	@JoinColumn(name="order_id")
+	private Order order;
 
 	public PaymentMode getPaymentMode() {
 		return paymentMode;
@@ -103,12 +104,12 @@ public class Payment extends AbsBaseEntity {
 		this.paymentStatusTime = paymentStatusTime;
 	}
 
-/*	public Order getOrder() {
+	public Order getOrder() {
 		return order;
 	}
 
 	public void setOrder(Order order) {
 		this.order = order;
-	}*/
+	}
 	
 }

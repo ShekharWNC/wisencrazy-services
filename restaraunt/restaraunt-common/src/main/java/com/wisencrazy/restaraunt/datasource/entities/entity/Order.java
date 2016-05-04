@@ -30,7 +30,7 @@ import com.dto.constants.EnumConstants.SignupType;
 	@NamedQuery(name = Order.FIND_BY_SID, query = "select o from Order o where hex(o.sid) = :sid"),
 	@NamedQuery(name = Order.FIND_BY_DATE, query = "select o from Order o where o.orderedOn = :timestamp"),
 	@NamedQuery(name = Order.FIND_BY_CUSTOMER_SID, query = "select o from Order o where hex(o.customer.sid) = :sid"),
-	@NamedQuery(name = Order.FIND_BY_RESTARAUNT_SID, query = "select o from Order o where hex(o.restaraunt.sid) = :sid and orderOn <= :fromDate and orderOn >=:toDate"),
+	@NamedQuery(name = Order.FIND_BY_RESTARAUNT_SID, query = "select o from Order o where hex(o.restaraunt.sid) = :sid and orderedOn <= :fromDate and orderedOn >=:toDate"),
 	@NamedQuery(name = Order.UPDATE_DEL_STATUS_BY_SID, query = "Update Order set deliveryStatus=:status  where hex(sid) = :sid "),
 })
 public class Order extends AbsBaseEntity {
@@ -112,9 +112,10 @@ public class Order extends AbsBaseEntity {
 	private DeliveryStatus deliveryStatus;
 
 	
-//	@OneToOne(optional=true)
-//	@JoinColumn(name="order_id",unique=true,nullable=true,updatable=false)
-//	private Payment payment;
+	@OneToOne(optional=true,mappedBy="order")
+//	@JoinColumn(referencedColumnName="order_id",unique=true,nullable=true,updatable=false)
+//	@JoinColumn(unique=true,nullable=true,updatable=false)
+	private Payment payment;
 	
     public Integer getRestroId() {
 		return restroId;
@@ -245,12 +246,12 @@ public class Order extends AbsBaseEntity {
 	}
 
 
-//	public Payment getPayment() {
-//		return payment;
-//	}
-//
-//	public void setPayment(Payment payment) {
-//		this.payment = payment;
-//	}
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
 
 }

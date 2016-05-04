@@ -309,6 +309,16 @@ CREATE TABLE `wisencrazy_restaraunt`.`payment_history` (
 ALTER TABLE `wisencrazy_restaraunt`.`eorder` 
 ADD COLUMN `order_delivery_status` ENUM('PLACED','OFD','DEL') NOT NULL AFTER `order_delivery_type`;
 
+ALTER TABLE `wisencrazy_restaraunt`.`eorder` 
+ADD COLUMN `payment_id` INT(11) NULL COMMENT '' AFTER `order_delivery_status`,
+ADD INDEX `fk_payment_idx` (`payment_id` ASC)  COMMENT '';
+ALTER TABLE `wisencrazy_restaraunt`.`eorder` 
+ADD CONSTRAINT `fk_payment`
+  FOREIGN KEY (`payment_id`)
+  REFERENCES `wisencrazy_restaraunt`.`payment_history` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
 -- Insert queries
 INSERT INTO country (country_name,sid) VALUES ('India',unhex('86b5bcd2ca374479b41df5e41a1be5a649a23e8462fb4d5d93c59e960eb80176'));
 INSERT INTO city(city_name,state_id,sid) VALUES ('Mysuru',1,unhex('9af4bf308c9b4e6cbb3f75d7b674d0e90224e75c7426410b9ca18b55e4e24d12'));

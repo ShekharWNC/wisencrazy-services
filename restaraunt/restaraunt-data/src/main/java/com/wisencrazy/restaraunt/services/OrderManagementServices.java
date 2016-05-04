@@ -9,11 +9,9 @@ import java.util.List;
 import org.slf4j.Logger;
 
 import com.dozer.mapper.DozerUtil;
-import com.dto.MaxMinRecordDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderHasItemsDTO;
 import com.dto.PaymentDTO;
-import com.dto.PaymentDTO.PaymentStatus;
 import com.wisencrazy.common.ApplicationConstants;
 import com.wisencrazy.common.CommonUtils;
 import com.wisencrazy.common.JsonUtils;
@@ -34,6 +32,7 @@ import com.wisencrazy.restaraunt.datasource.entities.entity.Order.DeliveryStatus
 import com.wisencrazy.restaraunt.datasource.entities.entity.Order.DeliveryType;
 import com.wisencrazy.restaraunt.datasource.entities.entity.OrderHasItems;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Payment;
+import com.wisencrazy.restaraunt.datasource.entities.entity.Payment.PaymentMode;
 import com.wisencrazy.restaraunt.datasource.entities.entity.Restaraunt;
 import com.wisencrazy.restaraunt.rest.dto.OrderSearchDTO;
 
@@ -304,7 +303,11 @@ public class OrderManagementServices {
 		int startLimit=(searchDTO.getPageIndex()*searchDTO.getCount())-searchDTO.getCount();
 		int endLimit=startLimit+searchDTO.getCount();
 		try {
-			List<Order> orders=commonRepoServ.findEntityListUsingNamedQueryByPagination(Order.FIND_BY_RESTARAUNT_SID, QueryParameter.with("sid", restroSid).and("fromDate", searchDTO.getFromDate()).and("toDate", searchDTO.getToDate()).parameters(), startLimit, endLimit);
+			List<Order> orders=null;
+			if(startLimit<=0)
+				orders=commonRepoServ.findEntityListByNamedQuery(Order.FIND_BY_RESTARAUNT_SID, QueryParameter.with("sid", restroSid).and("fromDate", searchDTO.getFromDate()).and("toDate", searchDTO.getToDate()).parameters());
+			else
+				orders=commonRepoServ.findEntityListUsingNamedQueryByPagination(Order.FIND_BY_RESTARAUNT_SID, QueryParameter.with("sid", restroSid).and("fromDate", searchDTO.getFromDate()).and("toDate", searchDTO.getToDate()).parameters(), startLimit, endLimit);
 			if(orders==null)
 				throw new NoResultException("No order found for the query.");
 			orderDTOs=dozerUtil.convertList(orders, OrderDTO.class);
@@ -330,7 +333,10 @@ public class OrderManagementServices {
 		Order order=null;
 		try {
 			order = commonRepoServ.getEntityBySid(Order.class, orderSid);
-			order.setDeliveryStatus(Enum.valueOf(DeliveryStatus.class, status));
+			DeliveryStatus deliveryStatus=Enum.valueOf(DeliveryStatus.class, status);
+			if(deliveryStatus.equals(DeliveryStatus.DEL))
+				order.setDeliveredOn(new Timestamp(new Date().getTime()));
+			order.setDeliveryStatus(deliveryStatus);
 		} catch (ApplicationException e) {
 			logger.error("Error while fetching Order: {} , {}",orderSid,e);
 			throw e;
@@ -350,17 +356,59 @@ public class OrderManagementServices {
 		if(paymentDTO.getPaymentAmount() == 0.00 || paymentDTO.getPaymentMode()==null)
 			throw new IncorrectArgumentException("Invalid Payment information");
 		logger.debug("Processing Payment for OrderSid : {} : {}",orderSid,JsonUtils.toJson(paymentDTO));
+		logger.debug("Fetching order information for Sid : {} ",orderSid);
+		Order order=null;
+		try{
+			order=commonRepoServ.getEntityBySid(Order.class, orderSid);			
+		}catch(Exception e){
+			logger.error("Error while fetching order for Sid : {}",orderSid);
+		}
+		if(order==null)
+			throw new IncorrectArgumentException("Invalid Order Sid: ".concat(orderSid));
+		if(paymentDTO.getPaymentAmount() < order.getBilledAmount())
+			throw new IncorrectArgumentException("The Payment amount is less than the billed amount - ".concat(String.valueOf(order.getBilledAmount())));
 		try {
-			Payment payment=dozerUtil.convert(paymentDTO, Payment.class);
+			Payment payment=new Payment();
+			payment.setPaymentMode(Enum.valueOf(PaymentMode.class, paymentDTO.getPaymentMode().toString()));
+			payment.setPaymentAmount(paymentDTO.getPaymentAmount());
 			payment.generateUuid();
-			payment.setPaymentStatus(com.wisencrazy.restaraunt.datasource.entities.entity.Payment.PaymentStatus.STARTED);
+			if(payment.getPaymentMode().equals(PaymentMode.COD))
+				payment.setPaymentStatus(com.wisencrazy.restaraunt.datasource.entities.entity.Payment.PaymentStatus.PENDING);
+			else if(payment.getPaymentMode().equals(PaymentMode.ONLINE))
+				payment.setPaymentStatus(com.wisencrazy.restaraunt.datasource.entities.entity.Payment.PaymentStatus.PENDING_CONFIRM);
 			payment.setPaymentStatusTime(new Timestamp(new Date().getTime()));
+			payment.setOrder(order);
+			//Saving the payment information
 			commonRepoServ.save(payment);
 			logger.debug("Payment processed for OrderSid : {} ",orderSid);
 			return payment.bytesToHexString();
 		} catch (ApplicationException e) {
 			logger.error("Error while Saving Order: {} , {}",orderSid,e);
 			throw e;
+		} catch (Exception e) {
+			logger.error("Error while Saving Order: {} , {}",orderSid,e);
+			throw new ApplicationException(e.getMessage());
+		}
+	}
+
+	public boolean updatePaymentStatus(String paymentSid,String status) throws IncorrectArgumentException,ApplicationException{
+		if(CommonUtils.isEmpty(paymentSid) || CommonUtils.isEmpty(status))
+			throw new IncorrectArgumentException();
+		logger.debug("Updating Payment {} with Status {}",paymentSid,status);
+		logger.debug("Fetching Payment information for Sid : {} ",paymentSid);
+		try {
+			Payment payment=commonRepoServ.getEntityBySid(Payment.class, paymentSid);
+			payment.setPaymentStatus(Enum.valueOf(Payment.PaymentStatus.class, status));
+			payment.setPaymentStatusTime(new Timestamp(new Date().getTime()));
+			//Saving the payment information
+			logger.debug("Payment updated Successfully ");
+			return true;
+		} catch (ApplicationException e) {
+			logger.error("Error while updating Order: {} , {}",paymentSid,e);
+			throw e;
+		}catch (Exception e) {
+			logger.error("Error while updating Order: {} , {}",paymentSid,e);
+			throw new ApplicationException(e.getMessage());
 		}
 	}
 }

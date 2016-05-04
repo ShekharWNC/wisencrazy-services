@@ -34,7 +34,10 @@ public class OrderDTO extends AbsCommonDTO {
 	private List<OrderHasItemsDTO> orderHasItems;
 	
 	private String deliveryType;
+
+	private PaymentDTO payment;
 	
+	private String deliveryStatus;
 
 	public Timestamp getOrderedOn() {
 		return orderedOn;
@@ -130,6 +133,22 @@ public class OrderDTO extends AbsCommonDTO {
 
 	public void setDeliveryType(String deliveryType) {
 		this.deliveryType = deliveryType;
+	}
+
+	public PaymentDTO getPayment() {
+		return payment;
+	}
+
+	public void setPayment(PaymentDTO payment) {
+		this.payment = payment;
+	}
+
+	public String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
 	}
 
 }

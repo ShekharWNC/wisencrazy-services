@@ -1,0 +1,185 @@
+1. Create a new Restaraunt - This api should be used to create a new restaraunt. The information regarding the input json is provided below.
+
+URL: http://<domain-name>/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/create
+Method: PUT
+Headers: Content-type - "application/json"
+Request Body:
+{
+  "sid": null, //Not required
+  "id": null, //Not required
+  "email": "hotel1@test.com",
+  "description": "description",
+  "photoUrl": "hotel_url", // The photourl provided by the hotel
+  "name": "Hotel Test HNagar", //Hotel Name
+  "primaryContact": "9898657898", //The contact number for the hotel
+  "createdDate": 1453321422902, //long value of the current ssytem date
+  "address": "Address 1", //
+  "pin": "560102",//PinCode - mandatory
+  "latitude": "12.912408", //Double value -- Mandatory
+  "longitude": "77.633957", //Double value -- Mandatory
+  "costFor2": 45, //Integer - mandatory
+  "area": {
+    "sid": "86B5BCD2CA374479B41DF5E41A1BE5A649A23E8462FB4D5D93C59E960EB80176",
+    "id": null,
+    "areaName": "New Area"
+  },//This part will be provided when the user select an item from the "area" dropdown
+  "active": true //Default value
+}
+
+2. Get List of area - This api should be used to get the list of area for a city and it should be used to populate the "area" dropdown for the above requirement.
+
+URL: http://<domain-name>/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/areas/city/9AF4BF308C9B4E6CBB3F75D7B674D0E90224E75C7426410B9CA18B55E4E24D12
+Method: GET
+Response JSON- This will be Json array
+[
+  {
+    "sid": "9AF4BF308C9B4E6CBB3F75D7B674D0E90224E75C7426410B9CA18B55E4E24D12",//This is the area SID 
+    "id": null,// Not exposed to external
+    "areaName": "JP Nagar",//Name of the area
+    "city": {
+      "sid": "9AF4BF308C9B4E6CBB3F75D7B674D0E90224E75C7426410B9CA18B55E4E24D12",
+      "id": null,
+      "cityName": "Mysuru"
+    }
+  }
+]
+
+3. Generate order report for a restaraunt - This api provides a list of all the orders placed for a particular restaraunt between two dates. This has pagination support from the server side.
+
+URL: http://<domain-name>/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/order/orders/<restaraunt_sid>
+Method: POST
+Headers: Content-type - "application/json"
+Request Body:
+{
+    "fromDate":1453321422000,//The from date from where the report should be generated
+    "toDate":1453321422000,// The to date till where the report should be generated
+    "count":10, //The result count for each page -- If complete result set is required then pass 0
+    "pageIndex":1 //This is the pageIndex, always starts with 1
+}
+
+ResponseBody:
+[
+  {
+    "sid": "9ACA805E0D0A42AA8B894FBC79FC41693C0EA3246352466586CFAAC422F93CF9",//The order Sid
+    "id": null,
+    "orderedOn": 1453321422000,//Date time of order
+    "deliveredOn": null,
+    "totalAmount": 117,//Total order Amount
+    "taxes": 6.9, // Taxes
+    "deliveryCharges": 50,//Del charged
+    "discounts": 0,//Discounts
+    "billedAmount": 173.5,//Final billed amount
+    "restaraunt": {//Restaraunt information -- not important
+      "sid": "F0E2C8E8924541CEA7FC8B9A18A086CBCE1D2ACE1A704CFF9021457739B97255",
+      "id": null,
+      "name": "Hotel Test RRR",
+      "primaryContact": "9898657898",
+      "address": "RRR,Gandhi Square, Near Mahatma Gandhi Statue, Chamrajpur, ",
+      "pin": "570001"
+    },
+    "customer": {//Customer Information
+      "sid": "09A1042495EB4D5B80F610BD354F3140E3AE145A5F274945A2BBD10C72AA28D0",
+      "id": null,
+      "name": "ShekharTest",
+      "photoUrl": null
+    },
+    "customerAddress": {//Order delivered to address
+      "sid": "86B5BCD2CA374479B41DF5E41A1BE5A649A23E8462FB4D5D93C59E960EB80176",
+      "id": null,
+      "addressLine1": "Line#1",
+      "addressLine2": "Line#2",
+      "addressLine3": "Line#3",
+      "country": {
+        "sid": "86B5BCD2CA374479B41DF5E41A1BE5A649A23E8462FB4D5D93C59E960EB80176",
+        "id": null,
+        "countryName": "India"
+      },
+      "pin": "560102",
+      "state": {
+        "sid": "9AF4BF308C9B4E6CBB3F75D7B674D0E90224E75C7426410B9CA18B55E4E24D12",
+        "id": null,
+        "stateName": "Karnataka"
+      }
+    },
+    "orderHasItems": [//Items in order -- JSON array
+      {
+        "sid": "BEFA6794DB784B138BB6A5CF7B8F2E1B9717FF7E3AAB4EA3B4946B1FBDB0692C",
+        "id": null,
+        "quantity": 2, // Qty of the item ordered
+        "itemBill": 40, //Price for the ordered item
+        "item": {
+          "sid": "881B9DC0EE64409189F9B4E74E8270982E12A5989C624F6AB3CC19DFCF57CA8F",
+          "id": null,
+          "nm": "Idli",//name of item
+          "size": "2 Nos",//Size
+          "price": 20,//Price per unit
+          "disc": null,
+          "rmngQty": null,
+          "totalQty": null,
+          "desc": null,
+          "avail": null,
+          "picUrl": null,
+          "itemType": null,
+          "tagName": null,
+          "sizes": [],
+          "veg": true
+        },
+        "itemHasSize": null
+      }
+    ],
+    "deliveryType": "DE",//Delivery type two options DE -- Delivery or TO - Takeout
+    "payment": {//Payment information
+      "sid": "75EA181AA31246B994D5625CD7B35171C36BEBBB24154EDABDFFD96DB2FD9310",//Payment sid
+      "id": null,
+      "paymentMode": "COD",//Type of payment - COD - cash on delivery, ONLINE
+      "paymentAmount": 174, // The payment amount
+      "paymentStatus": "COMPLETED",//Payment Status options - STARTED,PENDING,COMPLETED,PENDING_CONFIRM
+      "paymentStatusTime": 1462327425276 //Time of status
+    },
+    "deliveryStatus": "OFD" //Delivery status: OFD: Out for delivery , PLACED , DEL - Delivered
+  }
+]
+
+4. List of restaraunt - This api will provide the list of restaraunt based on the area sid provided. The list of restaraunt will be used to populate a drop down in the admin UI from where the user can select a particular restaraunt. This feature will be required for the API # 3
+
+URL - http://<domain-name>/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/restaraunt/search
+Method: POST
+Headers: Content-type - "application/json"
+Request Body:
+{
+  "areaSid": "9AF4BF308C9B4E6CBB3F75D7B674D0E90224E75C7426410B9CA18B55E4E24D12",// the area sid as fetched from #2
+  "stateSid": null,//Not required
+  "timings": "BR"//Keep this value hard-coded
+}
+ Response JSON:
+ [
+	{
+      "sid": "F0E2C8E8924541CEA7FC8B9A18A086CBCE1D2ACE1A704CFF9021457739B97255",// Restaraunt Sid
+      "id": null,
+      "name": "Hotel Test RRR",
+      "primaryContact": "9898657898",//Not important for this API
+      "address": "RRR,Gandhi Square, Near Mahatma Gandhi Statue, Chamrajpur, ",//Not important for this API
+      "pin": "570001" //Not important for this API
+    }
+ ]
+
+5. Update the delivery status - This API should be used to update the delivery status of an Order. The delivery statuses are PLACED which is default and is always set when order is placed. OFD - Out for delivery and DEL - Delivered when the order gets delivered. The user must be able to select any of the last two options to update the delivery status
+
+URL: http://<domain-name>/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/order/status/<order_sid>/<status>
+Method: POST
+Headers: Content-type - "application/json"
+
+6. Update the payment status for an order -  This api should be used to update the payment status of an Order payment. The statuses are 		S
+		STARTED, -- Default set by server
+		PENDING, -- This is also determined and set by server
+		COMPLETED, -- This is the option that a user can select because incase of Online payments this will be set by the server.
+		PENDING_CONFIRM --  This is also used for internal server purpose
+
+URL: http://<domain-name>/restaraunt-rest-0.0.1.local-SNAPSHOT/rest/order/payment/status/<payment_sid>/<status>
+Method: POST
+Headers: Content-type - "application/json"
+
+7. UPload excel to import restaraunt data --  will be provided
+8. Upload excel to create + import restaraunt data  -- will be provided
+
+
